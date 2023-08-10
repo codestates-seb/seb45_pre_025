@@ -3,6 +3,7 @@ import './index.css';
 import Main from './pages/Main';
 import Header from './components/Header';
 import Footer from './components/Footer';
+import Login from './pages/Login';
 
 function App() {
   return (
@@ -10,6 +11,7 @@ function App() {
       <Header />
       <Routes>
         <Route path="/" element={<Main />}></Route>
+        <Route path="/login" element={<Login />}></Route>
       </Routes>
       <Footer />
     </div>

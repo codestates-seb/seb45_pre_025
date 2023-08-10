@@ -9,7 +9,7 @@ const Header = () => {
 
   return (
     <header className="w-full h-14 fixed border-b border-t-[3px] border-t-orange-400">
-      <div className="h-full w-[97.2307692rem] flex items-center justify-center mx-auto my-0">
+      <div className="h-full max-w-full w-[80rem] flex items-center justify-center mx-auto my-0">
         <button
           className="h-full flex items-center justify-center px-2"
           onClick={menuIcon}
@@ -24,7 +24,7 @@ const Header = () => {
             <img src="/images/menu.png" alt="닫기 아이콘" className="h-6 w-6" />
           )}
         </button>
-        <div className="h-full flex items-center ">
+        <div className="h-full flex items-center cursor-pointer">
           <svg
             aria-hidden="true"
             className="native svg-icon iconLogoMd px-2"
@@ -45,15 +45,30 @@ const Header = () => {
         </div>
 
         <div className="flex">
-          <h1 className="px-3 py-1.5 text-sm text-[#525960]">About</h1>
-          <h1 className="px-5 py-1.5 text-sm text-[#525960]">Products</h1>
-          <h1 className="px-3 py-1.5 text-sm text-[#525960]">For Teams</h1>
+          <h1 className="px-3 py-1.5 text-sm text-[#525960] cursor-pointer">
+            About
+          </h1>
+          <h1 className="px-5 py-1.5 text-sm text-[#525960] cursor-pointer">
+            Products
+          </h1>
+          <h1 className="px-3 py-1.5 text-sm text-[#525960] cursor-pointer">
+            For Teams
+          </h1>
         </div>
-        <input className="border border-zinc-200 py-2 mx-2 rounded-md" />
-        <button className="bg-blue-100 px-3 py-2 rounded-md">
+
+        <div className="relative flex grow items-center mx-2 h-7">
+          <input className="border border-zinc-200 py-1 pl-10 rounded-md flex grow" />
+          <img
+            className="absolute left-3 color-[#525960]"
+            src="/images/Search-Icon.png"
+            alt="검색창"
+          />
+        </div>
+
+        <button className="bg-blue-100 px-2 py-2 rounded-md">
           <h1 className="text-sm text-blue-700">Log in</h1>
         </button>
-        <button className="bg-blue-500 px-3 py-2 rounded-md ml-1">
+        <button className="bg-blue-500 px-2 py-2 rounded-md ml-1">
           <h1 className="text-sm text-white">Sign up</h1>
         </button>
       </div>
