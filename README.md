@@ -1,4 +1,4 @@
-## 코딩해'조' 
+## 프로젝트_코딩해'조' 
 
 > 프로젝트 기간 : 08.04 ~ 08.23
 >> - [Figma Link](https://www.figma.com/file/n40SeKU2OlbZN8wwQZ1Zv7/%5B%EC%BD%94%EB%94%A9%ED%95%B4%EC%A1%B0%5D-pre-project?type=design&node-id=0%3A1&mode=design&t=uq01cPwr96HDyFwP-1)
@@ -7,12 +7,17 @@
 <br>
 
 ## 프로젝트팀 소개
-
+### FE
 |<center>윤 예빈</center>|<center>최 유리</center>|<center>최 민서</center>|
 |---|---|---|
-|<img width="150px" height="150px" src ="public/images/ye-bin.jpg" />|<img width="150px" height="150px" src ="public/images/you-ri.jpg" />|<img width="150px" height="150px" src ="public/images/min-seo.jpg" />|
+|<img width="150px" height="150px" src ="clientes/public/images/ye-bin.jpg" />|<img width="150px" height="150px" src ="clientes/public/images/you-ri.jpg" />|<img width="150px" height="150px" src ="clientes/public/images/min-seo.jpg" />|
 |<center>[@YebinYun](https://github.com/YebinYun)</center>|<center>[@greatjobcat](https://github.com/greatjobcat)</center>|<center>[@minseowo](https://github.com/minseowo)</center>|
 
+### BE
+|<center>박 찬우</center>|<center>강 석완</center>|<center>양 진호</center>|
+|---|---|---|
+|<img width="150px" height="150px" src ="" />|<img width="150px" height="150px" src ="" />|<img width="150px" height="150px" src ="" />|
+|<center>[@chanwoopark9301](https://github.com/chanwoopark9301)</center>|<center>[@blacksg](https://github.com/blacksg)</center>|<center>[@yang-jin-ho](https://github.com/yang-jin-ho)</center>|
 <br>
 
 ## 디렉토리 구조
@@ -33,4 +38,4 @@
 <br>
 
 ## User Flow
-<img src="public/images/[코딩해조] User Flow.png">
+<img src="clientes/public/images/[코딩해조] User Flow.png">
