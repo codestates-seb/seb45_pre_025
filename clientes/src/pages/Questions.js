@@ -49,7 +49,7 @@ const Questions = () => {
           </div>
           <div>
             <div>
-              <div>질문제목......</div>
+              <div>질문제목.......</div>
               <div>질문내용 일부.....</div>
             </div>
             <div>
