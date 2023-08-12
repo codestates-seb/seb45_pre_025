@@ -1,7 +1,9 @@
+import { Link } from 'react-router-dom';
+
 const Login = () => {
   return (
     <main className="w-full relative">
-      <div className="absolute w-full h-screen bg-gray-100 flex flex-wrap justify-center items-center">
+      <div className="absolute top-14 w-full h-screen bg-gray-100 flex flex-wrap justify-center items-center">
         <div className="flex flex-col items-center p-6">
           <svg
             aria-hidden="true"
@@ -71,7 +73,9 @@ const Login = () => {
             <div>
               <div className="flex justify-between items-center mt-4">
                 <h1 className="font-semibold">Password</h1>
-                <span className="text-xs text-blue-500">Forgot password?</span>
+                <span className="text-xs text-blue-500  cursor-pointer">
+                  Forgot password?
+                </span>
               </div>
               <input
                 type="password"
@@ -79,7 +83,7 @@ const Login = () => {
               />
             </div>
             <div className="w-full">
-              <button className="w-full bg-blue-400 rounded-md my-4 py-2">
+              <button className="w-full bg-blue-500 rounded-md my-4 py-2">
                 <h1 className="text-white">Log in</h1>
               </button>
             </div>
@@ -87,20 +91,24 @@ const Login = () => {
           <div className="text-sm w-72 mt-2">
             <div className=" flex w-ful justify-center">
               <h1 className="mr-1.5">Don&rsquo;t have an account?</h1>
-              <button className="text-blue-500">Sign up</button>
+              <Link to="/signup">
+                <button className="text-blue-500">Sign up</button>
+              </Link>
             </div>
             <div className="flex justify-center w-ful mt-3">
               <h1>Are you an employer?</h1>
-              <button className="text-blue-500 flex items-center w-ful">
-                <h1 className="mx-1.5">Sign up on Talent</h1>
-                <svg
-                  aria-hidden="true"
-                  className="va-text-bottom sm:d-none svg-icon iconShareSm w-3.5 h-3.5 fill-blue-500"
-                  viewBox="0 0 14 14"
-                >
-                  <path d="M5 1H3a2 2 0 0 0-2 2v8c0 1.1.9 2 2 2h8a2 2 0 0 0 2-2V9h-2v2H3V3h2V1Zm2 0h6v6h-2V4.5L6.5 9 5 7.5 9.5 3H7V1Z" />
-                </svg>
-              </button>
+              <Link to="https://talent.stackoverflow.com/users/login">
+                <button className="text-blue-500 flex items-center w-ful">
+                  <h1 className="mx-1.5">Sign up on Talent</h1>
+                  <svg
+                    aria-hidden="true"
+                    className="va-text-bottom sm:d-none svg-icon iconShareSm w-3.5 h-3.5 fill-blue-500"
+                    viewBox="0 0 14 14"
+                  >
+                    <path d="M5 1H3a2 2 0 0 0-2 2v8c0 1.1.9 2 2 2h8a2 2 0 0 0 2-2V9h-2v2H3V3h2V1Zm2 0h6v6h-2V4.5L6.5 9 5 7.5 9.5 3H7V1Z" />
+                  </svg>
+                </button>
+              </Link>
             </div>
           </div>
         </div>

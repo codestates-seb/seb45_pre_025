@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import Cartegory from './Cartegory';
 
 const Header = () => {
   // 메뉴 클릭이벤트
@@ -16,22 +17,29 @@ const Header = () => {
   };
 
   return (
-    <header className="z-50 bg-white w-full h-14 fixed border-b border-t-[3px] border-t-orange-400 z-1">
+    <header className="z-50 bg-white w-full h-14 fixed border-b border-t-[3px] border-t-orange-400 z-1 px-2">
       <div className="h-full max-w-full w-[80rem] flex items-center justify-center mx-auto my-0">
-        <button
-          className="h-full flex items-center justify-center px-2"
-          onClick={menuIcon}
-        >
-          {isMenuIcon ? (
-            <img
-              src="/images/close.png"
-              alt="메뉴 아이콘"
-              className="h-6 w-6"
-            />
-          ) : (
-            <img src="/images/menu.png" alt="닫기 아이콘" className="h-6 w-6" />
-          )}
-        </button>
+        <div>
+          <button
+            className="h-full flex items-center justify-center px-2"
+            onClick={menuIcon}
+          >
+            {isMenuIcon ? (
+              <img
+                src="/images/close.png"
+                alt="메뉴 아이콘"
+                className="h-6 w-6 my-3.5"
+              />
+            ) : (
+              <img
+                src="/images/menu.png"
+                alt="닫기 아이콘"
+                className="h-6 w-6 my-3.5"
+              />
+            )}
+          </button>
+          {isMenuIcon && <Cartegory />}
+        </div>
         <Link to="/">
           <div className="h-full flex items-center cursor-pointer">
             <svg
@@ -173,9 +181,11 @@ const Header = () => {
             <h1 className="text-sm text-blue-700">Log in</h1>
           </button>
         </Link>
-        <button className="border border-blue-500 bg-blue-500 px-3 py-1 rounded-md ml-1">
-          <h1 className="text-sm text-white">Sign up</h1>
-        </button>
+        <Link to="/signup">
+          <button className="border border-blue-500 bg-blue-500 px-3 py-1 rounded-md ml-1">
+            <h1 className="text-sm text-white">Sign up</h1>
+          </button>
+        </Link>
       </div>
     </header>
   );
