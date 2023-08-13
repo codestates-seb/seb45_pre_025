@@ -6,6 +6,7 @@ import Footer from './components/Footer';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
 import Questions from './pages/Questions';
+import Tags from './pages/Tags';
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
         <Route path="/login" element={<Login />}></Route>
         <Route path="/signup" element={<Signup />}></Route>
         <Route path="/questions" element={<Questions />}></Route>
+        <Route path="/tags" element={<Tags />}></Route>
       </Routes>
       <Footer />
     </div>
