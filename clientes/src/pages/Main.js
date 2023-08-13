@@ -5,7 +5,7 @@ const Main = () => {
     <main className="relative">
       <section>
         <div className="max-w-[1950px] p-12 absolute top-14 w-full border ">
-          <div className="bg-gray-800 rounded-md flex justify-center flex-col p-8 h-full">
+          <div className="bg-gray-700 rounded-md flex justify-center flex-col p-8 h-full">
             {/* 말풍선 박스 */}
             <div className="flex justify-center">
               {/* 왼쪽 배너 */}
@@ -42,7 +42,7 @@ const Main = () => {
                     </Link>
                   </span>
                 </div>
-                <div className="absolute -bottom-6 right-4 w-0 h-0 border-t-[20px] border-t-orange-100 border-r-[20px] border-r-orange-100 border-l-[20px] border-l-gray-800 border-b-[20px] border-b-gray-800 rounded-b-lg" />
+                <div className="absolute -bottom-6 right-4 w-0 h-0 border-t-[20px] border-t-orange-100 border-r-[20px] border-r-orange-100 border-l-[20px] border-l-gray-700 border-b-[20px] border-b-gray-700 rounded-b-lg" />
               </div>
 
               {/* 오른쪽 배너 */}
@@ -68,7 +68,7 @@ const Main = () => {
                     <span className="text-white">Discover Teams</span>
                   </button>
                 </div>
-                <div className="absolute -bottom-6 left-4 w-0 h-0 border-t-[20px] border-t-blue-100 border-r-[20px] border-r-gray-800 border-l-[20px] border-l-blue-100 border-b-[20px] border-b-gray-800 rounded-b-lg" />
+                <div className="absolute -bottom-6 left-4 w-0 h-0 border-t-[20px] border-t-blue-100 border-r-[20px] border-r-gray-700 border-l-[20px] border-l-blue-100 border-b-[20px] border-b-gray-700 rounded-b-lg" />
               </div>
             </div>
             {/* 말풍선 박스 끝 */}

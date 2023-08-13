@@ -1,4 +1,4 @@
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, useLocation } from 'react-router-dom';
 import './index.css';
 import Main from './pages/Main';
 import Header from './components/Header';
@@ -9,6 +9,11 @@ import Questions from './pages/Questions';
 import Tags from './pages/Tags';
 
 function App() {
+  const location = useLocation();
+  const showFooterPaths = ['/', '/questions', '/tags'];
+  // 현재 경로가 showFooterPaths에 속하는지 확인하는 함수
+  const showFooter = () => showFooterPaths.includes(location.pathname);
+
   return (
     <div className="w-full">
       <Header />
@@ -19,7 +24,7 @@ function App() {
         <Route path="/questions" element={<Questions />}></Route>
         <Route path="/tags" element={<Tags />}></Route>
       </Routes>
-      <Footer />
+      {showFooter() && <Footer />}
     </div>
   );
 }

@@ -17,7 +17,7 @@ const Header = () => {
   };
 
   return (
-    <header className="z-50 bg-white w-full h-14 fixed border-b border-t-[3px] border-t-orange-400 z-1 px-2">
+    <header className="z-50 bg-white w-full h-14 fixed border-b border-t-[3px] border-t-orange-400 px-2">
       <div className="h-full max-w-full w-[80rem] flex items-center justify-center mx-auto my-0">
         <div>
           <button
