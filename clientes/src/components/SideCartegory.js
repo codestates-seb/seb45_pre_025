@@ -1,9 +1,9 @@
 import { Link } from 'react-router-dom';
 
-const Cartegory = () => {
+const SideCartegory = () => {
   return (
-    <main className="relative">
-      <div className=" absolute top-0 w-60 h-auto bg-white drop-shadow-lg pt-6 pb-3 -ml-2 overflow-y-auto">
+    <article className="relativ z-0">
+      <div className="sticky w-40 bottom-0 bg-white border overflow-y-auto overflow-x-hidden py-6">
         <Link to="/">
           <div className="pl-2 py-1 hover:text-black hover:font-bold">
             <button>
@@ -67,15 +67,18 @@ const Cartegory = () => {
               >
                 <path d="M9.86.89a1.14 1.14 0 0 0-1.72 0l-.5.58c-.3.35-.79.48-1.23.33l-.72-.25a1.14 1.14 0 0 0-1.49.85l-.14.76c-.1.45-.45.8-.9.9l-.76.14c-.67.14-1.08.83-.85 1.49l.25.72c.15.44.02.92-.33 1.23l-.58.5a1.14 1.14 0 0 0 0 1.72l.58.5c.35.3.48.79.33 1.23l-.25.72c-.23.66.18 1.35.85 1.49l.76.14c.45.1.8.45.9.9l.14.76c.14.67.83 1.08 1.49.85l.72-.25c.44-.15.92-.02 1.23.33l.5.58c.46.52 1.26.52 1.72 0l.5-.58c.3-.35.79-.48 1.23-.33l.72.25c.66.23 1.35-.18 1.49-.85l.14-.76c.1-.45.45-.8.9-.9l.76-.14c.67-.14 1.08-.83.85-1.49l-.25-.72c-.15-.44-.02-.92.33-1.23l.58-.5c.52-.46.52-1.26 0-1.72l-.58-.5c-.35-.3-.48-.79-.33-1.23l.25-.72a1.14 1.14 0 0 0-.85-1.49l-.76-.14c-.45-.1-.8-.45-.9-.9l-.14-.76a1.14 1.14 0 0 0-1.49-.85l-.72.25c-.44.15-.92.02-1.23-.33l-.5-.58Zm-.49 2.67L10.6 6.6c.05.15.19.24.34.25l3.26.22c.36.03.5.48.23.71l-2.5 2.1a.4.4 0 0 0-.14.4l.8 3.16a.4.4 0 0 1-.6.44L9.2 12.13a.4.4 0 0 0-.42 0l-2.77 1.74a.4.4 0 0 1-.6-.44l.8-3.16a.4.4 0 0 0-.13-.4l-2.5-2.1a.4.4 0 0 1 .22-.7l3.26-.23a.4.4 0 0 0 .34-.25l1.22-3.03a.4.4 0 0 1 .74 0Z" />
               </svg>
-              <h1 className="pl-1 text-gray-600">Explore Collectives</h1>
+              <h1 className="pl-1 text-gray-600 ">Explore Collectives</h1>
             </button>
           </div>
         </div>
-        <div className="pl-2 py-1">
-          <h1 className="py-1 text-xs text-gray-600">TEAMS</h1>
-          <div className="flex flex-col items-center px-8">
-            <div className="text-xs pt-3">
-              <h1 className="font-bold">Stack Overflow for Teams –</h1>
+        <div className="pl-2 py-1 text-xs px-2">
+          <h1 className="py-1 text-gray-600 ">TEAMS</h1>
+          <div className="border-b  -mx-6" />
+          <div className="flex flex-col items-center">
+            <div className="text-xs pt-3 pl-2">
+              <h1 className="font-bold">
+                Stack Overflow for <br /> Teams–
+              </h1>
               <h2>Start collaborating and sharing organizational knowledge.</h2>
             </div>
             <svg
@@ -211,7 +214,7 @@ const Cartegory = () => {
                 fill="#fff"
               />
             </svg>
-            <button className="bg-orange-500 rounded-md w-full py-1 drop-shadow cursor-not-allowed">
+            <button className="bg-orange-500 rounded-md w-full py-1 drop-shadow cursor-not-allowed ">
               <h1 className="text-white text-sm">Create a free Team</h1>
             </button>
             <button className="w-full rounded-md py-1 drop-shadow cursor-not-allowed">
@@ -220,8 +223,8 @@ const Cartegory = () => {
           </div>
         </div>
       </div>
-    </main>
+    </article>
   );
 };
 
-export default Cartegory;
+export default SideCartegory;

@@ -1,6 +1,6 @@
 const Footer = () => {
   return (
-    <footer className=" bg-gray-900 absolute -bottom-full px-4 pt-8 pb-4 w-full">
+    <footer className=" bg-gray-900 absolute -bottom-full px-4 pt-8 pb-10 w-full">
       <div className="flex justify-center">
         {/* 로고 */}
         <div className="pr-6">
@@ -27,7 +27,7 @@ const Footer = () => {
             </ul>
           </div>
           <div className="text-gray-200 px-8 text-sm font-bold  w-max">
-            <h1 className="pb-3">Products</h1>
+            <h1 className="pb-3">PRODUCTS</h1>
             <ul className="cursor-not-allowed font-light text-gray-300">
               <li className="mb-1">Teams</li>
               <li className="mb-1">Advertising</li>
@@ -36,7 +36,7 @@ const Footer = () => {
             </ul>
           </div>
           <div className="text-gray-200 px-8 text-sm font-bold  w-max">
-            <h1 className="pb-3">Company</h1>
+            <h1 className="pb-3">COMPANY</h1>
             <ul className="cursor-not-allowed font-light text-gray-300">
               <li className="mb-1">About</li>
               <li className="mb-1">Press</li>
@@ -50,7 +50,7 @@ const Footer = () => {
             </ul>
           </div>
           <div className="text-gray-200 px-8 text-sm font-bold  w-max">
-            <h1 className="pb-3">Stack Exchange Network</h1>
+            <h1 className="pb-3">STACK EXCHANGE NETWORK</h1>
             <ul className="cursor-not-allowed font-light text-gray-300">
               <li className="mb-1">Technology</li>
               <li className="mb-1">Culture & recreation</li>
