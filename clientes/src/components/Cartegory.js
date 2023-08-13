@@ -14,25 +14,29 @@ const Cartegory = () => {
         <div className="pl-2 py-1">
           <h1 className="text-xs pt-3 pb-1 text-gray-600">PUBLIC</h1>
           <div className="flex flex-col items-start ">
-            <button className="flex items-center py-1 text-sm hover:text-black w-full hover:font-bold">
-              <svg
-                aria-hidden="true"
-                className="svg-icon iconGlobe fill-slate-500"
-                width="18"
-                height="18"
-                viewBox="0 0 18 18"
-              >
-                <path d="M9 1C4.64 1 1 4.64 1 9c0 4.36 3.64 8 8 8 4.36 0 8-3.64 8-8 0-4.36-3.64-8-8-8ZM8 15.32a6.46 6.46 0 0 1-4.3-2.74 6.46 6.46 0 0 1-.93-5.01L7 11.68v.8c0 .88.12 1.32 1 1.32v1.52Zm5.72-2c-.2-.66-1-1.32-1.72-1.32h-1v-2c0-.44-.56-1-1-1H6V7h1c.44 0 1-.56 1-1V5h2c.88 0 1.4-.72 1.4-1.6v-.33a6.45 6.45 0 0 1 3.83 4.51 6.45 6.45 0 0 1-1.51 5.73v.01Z" />
-              </svg>
-              <h1 className="pl-1 text-gray-600">Questions</h1>
-            </button>
-            <button className="py-1 text-sm text-left w-full hover:text-black hover:font-bold">
-              <h1 className="pl-6 text-gray-600">Tags</h1>
-            </button>
+            <Link to="/questions">
+              <button className="flex items-center py-1 text-sm hover:text-black w-full hover:font-bold">
+                <svg
+                  aria-hidden="true"
+                  className="svg-icon iconGlobe fill-slate-500"
+                  width="18"
+                  height="18"
+                  viewBox="0 0 18 18"
+                >
+                  <path d="M9 1C4.64 1 1 4.64 1 9c0 4.36 3.64 8 8 8 4.36 0 8-3.64 8-8 0-4.36-3.64-8-8-8ZM8 15.32a6.46 6.46 0 0 1-4.3-2.74 6.46 6.46 0 0 1-.93-5.01L7 11.68v.8c0 .88.12 1.32 1 1.32v1.52Zm5.72-2c-.2-.66-1-1.32-1.72-1.32h-1v-2c0-.44-.56-1-1-1H6V7h1c.44 0 1-.56 1-1V5h2c.88 0 1.4-.72 1.4-1.6v-.33a6.45 6.45 0 0 1 3.83 4.51 6.45 6.45 0 0 1-1.51 5.73v.01Z" />
+                </svg>
+                <h1 className="pl-1 text-gray-600">Questions</h1>
+              </button>
+            </Link>
+            <Link to="/tags">
+              <button className="py-1 text-sm text-left w-full hover:text-black hover:font-bold">
+                <h1 className="pl-6 text-gray-600">Tags</h1>
+              </button>
+            </Link>
             <button className="py-1 text-sm text-left w-full hover:text-black hover:font-bold">
               <h1 className="pl-6 text-gray-600">Users</h1>
             </button>
-            <button className="py-1 text-sm text-left w-full hover:text-black hover:font-bold">
+            <button className="py-1 text-sm text-left w-full hover:text-black hover:font-bold cursor-not-allowed">
               <h1 className="pl-6 text-gray-600">Companies</h1>
             </button>
           </div>
@@ -42,7 +46,7 @@ const Cartegory = () => {
             <h1 className="text-gray-600">COLLECTIVES</h1>
             <svg
               aria-hidden="true"
-              className="svg-icon iconInfoSm mr-2 fill-slate-500"
+              className="svg-icon iconInfoSm mr-2 fill-slate-500 cursor-pointer hover:fill-black"
               width="14"
               height="14"
               viewBox="0 0 14 14"
@@ -51,7 +55,7 @@ const Cartegory = () => {
             </svg>
           </div>
           <div className="flex flex-col items-start">
-            <button className="flex items-center py-1 text-sm text-left w-full hover:text-black hover:font-bold">
+            <button className="flex items-center py-1 text-sm text-left w-full hover:text-black hover:font-bold cursor-not-allowed">
               <svg
                 aria-hidden="true"
                 className="mt-auto fc-orange-400 svg-icon iconStarVerified fill-orange-500"
@@ -205,10 +209,10 @@ const Cartegory = () => {
                 fill="#fff"
               />
             </svg>
-            <button className="bg-orange-500 rounded-md w-full py-1 drop-shadow">
+            <button className="bg-orange-500 rounded-md w-full py-1 drop-shadow cursor-not-allowed">
               <h1 className="text-white text-sm">Create a free Team</h1>
             </button>
-            <button className="w-full rounded-md py-1 drop-shadow">
+            <button className="w-full rounded-md py-1 drop-shadow cursor-not-allowed">
               <h1 className="text-gray-600 text-sm">Why Teams?</h1>
             </button>
           </div>
