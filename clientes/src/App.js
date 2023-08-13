@@ -7,6 +7,7 @@ import Login from './pages/Login';
 import Signup from './pages/Signup';
 import Questions from './pages/Questions';
 import Tags from './pages/Tags';
+import Users from './pages/Users';
 
 function App() {
   const location = useLocation();
@@ -23,6 +24,7 @@ function App() {
         <Route path="/signup" element={<Signup />}></Route>
         <Route path="/questions" element={<Questions />}></Route>
         <Route path="/tags" element={<Tags />}></Route>
+        <Route path="/users" element={<Users />}></Route>
       </Routes>
       {showFooter() && <Footer />}
     </div>
