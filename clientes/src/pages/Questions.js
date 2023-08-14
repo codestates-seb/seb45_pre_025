@@ -1,3 +1,4 @@
+
 import { Link } from 'react-router-dom';
 
 const Questions = () => {
@@ -16,34 +17,37 @@ const Questions = () => {
           <div className="flex justify-between">
             <div>
               <div className="text-xl">1000 Questions</div>
+import SideCartegory from '../components/SideCartegory';
+
+const Questions = () => {
+  return (
+    <main className=" relative top-14 flex justify-between max-w-7xl my-0 mx-auto">
+      <SideCartegory />
+      <div className="flex w-full">
+        <div className="Question list">
+          <div className="tittle-wrapper">
+            <div className="flex">
+              <h1>All Questions</h1>
+              <button className="p-2.5">Ask Question</button>
             </div>
-            <div className="flex space-x-4 mb-2.5 text-sm">
-              <div className="flex border border-slate-300 rounded-md">
-                <button className="">
-                  <span className="p-2.5">Newest</span>
-                </button>
-                <button className="border-l border-r">
-                  <span className="p-2.5">Active</span>
-                </button>
-                <button className="border-r">
-                  <span className="p-2.5">Unanswered</span>
-                </button>
-                <button>
-                  <span className="p-2.5">More</span>
-                </button>
+            <div className="flex">
+              <div>
+                <h2>1000 Questions</h2>
               </div>
-              <div className="">
-                <button className="flex items-center space-x-1 p-1.5 bg-[#E1ECF4] text-[#39739D] rounded-md text-sm">
-                  <img
-                    src="/images/Vector.svg"
-                    alt="열기 아이콘"
-                    className="h-3 w-3"
-                  />
-                  <span className="">Filter</span>
-                </button>
+              <div className="flex">
+                <div>
+                  <button>Newest</button>
+                  <button>Active</button>
+                  <button>Unanswered</button>
+                  <button>More</button>
+                </div>
+                <div>
+                  <button>Filter</button>
+                </div>
               </div>
             </div>
           </div>
+          <div>Each Question</div>
         </div>
         <div className="pl-7 ">
           <div>
@@ -65,8 +69,7 @@ const Questions = () => {
           </div>
         </div>
       </div>
-      <div>sidebar component</div>
-    </div>
+    </main>
   );
 };
 
