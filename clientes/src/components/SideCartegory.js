@@ -4,7 +4,7 @@ const SideCartegory = () => {
   return (
     <article className="relativ z-0">
       <div className="sticky w-40 bottom-0 bg-white border overflow-y-auto overflow-x-hidden py-6">
-        <Link to="/">
+        <Link to="/home">
           <div className="pl-2 py-1 hover:text-black hover:font-bold">
             <button>
               <h1 className="text-sm text-gray-600 ">Home</h1>
@@ -29,12 +29,12 @@ const SideCartegory = () => {
               </button>
             </Link>
             <Link to="/tags">
-              <button className="py-1 text-sm text-left w-full hover:text-black hover:font-bold">
+              <button className="py-1 text-sm text-left w-full hover:text-black hover:font-bold cursor-not-allowed">
                 <h1 className="pl-6 text-gray-600">Tags</h1>
               </button>
             </Link>
             <Link to="/users">
-              <button className="py-1 text-sm text-left w-full hover:text-black hover:font-bold">
+              <button className="py-1 text-sm text-left w-full hover:text-black hover:font-bold cursor-not-allowed">
                 <h1 className="pl-6 text-gray-600">Users</h1>
               </button>
             </Link>

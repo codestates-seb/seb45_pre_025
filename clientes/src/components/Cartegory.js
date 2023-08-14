@@ -29,12 +29,12 @@ const Cartegory = () => {
               </button>
             </Link>
             <Link to="/tags">
-              <button className="py-1 text-sm text-left w-full hover:text-black hover:font-bold">
+              <button className="py-1 text-sm text-left w-full hover:text-black hover:font-bold cursor-not-allowed">
                 <h1 className="pl-6 text-gray-600">Tags</h1>
               </button>
             </Link>
             <Link to="/users">
-              <button className="py-1 text-sm text-left w-full hover:text-black hover:font-bold">
+              <button className="py-1 text-sm text-left w-full hover:text-black hover:font-bold cursor-not-allowed">
                 <h1 className="pl-6 text-gray-600">Users</h1>
               </button>
             </Link>
