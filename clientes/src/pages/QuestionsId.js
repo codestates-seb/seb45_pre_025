@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import Editor from '@toast-ui/editor';
 import '@toast-ui/editor/dist/toastui-editor.css';
 
-const Question = () => {
+const QuestionsId = () => {
   useEffect(() => {
     const editor = new Editor({
       el: document.querySelector('#editor'),
@@ -177,4 +177,4 @@ const Question = () => {
   );
 };
 
-export default Question;
+export default QuestionsId;

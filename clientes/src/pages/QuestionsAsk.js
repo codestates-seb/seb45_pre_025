@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import Editor from '@toast-ui/editor';
 import '@toast-ui/editor/dist/toastui-editor.css';
 
-const Ask = () => {
+const QuestionsAsk = () => {
   useEffect(() => {
     const editor1 = new Editor({
       el: document.querySelector('#editor1'),
@@ -267,4 +267,4 @@ const Ask = () => {
   );
 };
 
-export default Ask;
+export default QuestionsAsk;
