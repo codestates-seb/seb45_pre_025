@@ -131,7 +131,7 @@ const QuestionsAsk = () => {
           </div>
         </div>
         <div className="flex mt-4 ">
-          <div className="border rounded-md p-6 bg-white w-2/3 w-2/3 mr-6">
+          <div className="border rounded-md p-6 bg-white w-2/3 mr-6">
             <div className="font-semibold">
               What are the details of your problem?
               <p className="text-xs font-light">
@@ -176,7 +176,7 @@ const QuestionsAsk = () => {
           </div>
         </div>
         <div className="flex mt-4 ">
-          <div className="border rounded-md p-6 bg-white w-2/3 w-2/3 mr-6">
+          <div className="border rounded-md p-6 bg-white w-2/3 mr-6">
             <div className="font-semibold">
               What did you try and what were you expecting?
               <p className="text-xs font-light">
