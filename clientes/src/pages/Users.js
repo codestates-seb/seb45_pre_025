@@ -4,7 +4,7 @@ const Users = () => {
   return (
     <main className=" relative top-14 flex justify-between max-w-7xl my-0 mx-auto">
       <SideCartegory />
-      <div></div>
+      <div className="flex w-full"></div>
     </main>
   );
 };

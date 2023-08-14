@@ -11,7 +11,7 @@ import Users from './pages/Users';
 
 function App() {
   const location = useLocation();
-  const showFooterPaths = ['/', '/questions', '/tags'];
+  const showFooterPaths = ['/', '/questions', '/tags', '/users'];
   // 현재 경로가 showFooterPaths에 속하는지 확인하는 함수
   const showFooter = () => showFooterPaths.includes(location.pathname);
 

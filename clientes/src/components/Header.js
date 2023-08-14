@@ -1,20 +1,33 @@
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import Cartegory from './Cartegory';
 
 const Header = () => {
-  // 메뉴 클릭이벤트
   const [isMenuIcon, setIsMenuIcon] = useState(false);
-  // 검색창 드롭다운
   const [dropdownSearch, setDropdownSearch] = useState(false);
 
   const menuIcon = () => {
     setIsMenuIcon((prevState) => !prevState);
   };
-
   const veiwDropdown = () => {
     setDropdownSearch((prevState) => !prevState);
   };
+
+  const dropdownRef = useRef(null);
+  useEffect(() => {
+    const closeDropdown = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setDropdownSearch(false);
+        setIsMenuIcon(false);
+      }
+    };
+
+    window.addEventListener('mousedown', closeDropdown);
+
+    return () => {
+      window.removeEventListener('mousedown', closeDropdown);
+    };
+  }, []);
 
   return (
     <header className="z-50 bg-white w-full h-14 fixed border-b border-t-[3px] border-t-orange-400 px-2">
@@ -38,7 +51,11 @@ const Header = () => {
               />
             )}
           </button>
-          {isMenuIcon && <Cartegory />}
+          {isMenuIcon && (
+            <div ref={dropdownRef}>
+              <Cartegory setIsMenuIcon={setIsMenuIcon} />
+            </div>
+          )}
         </div>
         <Link to="/">
           <div className="h-full flex items-center cursor-pointer">
@@ -88,7 +105,10 @@ const Header = () => {
 
           {/* 검색창 클릭시 드롭다운 구현 */}
           {dropdownSearch ? (
-            <div className="bg-white drop-shadow-sm w-full min-w-max border border-zinc-200 rounded-md flex grow absolute top-10">
+            <div
+              ref={dropdownRef}
+              className="bg-white drop-shadow-sm w-full min-w-max border border-zinc-200 rounded-md flex grow absolute top-10"
+            >
               <div className="w-full">
                 <div className="flex w-full p-3">
                   <div className="w-full">
