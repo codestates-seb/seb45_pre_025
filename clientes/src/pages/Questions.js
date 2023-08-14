@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom';
+
 const Questions = () => {
   return (
     <div className="flex justify-center p-20 mb-1.5 ">
@@ -5,9 +7,11 @@ const Questions = () => {
         <div className="pl-7">
           <div className="flex justify-between pb-6">
             <h1 className="text-3xl">All Questions</h1>
-            <button className="p-2 bg-[#0A95FF] text-white rounded-md text-sm cursor-pointer">
-              Ask Question
-            </button>
+            <Link to="/questions/ask">
+              <button className="p-2 bg-[#0A95FF] text-white rounded-md text-sm cursor-pointer">
+                Ask Question
+              </button>
+            </Link>
           </div>
           <div className="flex justify-between">
             <div>
@@ -49,8 +53,10 @@ const Questions = () => {
           </div>
           <div>
             <div>
-              <div>질문제목.......</div>
-              <div>질문내용 일부.....</div>
+              {/* <div>질문제목.......link to Question</div> */}
+              <Link to="/questions/id">
+                <div>질문내용 일부.....</div>
+              </Link>
             </div>
             <div>
               <div>작성자</div>
