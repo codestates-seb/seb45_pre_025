@@ -2,8 +2,9 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/project_local.iml" filepath="$PROJECT_DIR$/.idea/project_local.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/stackOverFlow.main.iml" filepath="$PROJECT_DIR$/.idea/modules/stackOverFlow.main.iml" />
+
+      <module fileurl="file://$PROJECT_DIR$/.idea/seb45_pre_025.iml" filepath="$PROJECT_DIR$/.idea/seb45_pre_025.iml" />
+
     </modules>
   </component>
 </project>
