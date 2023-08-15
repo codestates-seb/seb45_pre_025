@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import SideCartegory from '../components/SideCartegory';
+import Sidebar from '../components/Sidebar';
 
 const Questions = () => {
   return (
@@ -90,7 +91,9 @@ const Questions = () => {
             </div>
           </div>
         </div>
-        <div className="">sidebar component</div>
+        <div className="flex py-4 w-[36%]">
+          <Sidebar />
+        </div>
       </div>
     </main>
   );
