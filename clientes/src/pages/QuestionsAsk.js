@@ -91,26 +91,6 @@ const QuestionsAsk = () => {
           </div>
           <div className="flex flex-col xl:flex-row xl:mx-auto xl:relative">
             <div className="border rounded-md p-6 mb-4 bg-white w-[95%] xl:w-[68%]">
-        </div>
-        <div className="flex mt-4 ">
-          <div className="border rounded-md p-6 bg-white w-2/3 mr-6">
-            <div className="font-semibold">
-              What are the details of your problem?
-              <p className="text-xs font-light">
-                Introduce the problem and expand on what you put in the title.
-                Minimum 20 characters.
-              </p>
-            </div>
-            <div id="editor1"></div>
-            <button className="flex p-2 bg-[#0A95FF] text-white rounded-md text-sm cursor-pointer">
-              Next
-            </button>
-          </div>
-          <div className="border rounded-md bg-white shadow-md w-1/4">
-            <div className="p-3 border-b border-slate-200 bg-[#F8F9F9]">
-              Expand on the problem
-            </div>
-            <div className="flex m-4">
               <div>
                 <div className="font-semibold">Title</div>
                 <div className="text-xs font-light">
@@ -151,16 +131,6 @@ const QuestionsAsk = () => {
                   </p>
                 </div>
               </div>
-          </div>
-        </div>
-        <div className="flex mt-4 ">
-          <div className="border rounded-md p-6 bg-white w-2/3 mr-6">
-            <div className="font-semibold">
-              What did you try and what were you expecting?
-              <p className="text-xs font-light">
-                Describe what you tried, what you expected to happen, and what
-                actually resulted. Minimum 20 characters.
-              </p>
             </div>
           </div>
           <div className=" mt-4 flex flex-col xl:flex-row xl:mx-auto xl:relative">
