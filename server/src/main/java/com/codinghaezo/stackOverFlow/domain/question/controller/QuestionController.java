@@ -1,13 +1,14 @@
 package com.codinghaezo.stackOverFlow.domain.question.controller;
 
-import com.codinghaezo.stackOverFlow.domain.question.dto.QuestionPostDto;
-import com.codinghaezo.stackOverFlow.domain.question.dto.QuestionResponseDto;
+import com.codinghaezo.stackOverFlow.Utils.UriCreator;
+import com.codinghaezo.stackOverFlow.domain.question.dto.PaginatedResponseDto;
+import com.codinghaezo.stackOverFlow.domain.question.dto.QuestionDto.*;
 import com.codinghaezo.stackOverFlow.domain.question.entity.Question;
 import com.codinghaezo.stackOverFlow.domain.question.mapper.QuestionMapper;
 import com.codinghaezo.stackOverFlow.domain.question.service.QuestionService;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
 
@@ -24,21 +25,47 @@ public class QuestionController {
         this.questionMapper = questionMapper;
     }
 
-    @PostMapping("/ask")
-    public ResponseEntity<?> postQuestion(@RequestBody QuestionPostDto postDto) {
+    @PostMapping
+    public ResponseEntity<?> postQuestion(@RequestBody Post postDto) {
         Question mappedQuestion = questionMapper.postDtoToQuestion(postDto);
         Question savedQuestion = questionService.createQuestion(mappedQuestion);
-        URI location = UriComponentsBuilder.newInstance()
-            .path("/questions/{question-id}")
-            .buildAndExpand(savedQuestion.getId())
-            .toUri();
+        URI location = UriCreator.createUri("/questions", savedQuestion.getId());
         return ResponseEntity.created(location).build();
     }
 
     @GetMapping("/{question-id}")
-    public ResponseEntity<QuestionResponseDto> getQuestion(@PathVariable("question-id") long questionId) {
+    public ResponseEntity<Response> getQuestion(@PathVariable("question-id") long questionId) {
         Question foundQuestion = questionService.findQuestion(questionId);
-        // response  dto로 매핑한다음 바디로 넣어서 리턴
-        return ResponseEntity.ok().build();
+        Response responseDto = questionMapper.questionToResponseDto(foundQuestion);
+        return ResponseEntity.ok(responseDto);
+    }
+
+    @GetMapping
+    public ResponseEntity<PaginatedResponseDto<Response>> getPaginatedQuestions(
+        @RequestParam int page,
+        @RequestParam int size
+    ) {
+        Page<Question> foundQuestions = questionService.findQuestions(page - 1, size);
+        PaginatedResponseDto<Response> paginatedResponseDto =
+            questionMapper.questionsToPaginatedResponseDto(foundQuestions);
+        return ResponseEntity.ok(paginatedResponseDto);
+    }
+
+    @PatchMapping("/{question-id}")
+    public ResponseEntity<Response> patchQuestion(
+        @PathVariable("question-id") long questionId,
+        @RequestBody Patch patchDto
+    ) {
+        Question question = questionMapper.patchDtoToQuestion(patchDto);
+        question.setId(questionId);
+        Question updatedQuestion = questionService.updateQuestion(question);
+        Response responseDto = questionMapper.questionToResponseDto(updatedQuestion);
+        return ResponseEntity.ok(responseDto);
+    }
+
+    @DeleteMapping("/{question-id}")
+    public ResponseEntity<?> deleteQuestion(@PathVariable("question-id") long questionId) {
+        questionService.deleteQuestion(questionId);
+        return ResponseEntity.noContent().build();
     }
 }
