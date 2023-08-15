@@ -1,33 +1,51 @@
 import { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
-import Cartegory from './Cartegory';
+import Category from './Category';
 
 const Header = () => {
-  const [isMenuIcon, setIsMenuIcon] = useState(false);
-  const [dropdownSearch, setDropdownSearch] = useState(false);
+  const [isMenuDropdown, setIsMenuDropdown] = useState(false);
+  const [isSearchDropdown, setIsSearchDropdown] = useState(false);
 
-  const menuIcon = () => {
-    setIsMenuIcon((prevState) => !prevState);
+  const menuDropdown = () => {
+    setIsMenuDropdown((prevState) => !prevState);
   };
-  const veiwDropdown = () => {
-    setDropdownSearch((prevState) => !prevState);
+  const inputDropdown = () => {
+    setIsSearchDropdown((prevState) => !prevState);
   };
 
-  const dropdownRef = useRef(null);
+  const menuRef = useRef(null);
+  const inputRef = useRef(null);
+
   useEffect(() => {
-    const closeDropdown = (event) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-        setDropdownSearch(false);
-        setIsMenuIcon(false);
+    const closeMenuDropdown = (e) => {
+      if (menuRef.current !== null && !menuRef.current.contains(e.target)) {
+        setIsMenuDropdown(false);
       }
     };
 
-    window.addEventListener('mousedown', closeDropdown);
+    if (isMenuDropdown) {
+      window.addEventListener('mousedown', closeMenuDropdown);
+    }
+    return () => {
+      window.removeEventListener('mousedown', closeMenuDropdown);
+    };
+  }, [isMenuDropdown]);
+
+  useEffect(() => {
+    const closeSearchDropdown = (e) => {
+      if (inputRef.current !== null && !inputRef.current.contains(e.target)) {
+        setIsSearchDropdown(false);
+      }
+    };
+
+    if (isSearchDropdown) {
+      window.addEventListener('mousedown', closeSearchDropdown);
+    }
 
     return () => {
-      window.removeEventListener('mousedown', closeDropdown);
+      window.removeEventListener('mousedown', closeSearchDropdown);
     };
-  }, []);
+  }, [isSearchDropdown]);
 
   return (
     <header className="z-50 bg-white w-full h-14 fixed border-b border-t-[3px] border-t-orange-400 px-2">
@@ -35,27 +53,16 @@ const Header = () => {
         <div>
           <button
             className="h-full flex items-center justify-center px-2"
-            onClick={menuIcon}
+            onClick={menuDropdown}
+            ref={menuRef}
           >
-            {isMenuIcon ? (
-              <img
-                src="/images/close.png"
-                alt="메뉴 아이콘"
-                className="h-6 w-6 my-3.5"
-              />
-            ) : (
-              <img
-                src="/images/menu.png"
-                alt="닫기 아이콘"
-                className="h-6 w-6 my-3.5"
-              />
-            )}
+            <img
+              src={isMenuDropdown ? '/images/close.png' : '/images/menu.png'}
+              alt={isMenuDropdown ? '메뉴 아이콘' : '닫기 아이콘'}
+              className="h-6 w-6 my-3.5"
+            />
           </button>
-          {isMenuIcon && (
-            <div ref={dropdownRef}>
-              <Cartegory setIsMenuIcon={setIsMenuIcon} />
-            </div>
-          )}
+          {isMenuDropdown && <Category setIsMenuDropdown={setIsMenuDropdown} />}
         </div>
         <Link to="/">
           <div className="h-full flex items-center cursor-pointer">
@@ -95,7 +102,8 @@ const Header = () => {
           <input
             placeholder="Search..."
             className="border border-zinc-200 py-1 pl-10 rounded-md flex grow text-sm"
-            onClick={veiwDropdown}
+            onClick={inputDropdown}
+            ref={inputRef}
           />
           <img
             className="absolute left-3 color-[#525960]"
@@ -104,11 +112,8 @@ const Header = () => {
           />
 
           {/* 검색창 클릭시 드롭다운 구현 */}
-          {dropdownSearch ? (
-            <div
-              ref={dropdownRef}
-              className="bg-white drop-shadow-sm w-full min-w-max border border-zinc-200 rounded-md flex grow absolute top-10"
-            >
+          {isSearchDropdown && (
+            <div className="bg-white drop-shadow-sm w-full min-w-max border border-zinc-200 rounded-md flex grow absolute top-10">
               <div className="w-full">
                 <div className="flex w-full p-3">
                   <div className="w-full">
@@ -192,8 +197,6 @@ const Header = () => {
                 </div>
               </div>
             </div>
-          ) : (
-            ''
           )}
         </div>
         <Link to="/login">
