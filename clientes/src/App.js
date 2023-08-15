@@ -6,8 +6,8 @@ import Footer from './components/Footer';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
 import Questions from './pages/Questions';
-import Ask from './pages/Ask';
-import Question from './pages/Question';
+import QuestionsAsk from './pages/QuestionsAsk';
+import QuestionsId from './pages/QuestionsId';
 import Tags from './pages/Tags';
 import Users from './pages/Users';
 
@@ -25,8 +25,8 @@ function App() {
         <Route path="/login" element={<Login />}></Route>
         <Route path="/signup" element={<Signup />}></Route>
         <Route path="/questions" element={<Questions />}></Route>
-        <Route path="/questions/ask" element={<Ask />}></Route>
-        <Route path="/questions/id" element={<Question />}></Route>
+        <Route path="/questions/ask" element={<QuestionsAsk />}></Route>
+        <Route path="/questions/id" element={<QuestionsId />}></Route>
         <Route path="/tags" element={<Tags />}></Route>
         <Route path="/users" element={<Users />}></Route>
       </Routes>
