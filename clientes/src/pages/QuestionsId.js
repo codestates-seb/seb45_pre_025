@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Editor from '@toast-ui/editor';
 import '@toast-ui/editor/dist/toastui-editor.css';
+import Sidebar from '../components/Sidebar';
 
 const QuestionsId = () => {
   useEffect(() => {
@@ -170,7 +171,9 @@ const QuestionsId = () => {
               </div>
             </div>
           </div>
-          <div className="flex py-4 w-1/5">sidebar</div>
+          <div className="flex py-4 w-1/5">
+            <Sidebar />
+          </div>
         </div>
       </div>
     </div>
