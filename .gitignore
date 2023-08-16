@@ -8,3 +8,5 @@
 /dataSources.local.xml
 .idea/
 server/.idea/
+server/.gradle/
+server/build/
