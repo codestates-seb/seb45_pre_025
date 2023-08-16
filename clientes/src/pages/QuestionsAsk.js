@@ -13,7 +13,6 @@ const QuestionsAsk = () => {
   let editor1 = undefined;
   let editor2 = undefined;
   useEffect(() => {
-
     editor1 = new Editor({
       el: document.querySelector('#editor1'),
       height: 'auto',
