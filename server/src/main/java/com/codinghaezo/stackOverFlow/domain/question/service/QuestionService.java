@@ -40,13 +40,9 @@ public class QuestionService {
         if (title != null) {
             foundQuestion.setTitle(title);
         }
-        String bodyProblem = question.getBodyProblem();
+        String bodyProblem = question.getBody();
         if (bodyProblem != null) {
-            foundQuestion.setBodyProblem(bodyProblem);
-        }
-        String bodyExpecting = question.getBodyExpecting();
-        if (bodyExpecting != null) {
-            foundQuestion.setBodyExpecting(bodyExpecting);
+            foundQuestion.setBody(bodyProblem);
         }
         return questionRepository.save(foundQuestion);
     }

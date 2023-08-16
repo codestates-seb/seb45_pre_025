@@ -14,9 +14,7 @@ public class QuestionDto {
 
         private String title;
 
-        private String bodyProblem;
-
-        private String bodyExpecting;
+        private String body;
     }
 
     @Getter
@@ -24,9 +22,7 @@ public class QuestionDto {
 
         private String title;
 
-        private String bodyProblem;
-
-        private String bodyExpecting;
+        private String body;
     }
 
     @Getter
@@ -37,12 +33,12 @@ public class QuestionDto {
 
         private String title;
 
-        private String bodyProblem;
-
-        private String bodyExpecting;
+        private String body;
 
         private long authorId;
 
         private LocalDateTime createdAt;
+
+        private LocalDateTime modifiedAt;
     }
 }

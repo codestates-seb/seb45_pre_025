@@ -19,10 +19,7 @@ public class Question extends Auditable {
     private String title;
 
     @Column(nullable = false)
-    private String bodyProblem;
-
-    @Column(nullable = false)
-    private String bodyExpecting;
+    private String body;
 
     /* 질문 작성자를 참조하는 필드 필요 */
 }

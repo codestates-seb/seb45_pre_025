@@ -26,7 +26,7 @@ public class QuestionController {
     }
 
     @PostMapping
-    public ResponseEntity<?> postQuestion(@RequestBody Post postDto) {
+    public ResponseEntity<?> postQuestion(@RequestBody Post postDto) throws Exception {
         Question mappedQuestion = questionMapper.postDtoToQuestion(postDto);
         Question savedQuestion = questionService.createQuestion(mappedQuestion);
         URI location = UriCreator.createUri("/questions", savedQuestion.getId());
