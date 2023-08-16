@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+//import axios from 'axios';
 import { Link } from 'react-router-dom';
 import Editor from '@toast-ui/editor';
 import '@toast-ui/editor/dist/toastui-editor.css';
@@ -6,6 +7,30 @@ import Sidebar from '../components/Sidebar';
 import SideCartegory from '../components/SideCartegory';
 
 const QuestionsId = () => {
+  //const [editorContent, setEditorContent] = useState('');
+  let questionContent = '## 저,, 취업할 수 있을까요?\n`let say = "hello"`';
+  let answerContent = `그러게 공부 좀 하지 그랬니,,,,`;
+  useEffect(() => {
+    const question = Editor.factory({
+      el: document.querySelector('#question'),
+      initialValue: questionContent,
+      height: 'auto',
+      viewer: true,
+    });
+
+    const answer = Editor.factory({
+      el: document.querySelector('#answer'),
+      initialValue: answerContent,
+      height: 'auto',
+      viewer: true,
+    });
+
+    return () => {
+      question.destroy();
+      answer.destroy();
+    };
+  }, [questionContent, answerContent]);
+
   useEffect(() => {
     const editor = new Editor({
       el: document.querySelector('#editor'),
@@ -28,7 +53,8 @@ const QuestionsId = () => {
         <div className="">
           <div className="flex justify-between">
             <div className="mb-2 text-2xl">
-              how do you insert data frame to ms sql table faster
+              {/* question title below */}
+              미리 감사합니다
             </div>
             <Link to="/questions/ask">
               <button className="p-2 bg-[#0A95FF] text-white rounded-md text-sm cursor-pointer">
@@ -44,7 +70,7 @@ const QuestionsId = () => {
         </div>
         <div className="flex justify-between ">
           <div className="w-3/4">
-            <div className="flex grow py-4 h-1/3  min-h-min ">
+            <div className="flex grow py-4 min-h-[12%]">
               <div className="flex flex-col items-center pr-4 w-14">
                 <button className="p-3 mb-2 border rounded-full">
                   <img
@@ -70,22 +96,18 @@ const QuestionsId = () => {
                 </button>
               </div>
               <div className="pr-4 w-full">
-                <div className="grow pb-6">
-                  질문뭉치 I am packaging my angular application using electron
-                  packager. However, when opening the packaged application then
-                  the assets referenced from my custom created .scss files does
-                  not load correctly whilst my other assets (referenced directly
-                  from the libraries assets folder) loads correctly. The angular
-                  project contains applications and libraries. It has the
-                  following structure RootProjects Desktop Web Library-1
-                  Library-1 Library-2 Library 1 has a fonts.scss file which
-                  REFERENCES the fonts: fonts are in library-1/src/assets/fonts
+                <div className="pb-2">
+                  {/* question viewer below */}
+                  <div
+                    id="question"
+                    className="my-4 border rounded-md p-3 bg-white"
+                  ></div>
                 </div>
-                <ul className="relative">
+                {/* <ul className="relative">
                   <li className="inline-block space-x-1 p-1.5 bg-[#E1ECF4] text-[#39739D] rounded-md text-xs">
                     tag
                   </li>
-                </ul>
+                </ul> */}
                 <div className="flex justify-end">
                   <div className="my-4 p-1.5 bg-[#E1ECF4] rounded-md text-xs">
                     <div className="text-[#6A737C]">asked when</div>
@@ -138,12 +160,18 @@ const QuestionsId = () => {
                   </button>
                 </div>
                 <div className="pr-4 w-full">
-                  <div className="pb-6 grow">답변뭉치</div>
-                  <ul className="relative">
+                  <div className="pb-6 grow">
+                    {/* answer viewer below */}
+                    <div
+                      id="answer"
+                      className="my-4 border rounded-md p-3 bg-white"
+                    ></div>
+                  </div>
+                  {/* <ul className="relative">
                     <li className="inline-block space-x-1 p-1.5 bg-[#E1ECF4] text-[#39739D] rounded-md text-xs">
                       tag
                     </li>
-                  </ul>
+                  </ul> */}
                   <div className="flex justify-end">
                     <div className="  my-4 p-1.5 text-[#39739D] text-xs">
                       <div className="text-[#6A737C]">answered when</div>
@@ -168,7 +196,7 @@ const QuestionsId = () => {
               <div>
                 <h2 className="pt-5 mb-5 text-2xl">Your Answer</h2>
                 <div id="editor" className="pb-5"></div>
-                <button className="flex p-2 bg-[#0A95FF] text-white rounded-md text-sm cursor-pointer">
+                <button className="flex p-2 bg-[#0A95FF] text-white rounded-md text-sm cursor-pointer hover:bg-[#0A95FF]/50">
                   Post Your Answer
                 </button>
               </div>
