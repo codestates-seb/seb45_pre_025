@@ -18,6 +18,7 @@ public class MemberDto {
         @Email
         private String email;
 
+        private String password;
     }
     @Getter
     @AllArgsConstructor
@@ -25,7 +26,7 @@ public class MemberDto {
     @Setter
     public static class MemberPatchDto{
         private long memberId;
-
+        private String password;
     }
 
     @Getter
@@ -36,5 +37,12 @@ public class MemberDto {
 
         private String email;
 
+        private String password;
+
+    }
+    @AllArgsConstructor
+    @Getter
+    public static class SingleResponseDto<T>{
+        private T data;
     }
 }
