@@ -120,7 +120,7 @@ const QuestionsAsk = () => {
                   <img
                     src="/images/write.png"
                     alt="write"
-                    className="h-12 w-12"
+                    className="xl:min-w-[34px]"
                   />
                 </div>
                 <div className="text-xs mx-2">
@@ -156,7 +156,7 @@ const QuestionsAsk = () => {
                   <img
                     src="/images/write.png"
                     alt="write"
-                    className="h-12 w-12"
+                    className="xl:min-w-[34px]"
                   />
                 </div>
                 <div className="text-xs mx-2">
@@ -201,7 +201,7 @@ const QuestionsAsk = () => {
                   <img
                     src="/images/write.png"
                     alt="write"
-                    className="h-12 w-12"
+                    className="xl:min-w-[34px]"
                   />
                 </div>
                 <div className="text-xs mx-2">
@@ -248,7 +248,7 @@ const QuestionsAsk = () => {
                   <img
                     src="/images/write.png"
                     alt="write"
-                    className="h-12 w-12"
+                    className="xl:min-w-[34px]"
                   />
                 </div>
                 <div className="text-xs mx-2">
