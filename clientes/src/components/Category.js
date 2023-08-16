@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
-const Category = ({ setIsMenuDropdown }) => {
+const Category = ({ setIsMenuDropdown, hideMenu }) => {
   const hideCategory = () => {
     setIsMenuDropdown(false);
   };
@@ -11,9 +11,13 @@ const Category = ({ setIsMenuDropdown }) => {
     setIsMenuDropdown: PropTypes.func.isRequired,
   };
 
+  Category.propTypes = {
+    hideMenu: PropTypes.func.isRequired,
+  };
+
   return (
     <main className="relative">
-      <div className=" absolute top-0 w-60 h-auto bg-white drop-shadow-lg pt-6 pb-3 -ml-2 overflow-y-auto">
+      <div className=" absolute top-14 w-60 h-auto bg-white drop-shadow-lg pt-6 pb-3 -ml-2 overflow-y-auto">
         <Link to="/">
           <button
             onClick={hideCategory}
@@ -25,7 +29,7 @@ const Category = ({ setIsMenuDropdown }) => {
         <div className="pl-2 py-1">
           <h1 className="text-xs pt-3 pb-1 text-gray-600">PUBLIC</h1>
           <div className="flex flex-col items-start ">
-            <Link to="/questions">
+            <Link to="/questions" onClick={hideMenu}>
               <button
                 onClick={hideCategory}
                 className="flex items-center py-1 text-sm hover:text-black w-full hover:font-bold"
