@@ -83,7 +83,7 @@ const Login = () => {
               />
             </div>
             <div className="w-full">
-              <button className="w-full bg-blue-500 rounded-md my-4 py-2">
+              <button className="w-full bg-blue-500 hover:bg-blue-600 rounded-md my-4 py-2">
                 <h1 className="text-white">Log in</h1>
               </button>
             </div>
@@ -92,17 +92,19 @@ const Login = () => {
             <div className=" flex w-ful justify-center">
               <h1 className="mr-1.5">Don&rsquo;t have an account?</h1>
               <Link to="/signup">
-                <button className="text-blue-500">Sign up</button>
+                <button className="text-blue-500 hover:text-blue-300">
+                  Sign up
+                </button>
               </Link>
             </div>
             <div className="flex justify-center w-ful mt-3">
               <h1>Are you an employer?</h1>
               <Link to="https://talent.stackoverflow.com/users/login">
-                <button className="text-blue-500 flex items-center w-ful">
+                <button className="text-blue-500 hover:text-blue-300 fill-blue-500 hover:fill-blue-300 flex items-center w-ful">
                   <h1 className="mx-1.5">Sign up on Talent</h1>
                   <svg
                     aria-hidden="true"
-                    className="va-text-bottom sm:d-none svg-icon iconShareSm w-3.5 h-3.5 fill-blue-500"
+                    className="va-text-bottom sm:d-none svg-icon iconShareSm w-3.5 h-3.5 "
                     viewBox="0 0 14 14"
                   >
                     <path d="M5 1H3a2 2 0 0 0-2 2v8c0 1.1.9 2 2 2h8a2 2 0 0 0 2-2V9h-2v2H3V3h2V1Zm2 0h6v6h-2V4.5L6.5 9 5 7.5 9.5 3H7V1Z" />

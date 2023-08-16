@@ -2,6 +2,8 @@ import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Editor from '@toast-ui/editor';
 import '@toast-ui/editor/dist/toastui-editor.css';
+import Sidebar from '../components/Sidebar';
+import SideCartegory from '../components/SideCartegory';
 
 const QuestionsId = () => {
   useEffect(() => {
@@ -18,9 +20,11 @@ const QuestionsId = () => {
   }, []);
 
   return (
-    <div className="flex justify-center py-20 w-full">
-      <div className="py-4">category</div>
-      <div className="flex flex-col justify-center px-10 mb-1.5 divide-y divide-slate-200 w-4/6 ">
+    <div className="flex justify-center py-[2%] w-full">
+      <div className="py-4">
+        <SideCartegory />
+      </div>
+      <div className="flex flex-col justify-center pt-14 pl-6 mb-1.5 divide-y divide-slate-200 w-4/6 ">
         <div className="">
           <div className="flex justify-between">
             <div className="mb-2 text-2xl">
@@ -170,7 +174,9 @@ const QuestionsId = () => {
               </div>
             </div>
           </div>
-          <div className="flex py-4 w-1/5">sidebar</div>
+          <div className="flex py-4 pl-4 w-[30%]">
+            <Sidebar />
+          </div>
         </div>
       </div>
     </div>
