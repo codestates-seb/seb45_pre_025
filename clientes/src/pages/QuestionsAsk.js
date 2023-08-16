@@ -1,16 +1,40 @@
-import { useEffect } from 'react';
+import { useState, useEffect } from 'react';
+//import axios from 'axios';
 import Editor from '@toast-ui/editor';
 import '@toast-ui/editor/dist/toastui-editor.css';
 
 const QuestionsAsk = () => {
+  const [editorContent1, setEditorContent1] = useState('');
+  const [editorContent2, setEditorContent2] = useState('');
+  const [title, setTitle] = useState('');
+  //const [step, setStep] = useState(1);
+  const [displayedMergedContent, setDisplayedMergedContent] = useState('');
+
   let editor1 = undefined;
   let editor2 = undefined;
   useEffect(() => {
+
     editor1 = new Editor({
       el: document.querySelector('#editor1'),
       height: 'auto',
       initialEditType: 'markdown',
       previewStyle: 'tab',
+      autofocus: true,
+      events: {
+        change: () => {
+          setEditorContent1(editor1.getMarkdown());
+        },
+        blur: () => {
+          const content = editor1.getMarkdown();
+          if (content.length < 20) {
+            console.log('Editor 1: Content must be at least 20 characters.');
+          }
+        },
+        focus: () => {
+          //console.log('Editor 1 focused');
+          //editor1.focus();
+        },
+      },
     });
 
     editor2 = new Editor({
@@ -18,6 +42,18 @@ const QuestionsAsk = () => {
       height: 'auto',
       initialEditType: 'markdown',
       previewStyle: 'tab',
+      events: {
+        change: () => {
+          setEditorContent2(editor2.getMarkdown());
+        },
+        blur: () => {
+          //editor1.blur();
+        },
+        focus: () => {
+          //console.log('Editor 2 focused');
+          // editor2.focus();
+        },
+      },
       //placeholder: ['Write your question here'],
     });
 
@@ -26,7 +62,55 @@ const QuestionsAsk = () => {
       editor2.destroy();
     };
   }, []);
-  //lg:container lg:flex-col lg:mx-auto
+
+  // const handleEditor1Next = () => {
+  //   const content = editor1.getMarkdown();
+  //   setEditorContent1(content);
+  //   setStep(step + 1);
+  //   // Move to the next step or perform other actions
+  // };
+
+  // const handleEditor2Next = () => {
+  //   const content = editor2.getMarkdown();
+  //   setEditorContent2(content);
+  //   //setStep(step + 1);
+  //   // Move to the next step or perform other actions
+  // };
+
+  const handleSubmit = () => {
+    const mergedContent = `${editorContent1}\n\n${editorContent2}`;
+    console.log(mergedContent);
+    console.log(title);
+    setDisplayedMergedContent(mergedContent);
+
+    // const dataToSend = {
+    //   title: title,
+    //   content: mergedContent,
+    // };
+
+    // axios
+    //   .post('/your-server-endpoint', dataToSend)
+    //   .then((response) => {
+    //     // Handle server response if needed
+    //   })
+    //   .catch((error) => {
+    //     // Handle error if needed
+    //   });
+  };
+  useEffect(() => {
+    const viewer = new Editor({
+      el: document.querySelector('#viewer'),
+      initialValue: displayedMergedContent,
+      initialEditType: 'markdown',
+      previewStyle: 'tab',
+      usageStatistics: false, // Optional: Disable usage statistics tracking
+    });
+
+    return () => {
+      viewer.destroy();
+    };
+  }, [displayedMergedContent]);
+
   return (
     <div className="bg-[#F8F9F9] min-h-screen">
       <div className="flex justify-center xl:justify-center pt-20 h-min">
@@ -105,6 +189,7 @@ const QuestionsAsk = () => {
                   className="w-full border rounded-md focus:outline-none focus:border-sky-50 focus:ring-4 pl-2"
                   data-min-length="15"
                   data-max-length="150"
+                  onChange={(event) => setTitle(event.target.value)}
                 />
               </div>
               <button className="flex p-2 mt-6 bg-[#0A95FF] text-white rounded-md text-sm cursor-pointer">
@@ -265,10 +350,21 @@ const QuestionsAsk = () => {
               </div>
             </div>
           </div>
-          <div>
-            <button className="flex p-2 rounded-md my-4 text-red-700 hover:bg-red-700/10">
+          <div className="flex">
+            <button
+              className="flex p-2 rounded-md my-4 bg-[#0A95FF] text-white hover:bg-[#0A95FF]/50  focus:ring focus:ring-black focus:outline-none"
+              onClick={handleSubmit}
+            >
+              Post your question
+            </button>
+            <button className="flex p-2 ml-[1%] rounded-md my-4 text-red-700 hover:bg-red-700/10">
               Discard draft
             </button>
+            <div>{displayedMergedContent}</div>
+            <div
+              id="viewer"
+              className="my-4 border rounded-md p-3 bg-white"
+            ></div>
           </div>
         </div>
       </div>
