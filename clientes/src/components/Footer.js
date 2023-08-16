@@ -1,7 +1,7 @@
 const Footer = () => {
   return (
-    <footer className=" bg-gray-900 absolute -bottom-full px-4 pt-8 pb-10 w-full">
-      <div className="flex justify-center">
+    <footer className="relative bottom-0 w-full h-auto mt-20">
+      <div className="flex justify-center bg-gray-900 absolute w-full px-4 pt-8 pb-10">
         {/* 로고 */}
         <div className="pr-6">
           <svg

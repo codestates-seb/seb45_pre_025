@@ -2,6 +2,7 @@ import { Routes, Route, useLocation } from 'react-router-dom';
 import './index.css';
 import Main from './pages/Main';
 import Header from './components/Header';
+// import HeaderOn from './components/HeaderOn';
 import Footer from './components/Footer';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
@@ -12,12 +13,19 @@ import Home from './pages/Home';
 
 function App() {
   const location = useLocation();
-  const showFooterPaths = ['/', '/questions', '/home'];
+  const showFooterPaths = [
+    '/',
+    '/questions',
+    '/home',
+    '/questions/ask',
+    '/questions/id',
+  ];
   // 현재 경로가 showFooterPaths에 속하는지 확인하는 함수
   const showFooter = () => showFooterPaths.includes(location.pathname);
 
   return (
     <div className="w-full">
+      {/* <Header /> */}
       <Header />
       <Routes>
         <Route path="/" element={<Main />}></Route>
