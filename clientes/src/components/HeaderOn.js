@@ -52,7 +52,7 @@ const HeaderOn = () => {
     <header className="z-50 bg-white w-full h-14 fixed border-b border-t-[3px] border-t-orange-400 px-2">
       <div className="h-full max-w-full w-[80rem] flex items-center justify-center mx-auto my-0">
         <Link to="/">
-          <div className="h-full flex items-center cursor-pointer">
+          <div className="flex items-center cursor-pointer ">
             <svg
               aria-hidden="true"
               className="native svg-icon iconLogoMd px-2"
@@ -241,6 +241,11 @@ const HeaderOn = () => {
             >
               <path d="M15 1H3a2 2 0 0 0-2 2v2h16V3a2 2 0 0 0-2-2ZM1 13c0 1.1.9 2 2 2h8v3l3-3h1a2 2 0 0 0 2-2v-2H1v2Zm16-7H1v4h16V6Z" />
             </svg>
+          </button>
+
+          {/* 로그아웃 버튼 */}
+          <button className="bg-blue-500 hover:bg-blue-600 rounded-md px-3 py-1 ml-1">
+            <span className="text-sm text-white">Log out</span>
           </button>
         </div>
       </div>

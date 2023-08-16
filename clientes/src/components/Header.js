@@ -231,14 +231,14 @@ const Header = () => {
 
         {/* 로그인 버튼 */}
         <Link to="/login">
-          <button className="border border-blue-100 bg-blue-100 px-3 py-1 rounded-md">
+          <button className="border border-blue-100 bg-blue-100 hover:bg-blue-200 px-3 py-1 rounded-md">
             <h1 className="text-sm text-blue-700">Log in</h1>
           </button>
         </Link>
 
         {/* 회원가입 버튼 */}
         <Link to="/signup">
-          <button className="border border-blue-500 bg-blue-500 px-3 py-1 rounded-md ml-1">
+          <button className="border border-blue-500 bg-blue-500 hover:bg-blue-600 px-3 py-1 rounded-md ml-1">
             <h1 className="text-sm text-white">Sign up</h1>
           </button>
         </Link>

@@ -29,14 +29,14 @@ const Main = () => {
                     answer theirs
                   </span>
                   <Link to="/signup">
-                    <button className="bg-orange-500 rounded-md px-8 py-3">
-                      <span className="text-white">Join the community</span>
+                    <button className="bg-orange-500 hover:bg-orange-600 rounded-md px-8 py-3">
+                      <span className="text-white ">Join the community</span>
                     </button>
                   </Link>
                   <span className="flex mt-3 text-sm">
                     or{' '}
                     <Link to="/questions">
-                      <p className="underline ml-1 cursor-pointer">
+                      <p className="underline ml-1 cursor-pointer hover:text-orange-600">
                         search content
                       </p>
                     </Link>
@@ -64,7 +64,7 @@ const Main = () => {
                   <span className="text-center mb-5 text-xl">
                     Want a secure, private space for your technical knowledge?
                   </span>
-                  <button className="bg-blue-500 rounded-md px-8 py-3 cursor-not-allowed">
+                  <button className="bg-blue-500 hover:bg-blue-600 rounded-md px-8 py-3 cursor-not-allowed">
                     <span className="text-white">Discover Teams</span>
                   </button>
                 </div>
