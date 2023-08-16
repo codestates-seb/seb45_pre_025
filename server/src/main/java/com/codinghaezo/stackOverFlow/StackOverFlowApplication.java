@@ -6,7 +6,6 @@ import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 
 @EnableJpaAuditing
 @SpringBootApplication
-@EnableJpaAuditing
 public class StackOverFlowApplication {
 
 	public static void main(String[] args) {
