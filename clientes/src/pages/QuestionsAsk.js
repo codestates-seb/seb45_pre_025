@@ -7,8 +7,8 @@ const QuestionsAsk = () => {
   const [editorContent1, setEditorContent1] = useState('');
   const [editorContent2, setEditorContent2] = useState('');
   const [title, setTitle] = useState('');
-  //const [step, setStep] = useState(1);
   const [displayedMergedContent, setDisplayedMergedContent] = useState('');
+  const [nextButtonClicked, setNextButtonClicked] = useState(false);
 
   let editor1 = undefined;
   let editor2 = undefined;
@@ -23,16 +23,6 @@ const QuestionsAsk = () => {
         change: () => {
           setEditorContent1(editor1.getMarkdown());
         },
-        blur: () => {
-          const content = editor1.getMarkdown();
-          if (content.length < 20) {
-            console.log('Editor 1: Content must be at least 20 characters.');
-          }
-        },
-        focus: () => {
-          //console.log('Editor 1 focused');
-          //editor1.focus();
-        },
       },
     });
 
@@ -45,15 +35,7 @@ const QuestionsAsk = () => {
         change: () => {
           setEditorContent2(editor2.getMarkdown());
         },
-        blur: () => {
-          //editor1.blur();
-        },
-        focus: () => {
-          //console.log('Editor 2 focused');
-          // editor2.focus();
-        },
       },
-      //placeholder: ['Write your question here'],
     });
 
     return () => {
@@ -62,24 +44,25 @@ const QuestionsAsk = () => {
     };
   }, []);
 
-  // const handleEditor1Next = () => {
-  //   const content = editor1.getMarkdown();
-  //   setEditorContent1(content);
-  //   setStep(step + 1);
-  //   // Move to the next step or perform other actions
-  // };
+  useEffect(() => {
+    setNextButtonClicked(false);
+  }, [title, editorContent1, editorContent2]);
 
-  // const handleEditor2Next = () => {
-  //   const content = editor2.getMarkdown();
-  //   setEditorContent2(content);
-  //   //setStep(step + 1);
-  //   // Move to the next step or perform other actions
-  // };
+  const handleNextButtonClick = () => {
+    setNextButtonClicked(!nextButtonClicked);
+  };
+
+  const handleDiscard = () => {
+    setEditorContent1('');
+    setEditorContent2('');
+    setTitle('');
+    console.log(title);
+    console.log(editorContent1);
+    //window.location.reload();
+  };
 
   const handleSubmit = () => {
     const mergedContent = `${editorContent1}\n\n${editorContent2}`;
-    console.log(mergedContent);
-    console.log(title);
     setDisplayedMergedContent(mergedContent);
 
     // const dataToSend = {
@@ -97,12 +80,11 @@ const QuestionsAsk = () => {
     //   });
   };
   useEffect(() => {
-    const viewer = new Editor({
+    const viewer = Editor.factory({
       el: document.querySelector('#viewer'),
       initialValue: displayedMergedContent,
-      initialEditType: 'markdown',
-      previewStyle: 'tab',
-      usageStatistics: false, // Optional: Disable usage statistics tracking
+      height: 'auto',
+      viewer: true,
     });
 
     return () => {
@@ -186,16 +168,23 @@ const QuestionsAsk = () => {
                   type="text"
                   placeholder="e.g. Is there an R function for finding the index of an element in a vector?"
                   className="w-full border rounded-md focus:outline-none focus:border-sky-50 focus:ring-4 pl-2"
-                  data-min-length="15"
-                  data-max-length="150"
+                  value={title}
                   onChange={(event) => setTitle(event.target.value)}
                 />
               </div>
-              <button className="flex p-2 mt-6 bg-[#0A95FF] text-white rounded-md text-sm cursor-pointer">
+              <button
+                className={`flex p-2 mt-6 bg-[#0A95FF] text-white rounded-md text-sm cursor-pointer hover:bg-[#0A95FF]/50 ${
+                  title.length > 20 && !nextButtonClicked ? '' : 'hidden'
+                }`}
+                onClick={handleNextButtonClick}
+              >
                 Next
               </button>
             </div>
-            <div className="border rounded-md bg-white shadow-md h-auto w-[95%] xl:absolute xl:w-[23%] xl:right-[7%] xl:top-0">
+            <div
+              className={`border rounded-md bg-white shadow-md h-auto w-[95%] xl:absolute xl:w-[23%] xl:right-[7%] xl:top-0 
+              `}
+            >
               <div className="p-3 border-b border-slate-200 bg-[#F8F9F9]">
                 Introduce the problem
               </div>
@@ -227,11 +216,18 @@ const QuestionsAsk = () => {
                 </p>
               </div>
               <div id="editor1"></div>
-              <button className="flex p-2 mt-6 bg-[#0A95FF] text-white rounded-md text-sm cursor-pointer">
+              <button
+                className={`flex p-2 mt-6 bg-[#0A95FF] text-white rounded-md text-sm cursor-pointer hover:bg-[#0A95FF]/50 ${
+                  editorContent1.length > 20 ? '' : 'hidden'
+                }`}
+                onClick={handleNextButtonClick}
+              >
                 Next
               </button>
             </div>
-            <div className="border rounded-md bg-white shadow-md w-[95%] xl:absolute xl:w-[23%] xl:right-[7%] xl:top-0">
+            <div
+              className={`border rounded-md bg-white shadow-md h-auto w-[95%] xl:absolute xl:w-[23%] xl:right-[7%] xl:top-0 `}
+            >
               <div className="p-3 border-b border-slate-200 bg-[#F8F9F9]">
                 Expand on the problem
               </div>
@@ -272,11 +268,20 @@ const QuestionsAsk = () => {
                 </p>
               </div>
               <div id="editor2"></div>
-              <button className="flex p-2 mt-6 bg-[#0A95FF] text-white rounded-md text-sm cursor-pointer">
+              <button
+                className={`flex p-2 mt-6 bg-[#0A95FF] text-white rounded-md text-sm cursor-pointer hover:bg-[#0A95FF]/50 ${
+                  editorContent2.length > 15 && !nextButtonClicked
+                    ? ''
+                    : 'hidden'
+                }`}
+                onClick={handleNextButtonClick}
+              >
                 Next
               </button>
             </div>
-            <div className="border rounded-md bg-white shadow-md w-[95%] xl:absolute xl:w-[23%] xl:right-[7%] xl:top-0">
+            <div
+              className={`border rounded-md bg-white shadow-md h-auto w-[95%] xl:absolute xl:w-[23%] xl:right-[7%] xl:top-0 `}
+            >
               <div className="p-3 border-b border-slate-200 bg-[#F8F9F9]">
                 Writing a good tittle
               </div>
@@ -323,7 +328,7 @@ const QuestionsAsk = () => {
                 Next
               </button>
             </div>
-            <div className="border rounded-md bg-white shadow-md w-[95%] xl:absolute xl:w-[23%] xl:right-[7%] xl:top-0">
+            {/* <div className="border rounded-md bg-white shadow-md w-[95%] xl:absolute xl:w-[23%] xl:right-[7%] xl:top-0">
               <div className="p-3 border-b border-slate-200 bg-[#F8F9F9]">
                 Adding tags
               </div>
@@ -347,19 +352,34 @@ const QuestionsAsk = () => {
                   </p>
                 </div>
               </div>
-            </div>
+            </div> */}
           </div>
           <div className="flex">
             <button
-              className="flex p-2 rounded-md my-4 bg-[#0A95FF] text-white hover:bg-[#0A95FF]/50  focus:ring focus:ring-black focus:outline-none"
+              className=" ${
+                title && editorContent1 && editorContent2 ? 'bg-gray-300 focus:ring focus:outline-none' : ''
+              } flex p-2 rounded-md my-4 bg-[#0A95FF] text-white hover:bg-[#0A95FF]/50"
               onClick={handleSubmit}
+              disabled={
+                title.length < 15 ||
+                editorContent1.length < 20 ||
+                editorContent2.length < 20
+              }
+              style={{
+                cursor:
+                  title && editorContent1 && editorContent2
+                    ? 'pointer'
+                    : 'not-allowed',
+              }}
             >
               Post your question
             </button>
-            <button className="flex p-2 ml-[1%] rounded-md my-4 text-red-700 hover:bg-red-700/10">
+            <button
+              className="flex p-2 ml-[1%] rounded-md my-4 text-red-700 hover:bg-red-700/10"
+              onClick={handleDiscard}
+            >
               Discard draft
             </button>
-            <div>{displayedMergedContent}</div>
             <div
               id="viewer"
               className="my-4 border rounded-md p-3 bg-white"
