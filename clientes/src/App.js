@@ -10,15 +10,17 @@ import Questions from './pages/Questions';
 import QuestionsAsk from './pages/QuestionsAsk';
 import QuestionsId from './pages/QuestionsId';
 import Home from './pages/Home';
+import Users from './pages/Users';
 
 function App() {
   const location = useLocation();
   const showFooterPaths = [
     '/',
-    '/questions',
     '/home',
+    '/questions',
     '/questions/ask',
     '/questions/id',
+    '/users',
   ];
   // 현재 경로가 showFooterPaths에 속하는지 확인하는 함수
   const showFooter = () => showFooterPaths.includes(location.pathname);
@@ -35,6 +37,7 @@ function App() {
         <Route path="/questions/ask" element={<QuestionsAsk />}></Route>
         <Route path="/questions/id" element={<QuestionsId />}></Route>
         <Route path="/home" element={<Home />}></Route>
+        <Route path="/users" element={<Users />}></Route>
       </Routes>
       {showFooter() && <Footer />}
     </div>
