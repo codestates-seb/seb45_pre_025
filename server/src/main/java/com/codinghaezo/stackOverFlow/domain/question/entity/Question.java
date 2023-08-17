@@ -1,13 +1,17 @@
 package com.codinghaezo.stackOverFlow.domain.question.entity;
 
 import com.codinghaezo.stackOverFlow.audit.Auditable;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
-import lombok.Setter;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 @Getter
-@Setter
 @Entity
 public class Question extends Auditable {
 
@@ -19,7 +23,8 @@ public class Question extends Auditable {
     private String title;
 
     @Column(nullable = false)
-    private String body;
+    private String bodyProblem;
 
-    /* 질문 작성자를 참조하는 필드 필요 */
+    @Column(nullable = false)
+    private String bodyExpecting;
 }

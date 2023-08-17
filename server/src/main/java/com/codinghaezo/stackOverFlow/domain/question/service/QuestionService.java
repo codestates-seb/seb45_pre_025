@@ -1,5 +1,6 @@
 package com.codinghaezo.stackOverFlow.domain.question.service;
 
+import com.codinghaezo.stackOverFlow.Utils.UriCreator;
 import com.codinghaezo.stackOverFlow.domain.question.entity.Question;
 import com.codinghaezo.stackOverFlow.domain.question.repository.QuestionRepository;
 import org.springframework.data.domain.Page;
@@ -8,6 +9,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.net.URI;
 import java.util.Optional;
 
 @Service
@@ -20,8 +22,9 @@ public class QuestionService {
         this.questionRepository = questionRepository;
     }
 
-    public Question createQuestion(Question question) {
-        return questionRepository.save(question);
+    public URI createQuestion(Question question) {
+        long questionId = questionRepository.save(question).getId();
+        return UriCreator.createUri("/questions", questionId);
     }
 
     public Question findQuestion(long questionId) {
@@ -34,17 +37,21 @@ public class QuestionService {
         return questionRepository.findAll(pageRequest);
     }
 
-    public Question updateQuestion(Question question) {
-        Question foundQuestion = findQuestion(question.getId());
-        String title = question.getTitle();
-        if (title != null) {
-            foundQuestion.setTitle(title);
-        }
-        String bodyProblem = question.getBody();
-        if (bodyProblem != null) {
-            foundQuestion.setBody(bodyProblem);
-        }
-        return questionRepository.save(foundQuestion);
+    public Question updateQuestion(long questionId, Question question) {
+        Question foundQuestion = findQuestion(questionId);
+        Question updatedQuestion = Question.builder()
+            .id(questionId)
+            .title((question.getTitle() == null)
+                ? foundQuestion.getTitle()
+                : question.getTitle())
+            .bodyProblem((question.getBodyProblem() == null)
+                ? foundQuestion.getBodyProblem()
+                : question.getBodyProblem())
+            .bodyExpecting((question.getBodyExpecting() == null)
+                ? foundQuestion.getBodyExpecting()
+                : question.getBodyExpecting())
+            .build();
+        return questionRepository.save(updatedQuestion);
     }
 
     public void deleteQuestion(long questionId) {
