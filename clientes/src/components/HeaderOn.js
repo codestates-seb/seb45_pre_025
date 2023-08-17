@@ -182,14 +182,16 @@ const HeaderOn = () => {
         </div>
         <div className="flex items-center ">
           {/* 유저정보 아이콘 */}
-          <button className="flex items-center px-2">
-            <div className="w-6 h-6 bg-yellow-200 rounded-md mx-1" />
-            <span className="font-semibold text-sm mx-1">1</span>
-            <div className="flex items-center mx-1">
-              <span className="text-[6px] text-yellow-500">●</span>
-              <span className="text-yellow-600 text-sm ml-1">1</span>
-            </div>
-          </button>
+          <Link to="/users">
+            <button className="flex items-center px-2">
+              <div className="w-6 h-6 bg-yellow-200 rounded-md mx-1" />
+              <span className="font-semibold text-sm mx-1">1</span>
+              <div className="flex items-center mx-1">
+                <span className="text-[6px] text-yellow-500">●</span>
+                <span className="text-yellow-600 text-sm ml-1">1</span>
+              </div>
+            </button>
+          </Link>
 
           {/* INBOX 드롭다운 */}
           <button className="fill-slate-600 px-2">
