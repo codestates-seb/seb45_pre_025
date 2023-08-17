@@ -4,8 +4,8 @@ const Main = () => {
   return (
     <main className="relative min-h-screen">
       <section>
-        <div className="max-w-[1950px] p-12 absolute top-14 w-full border">
-          <div className="bg-gray-700 rounded-md flex justify-center flex-col p-8 h-full">
+        <div className="relative top-14 w-full flex justify-between my-0 mx-auto p-12">
+          <div className="bg-gray-700 rounded-md flex justify-center flex-col p-8 h-full  w-full">
             {/* 말풍선 박스 */}
             <div className="flex justify-center">
               {/* 왼쪽 배너 */}
