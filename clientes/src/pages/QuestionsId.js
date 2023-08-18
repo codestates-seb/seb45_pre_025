@@ -5,39 +5,101 @@ import Editor from '@toast-ui/editor';
 import '@toast-ui/editor/dist/toastui-editor.css';
 import Sidebar from '../components/Sidebar';
 import SideCartegory from '../components/SideCartegory';
+import { format, formatDistanceToNow } from 'date-fns';
 
 const QuestionsId = () => {
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
-  //const questionId = searchParams.get('id');
   const questionId = searchParams.get('id');
 
   //const [questionDetails, setQuestionDetails] = useState(null);
   //const [answersDetails, setAnswersDetails] = useState(null);
-
+  //const [commentsDetails, setCommentsDetails] = useState(null);
   //const [editorContent, setEditorContent] = useState('');
-  let questionContent = '## 저,, 취업할 수 있을까요?\n`let say = "hello"`'; //테스트용
-  let answerContent = `그러게 공부 좀 하지 그랬니,,,,`; //테스트용
+
+  const questionDetails = [
+    {
+      id: 1,
+      title: '제목',
+      bodyExpecting: '기대하는 바',
+      bodyProblem: '문제점',
+      authorId: 0,
+      createdAt: '2023-08-16T23:19:49.0995',
+      modifiedAt: '2023-08-16T23:19:49.0995',
+    },
+  ];
+
+  //const answersDetails = undefined;
+
+  const answersDetails = [
+    {
+      answerId: 1,
+      content: '답변조회테스트1',
+      questionId: 1,
+      createdAt: '2023-08-16T23:19:49.0995',
+      modifiedAt: '2023-08-16T23:19:49.0995',
+    },
+    {
+      answerId: 2,
+      content: '답변조회테스트2',
+      questionId: 1,
+      createdAt: '2023-08-16T23:19:49.0995',
+      modifiedAt: '2023-08-16T23:19:49.0995',
+    },
+  ];
+
+  const commentsDetails = [
+    {
+      answerId: 1,
+      content: '댓글조회테스트1-1',
+      commentId: 1,
+      createdAt: '2023-08-16T23:19:49.0995',
+      modifiedAt: '2023-08-16T23:19:49.0995',
+    },
+    {
+      answerId: 1,
+      content: '댓글조회테스트1-2',
+      commentId: 2,
+      createdAt: '2023-08-16T23:19:49.0995',
+      modifiedAt: '2023-08-16T23:19:49.0995',
+    },
+    {
+      answerId: 2,
+      content: '댓글조회테스트2-1',
+      commentId: 1,
+      createdAt: '2023-08-16T23:19:49.0995',
+      modifiedAt: '2023-08-16T23:19:49.0995',
+    },
+    {
+      answerId: 2,
+      content: '댓글조회테스트2-2',
+      commentId: 1,
+      createdAt: '2023-08-16T23:19:49.0995',
+      modifiedAt: '2023-08-16T23:19:49.0995',
+    },
+  ];
+
   useEffect(() => {
+    const questionBody = `${questionDetails[0].bodyExpecting}\n\n${questionDetails[0].bodyProblem}`;
     const question = Editor.factory({
       el: document.querySelector('#question'),
-      initialValue: questionContent, //`${questionDetails.body1}\n\n${questionDetails.body2}`;
+      initialValue: questionBody,
       height: 'auto',
       viewer: true,
     });
 
-    const answer = Editor.factory({
-      el: document.querySelector('#answer'), //id={`answer-${answer.answerId}`}
-      initialValue: answerContent, //answer.content
-      height: 'auto',
-      viewer: true,
-    });
+    // const answer = Editor.factory({
+    //   el: document.querySelector('#answer'), //id={`answer-${answer.answerId}`}
+    //   initialValue: answersDetails.content, //answerContent, //answer.content
+    //   height: 'auto',
+    //   viewer: true,
+    // });
 
     return () => {
       question.destroy();
-      answer.destroy();
+      //answer.destroy();
     };
-  }, [questionContent, answerContent]); //테스트용/api 연결하면 수정
+  }, [questionDetails]); //테스트용/api 연결하면 수정
 
   // useEffect(() => {
   //   const apiUrl = `{api-url}/questions/${questionId}`;
@@ -52,11 +114,48 @@ const QuestionsId = () => {
   // }, []);
 
   // useEffect(() => {
+  //   const fetchAnswersAndComments = async () => {
+  //     try {
+  //       const answersResponse = await axios.get(`${apiUrl}/${questionId}/answers`);
+  //       const fetchedAnswers = answersResponse.data;
+
+  //       setAnswersDetails(fetchedAnswers);
+
+  //       fetchedAnswers.forEach(async (answer) => {
+  //         try {
+  //           const commentsResponse = await axios.get(`${apiUrl}/answers/${answer.answerId}/comments`);
+  //           const commentsForAnswer = commentsResponse.data;
+  //           setCommentsDetails((prevComments) => [...prevComments, ...commentsForAnswer]);
+  //         } catch (error) {
+  //           console.error(`Error fetching comments for answer ${answer.answerId}:`, error);
+  //         }
+  //       });
+  //     } catch (error) {
+  //       console.error('Error fetching answers:', error);
+  //     }
+  //   };
+
+  //   fetchAnswersAndComments();
+  // }, [questionId]);
+
+  // useEffect(() => {
   //   const apiUrl = `{api-url}/${questionId}/answers}`;
   //   axios
   //     .get(apiUrl)
   //     .then((response) => {
   //       setAnswersDetails(response.data);
+  //     })
+  //     .catch((error) => {
+  //       console.error('Error fetching question details:', error);
+  //     });
+  // }, []);
+
+  // useEffect(() => {
+  //   const apiUrl = `{api-url}/answers/${answersDetail.answerId}/comments}`;
+  //   axios
+  //     .get(apiUrl)
+  //     .then((response) => {
+  //       setCommentsDetails(response.data);
   //     })
   //     .catch((error) => {
   //       console.error('Error fetching question details:', error);
@@ -69,39 +168,14 @@ const QuestionsId = () => {
       height: 'auto',
       initialEditType: 'markdown',
       previewStyle: 'tab',
+      placeholder:
+        'Please be sure to answer the question. Provide details and share your research!',
     });
 
     return () => {
       editor.destroy();
     };
   }, []);
-
-  const answersDetails = [
-    {
-      id: 1,
-      title: '제목1',
-      body: '본문',
-      authorId: 0,
-      createdAt: '2023-08-16T23:19:49.0995',
-      modifiedAt: '2023-08-16T23:19:49.0995',
-    },
-    {
-      id: 2,
-      title: '제목2',
-      body: '본문',
-      authorId: 0,
-      createdAt: '2023-08-16T23:19:49.0995',
-      modifiedAt: '2023-08-16T23:19:49.0995',
-    },
-    {
-      id: 3,
-      title: '제목3',
-      body: '본문',
-      authorId: 0,
-      createdAt: '2023-08-16T23:19:49.0995',
-      modifiedAt: '2023-08-16T23:19:49.0995',
-    },
-  ];
 
   return (
     <div className="flex justify-center py-[2%] w-full">
@@ -111,11 +185,9 @@ const QuestionsId = () => {
       <div className="flex flex-col justify-center pt-14 pl-6 mb-1.5 divide-y divide-slate-200 w-4/6 ">
         <div className="">
           <div className="flex justify-between">
-            <div className="mb-2 text-2xl">
-              {/* {questionDetails.title} */}
-              미리 감사합니다
-            </div>
+            <div className="mb-2 text-2xl">{questionDetails[0].title}</div>
             <div>
+              {/* 로그인 정보 받으면 수정/삭제 버튼 보이게 */}
               <Link to={`/questions/ask?id=${questionId}`}>
                 <button className=" p-2 mt-6 bg-[#0A95FF] text-white rounded-md text-sm ">
                   Edit
@@ -132,26 +204,30 @@ const QuestionsId = () => {
             </div>
           </div>
           <div className="flex mb-2">
-            <div className="mr-4 text-xs font-light">Asked</div>
-            {/* {questionDetails.createdAt} */}
-            <div className="mr-4 text-xs font-light">Modified</div>
-            {/* {questionDetails.modifiedAt} */}
-            <div className="text-xs font-light">Viewed</div>
+            <div className="mr-4 text-xs font-light">
+              Asked{' '}
+              {formatDistanceToNow(new Date(questionDetails[0].createdAt))} ago
+            </div>
+            <div className="mr-4 text-xs font-light">
+              Modified{' '}
+              {formatDistanceToNow(new Date(questionDetails[0].modifiedAt))} ago
+            </div>
+            {/* <div className="text-xs font-light">{`Viewed`}</div> */}
           </div>
         </div>
         <div className="flex justify-between ">
           <div className="w-3/4">
             <div className="flex grow py-4 min-h-[12%]">
               <div className="flex flex-col items-center pr-4 w-14">
-                <button className="p-3 mb-2 border rounded-full">
+                <button className="p-3 mb-2 border rounded-full hover:bg-orange-500/20 cursor-not-allowed">
                   <img
                     src="/images/vote-up.png"
                     alt="vote-up"
                     className="h-2 w-4"
                   />
                 </button>
-                <div className="flex">투표수</div>
-                <button className="p-3 mb-2 border rounded-full">
+                <div className="flex font-semibold mb-2">0</div>
+                <button className="p-3 mb-2 border rounded-full hover:bg-orange-500/20 cursor-not-allowed">
                   <img
                     src="/images/vote-down.png"
                     alt="vote-down"
@@ -171,7 +247,7 @@ const QuestionsId = () => {
                   {/* question viewer below */}
                   <div
                     id="question"
-                    className="my-4 border rounded-md p-3 bg-white"
+                    className="mb-4 border rounded-md p-3 bg-white"
                   ></div>
                 </div>
                 {/* <ul className="relative">
@@ -181,16 +257,25 @@ const QuestionsId = () => {
                 </ul> */}
                 <div className="flex justify-end">
                   <div className="my-4 p-1.5 bg-[#E1ECF4] rounded-md text-xs">
-                    <div className="text-[#6A737C]">asked when</div>
-                    {/* {questionDetails.createdAt} */}
+                    <div className="text-[#6A737C]">
+                      Asked{' '}
+                      {format(
+                        new Date(questionDetails[0].createdAt),
+                        'MMM d, yyyy',
+                      )}{' '}
+                      at{' '}
+                      {format(new Date(questionDetails[0].createdAt), 'HH:mm')}
+                    </div>
                     <div className="flex">
                       <img
                         src="/images/Vector.svg"
                         alt="user"
                         className="h-8 w-8"
                       />
-                      <div className="text-[#0074CC] ml-2">user name</div>
-                      {/* {questionDetails.authorId} */}
+                      <div className="text-[#0074CC] ml-2">
+                        {/* {유저이름 받아와야함} */}
+                        {questionDetails[0].authorId}
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -198,79 +283,111 @@ const QuestionsId = () => {
             </div>
             <div className="">
               <div>
-                <div className="text-xl">{`${answersDetails.length} Answer${
-                  answersDetails.length !== 1 ? 's' : ''
-                }`}</div>
+                {answersDetails && (
+                  <div className="text-xl">{`${answersDetails.length} Answer${
+                    answersDetails.length !== 1 ? 's' : ''
+                  }`}</div>
+                )}
               </div>
-              {answersDetails.map((answer) => (
-                <div className="flex py-4 border-b" key={answer.answerId}>
-                  <div className="flex flex-col items-center pr-4 w-14">
-                    <button className="p-3 mb-2 border rounded-full">
-                      <img
-                        src="/images/vote-up.png"
-                        alt="vote-up"
-                        className="h-2 w-4"
-                      />
-                    </button>
-                    <div className="flex">투표수</div>
-                    <button className="p-3 mb-2 border rounded-full">
-                      <img
-                        src="/images/vote-down.png"
-                        alt="vote-down"
-                        className="h-2 w-4"
-                      />
-                    </button>
-                    <button className="mb-2">
-                      <img
-                        src="/images/unbookmarked.png"
-                        alt="unbookmarked"
-                        className="h-4 w-3"
-                      />
-                    </button>
-                    <button>
+              {answersDetails &&
+                answersDetails.map((answer) => (
+                  <div className="flex py-4 border-b" key={answer.answerId}>
+                    <div className="flex flex-col items-center pr-4 w-14">
+                      <button className="p-3 mb-2 border rounded-full hover:bg-orange-500/20 cursor-not-allowed">
+                        <img
+                          src="/images/vote-up.png"
+                          alt="vote-up"
+                          className="h-2 w-4"
+                        />
+                      </button>
+                      <div className="flex font-semibold mb-2">0</div>
+                      <button className="p-3 mb-2 border rounded-full hover:bg-orange-500/20 cursor-not-allowed">
+                        <img
+                          src="/images/vote-down.png"
+                          alt="vote-down"
+                          className="h-2 w-4"
+                        />
+                      </button>
+                      <button className="mb-2">
+                        <img
+                          src="/images/unbookmarked.png"
+                          alt="unbookmarked"
+                          className="h-4 w-3"
+                        />
+                      </button>
+                      {/* <button>
                       <img
                         src="/images/selected.png"
                         alt="selected"
                         className="h-6 w-6"
                       />
-                    </button>
-                  </div>
-                  <div className="pr-4 w-full">
-                    <div className="pb-6 grow">
-                      {/* answer viewer below */}
-                      {/* id={`answer-${answer.id}`} 뷰어 맵돌릴때 필요한 아이디 이슈*/}
-                      <div
-                        id="answer"
-                        className="my-4 border rounded-md p-3 bg-white"
-                      ></div>
+                    </button> */}
                     </div>
-                    {/* <ul className="relative">
+                    <div className="pr-4 w-full">
+                      <div className="pb-6 grow">
+                        {/* answer viewer below */}
+                        <div className="mb-4 border rounded-md p-3 bg-white text-sm font-light">
+                          {answer.content}
+                        </div>
+                      </div>
+                      {/* <ul className="relative">
                     <li className="inline-block space-x-1 p-1.5 bg-[#E1ECF4] text-[#39739D] rounded-md text-xs">
                       tag
                     </li>
                   </ul> */}
-                    <div className="flex justify-end">
-                      <div className="  my-4 p-1.5 text-[#39739D] text-xs">
-                        <div className="text-[#6A737C]">{`answered ${answer.createdAt}`}</div>
-                        <div className="flex">
-                          <img
-                            src="/images/Vector.svg"
-                            alt="user"
-                            className="h-8 w-8"
-                          />
-                          <div className="text-[#0074CC] ml-2">user name</div>
+                      <div className="flex justify-end">
+                        <div className="  my-4 p-1.5 text-[#39739D] text-xs">
+                          <div className="text-[#6A737C]">
+                            {format(
+                              new Date(answer.createdAt),
+                              "'answered' MMM d, yyyy 'at' HH:mm",
+                            )}
+                          </div>
+                          <div className="flex">
+                            <img
+                              src="/images/Vector.svg"
+                              alt="user"
+                              className="h-8 w-8"
+                            />
+                            <div className="text-[#0074CC] ml-2">user name</div>
+                          </div>
                         </div>
                       </div>
-                    </div>
-                    <div>
-                      <input
-                        placeholder="Add a comment"
-                        className="w-full border rounded-md focus:outline-none focus:border-sky-50 focus:ring-4 pl-2"
-                      ></input>
+                      {commentsDetails
+                        .filter(
+                          (comment) => comment.answerId === answer.answerId,
+                        )
+                        .map((comment) => (
+                          <div key={comment.commentId}>
+                            <div
+                              className="w-full border-t"
+                              key={comment.commentId}
+                            >
+                              <div className="flex justify-between py-[1.5%] mr-[.5%] ml-[6%] text-xs">
+                                <div>{comment.content}</div>
+                                <div className="text-[#6A737C]">
+                                  {format(
+                                    new Date(comment.createdAt),
+                                    "'answered' MMM d, yyyy 'at' HH:mm",
+                                  )}
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        ))}
+                      <div className="flex">
+                        <input
+                          placeholder="Add a comment"
+                          className="w-full border rounded-md focus:outline-none focus:border-sky-50 focus:ring-4 pl-2"
+                        />
+                        <button className="flex p-2 ml-[.5%] bg-[#0A95FF]/80 text-white rounded-md text-sm cursor-pointer hover:bg-[#0A95FF]/50">
+                          Add
+                        </button>
+                      </div>
                     </div>
                   </div>
-                </div>
-              ))}
+                ))}
+              <div></div>
               <div>
                 <h2 className="pt-5 mb-5 text-2xl">Your Answer</h2>
                 <div id="editor" className="pb-5"></div>
