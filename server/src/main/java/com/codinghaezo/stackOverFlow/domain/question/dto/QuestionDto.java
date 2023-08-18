@@ -7,13 +7,12 @@ import org.springframework.data.domain.Page;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class QuestionDto {
 
     @Getter
     public static class Post {
-
-        private long authorId;
 
         private String title;
 
@@ -62,6 +61,8 @@ public class QuestionDto {
 
         private long authorId;
 
+        private int views;
+
         private LocalDateTime createdAt;
 
         private LocalDateTime modifiedAt;
@@ -72,6 +73,8 @@ public class QuestionDto {
                 .title(question.getTitle())
                 .bodyProblem(question.getBodyProblem())
                 .bodyExpecting(question.getBodyExpecting())
+                .authorId(question.getAuthor().getMemberId())
+                .views(question.getViews())
                 .createdAt(question.getCreatedAt())
                 .modifiedAt(question.getModifiedAt())
                 .build();
@@ -98,6 +101,10 @@ public class QuestionDto {
                 .pageSize(questionPage.getSize())
                 .totalPages(questionPage.getTotalPages())
                 .pageNumber(questionPage.getNumber())
+                .contents(questionPage.getContent()
+                    .stream()
+                    .map(SingleResponse::parse)
+                    .collect(Collectors.toList()))
                 .build();
         }
     }

@@ -30,6 +30,10 @@ public class Question extends Auditable {
     private String bodyExpecting;
 
     @Setter
+    @Column(nullable = false)
+    private Integer views = 0;
+
+    @Setter
     @ManyToOne
     @JoinColumn(name = "author_id")
     private Member author;
