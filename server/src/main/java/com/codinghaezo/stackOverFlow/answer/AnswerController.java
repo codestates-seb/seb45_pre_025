@@ -72,6 +72,7 @@ public class AnswerController {
             @PathVariable("question-Id") long questionId,
             @AuthenticationPrincipal UserDetails userDetails) {
 
+
         String membername = userDetails.getUsername();
         Long memberId = // 토큰에서 추출한 사용자 아이디 값 or 다른 방식으로 memberId를 가져오는 로직
 
@@ -91,6 +92,7 @@ public class AnswerController {
 
         return ResponseEntity.ok(mapper.answerToAnswerResponseDto(updatedAnswer));
     }
+
 
 /*
 

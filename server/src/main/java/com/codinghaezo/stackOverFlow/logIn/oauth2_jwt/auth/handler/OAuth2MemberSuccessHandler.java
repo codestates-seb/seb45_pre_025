@@ -1,12 +1,11 @@
 package com.codinghaezo.stackOverFlow.logIn.oauth2_jwt.auth.handler;
 
-import com.codinghaezo.stackOverFlow.logIn.oauth2_jwt.jwt.JwtTokenizer;
-import com.codinghaezo.stackOverFlow.logIn.oauth2_jwt.utils.CustomAuthorityUtils;
+import com.codinghaezo.stackOverFlow.logIn.jwt.jwt.JwtTokenizer;
+import com.codinghaezo.stackOverFlow.logIn.utils.CustomAuthorityUtils;
 import com.codinghaezo.stackOverFlow.member.Member;
 import com.codinghaezo.stackOverFlow.member.MemberService;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.core.user.OAuth2User;
-import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
@@ -47,7 +46,7 @@ public class OAuth2MemberSuccessHandler extends SimpleUrlAuthenticationSuccessHa
 
     private void saveMember(String email) {
         Member member = new Member(email);
-        memberService.createMember(member);
+        memberService.createMemberOAuth2(member);
     }
 
     private void redirect(HttpServletRequest request,
@@ -95,7 +94,8 @@ public class OAuth2MemberSuccessHandler extends SimpleUrlAuthenticationSuccessHa
                 .newInstance()
                 .scheme("http")
                 .host("localhost")
-                .path("/receive-token.html")
+                .port(3000)
+                .path("/")
                 .queryParams(queryParams)
                 .build()
                 .toUri();

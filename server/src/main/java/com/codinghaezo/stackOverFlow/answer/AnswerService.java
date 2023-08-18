@@ -49,11 +49,18 @@ public class AnswerService {
         answerRepository.delete(foundAnswer);
     }
 
-    public Answer updateAnswer(Answer answer, long answerId) {
-        Answer foundAnswer = findAnswer(answerId);
-        foundAnswer.setContent(answer.getContent());
-        return answerRepository.save(foundAnswer);
+    public Answer updateAnswer(Answer answer, long answerId, long memberId) {
+        Answer foundAnswer = findAnswer(answerId); /*
+         1. 답변아이디로 답변글을 찾는다.
+         2. 답변글로 작성자 멤버 아이디를 찾는다. findMemberId
+             /*
+           식별 if(memberId==findMemberId)
+           else 에러 던지기(유효하지 않은 회원입니다.)
+            */
+        foundAnswer.setContent(answer.getContent()); // 찾은 답변글의 내용을 수정한다.
+        return answerRepository.save(foundAnswer); //리포지토리에 저장한다.
     }
+
 
     public Answer updateAnswer(Answer answer, long answerId, String membername) {
         Answer foundAnswer = findAnswer(answerId);
@@ -67,6 +74,7 @@ public class AnswerService {
 
 
     }
+
 }
 
 

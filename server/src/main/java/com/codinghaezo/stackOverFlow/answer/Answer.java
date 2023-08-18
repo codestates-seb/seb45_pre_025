@@ -3,6 +3,7 @@ package com.codinghaezo.stackOverFlow.answer;
 import com.codinghaezo.stackOverFlow.answer.comment.Comment;
 import com.codinghaezo.stackOverFlow.audit.Auditable;
 import com.codinghaezo.stackOverFlow.domain.question.entity.Question;
+
 import com.codinghaezo.stackOverFlow.member.Member;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -38,4 +39,5 @@ public class Answer extends Auditable {
 
     @OneToMany(mappedBy = "answer", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Comment> comments = new ArrayList<>();
+
 }

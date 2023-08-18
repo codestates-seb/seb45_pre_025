@@ -1,13 +1,18 @@
 package com.codinghaezo.stackOverFlow.domain.question.entity;
 
+import com.codinghaezo.stackOverFlow.answer.Answer;
 import com.codinghaezo.stackOverFlow.audit.Auditable;
-import lombok.Getter;
-import lombok.Setter;
+import com.codinghaezo.stackOverFlow.member.Member;
+import lombok.*;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 @Getter
-@Setter
 @Entity
 public class Question extends Auditable {
 
@@ -24,5 +29,15 @@ public class Question extends Auditable {
     @Column(nullable = false)
     private String bodyExpecting;
 
-    /* 질문 작성자를 참조하는 필드 필요 */
+    @Setter
+    @Column(nullable = false)
+    private Integer views = 0;
+
+    @Setter
+    @ManyToOne
+    @JoinColumn(name = "author_id")
+    private Member author;
+
+    @OneToMany(mappedBy = "question", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Answer> answers = new ArrayList<>();
 }
