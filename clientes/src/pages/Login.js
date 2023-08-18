@@ -129,10 +129,6 @@ const Login = () => {
               />
             </div>
             <div className="w-full">
-              onClick=
-              {() => {
-                register();
-              }}
               {/* 로그인 버튼 */}
               <button
                 className="w-full bg-blue-500 hover:bg-blue-600 rounded-md my-4 py-2"
