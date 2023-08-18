@@ -1,4 +1,4 @@
-package com.codinghaezo.stackOverFlow.logIn.oauth2_jwt.utils;
+package com.codinghaezo.stackOverFlow.logIn.utils;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
