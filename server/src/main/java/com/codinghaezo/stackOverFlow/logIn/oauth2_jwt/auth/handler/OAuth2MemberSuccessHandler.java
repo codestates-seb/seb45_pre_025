@@ -94,12 +94,9 @@ public class OAuth2MemberSuccessHandler extends SimpleUrlAuthenticationSuccessHa
                 .newInstance()
                 .scheme("http")
                 .host("localhost")
-                .port(3000)
-                .path("/")
+                .path("/receive-token.html")
                 .queryParams(queryParams)
                 .build()
                 .toUri();
     }
-
-
 }

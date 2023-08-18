@@ -3,7 +3,7 @@ package com.codinghaezo.stackOverFlow.member;
 import com.codinghaezo.stackOverFlow.exception.BusinessLogicException;
 import com.codinghaezo.stackOverFlow.exception.ExceptionCode;
 
-import org.springframework.context.ApplicationEventPublisher;
+import com.codinghaezo.stackOverFlow.logIn.utils.CustomAuthorityUtils;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
