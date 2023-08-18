@@ -9,9 +9,14 @@ const Signup = () => {
   const navigate = useNavigate();
 
   const register = () => {
+    if (userName === '' || email === '' || password === '') {
+      alert('빈칸 없이 모두 작성해주세요');
+      return;
+    }
+
     axios
       .post(
-        'https://f3d7-2406-5900-1084-b81a-1592-6236-d078-6c13.ngrok-free.app//members/membership',
+        ' https://a7ec-2406-5900-1084-b81a-1592-6236-d078-6c13.ngrok-free.app/members/membership',
         {
           username: userName,
           email: email,

@@ -1,5 +1,8 @@
 ## 프로젝트_코딩해'조' 
 
+<img width="300px" height="300px" src="clientes/public/images/코딩해조_로고.png">
+
+
 > 프로젝트 기간 : 08.04 ~ 08.23
 >> - [Figma Link](https://www.figma.com/file/n40SeKU2OlbZN8wwQZ1Zv7/%5B%EC%BD%94%EB%94%A9%ED%95%B4%EC%A1%B0%5D-pre-project?type=design&node-id=0%3A1&mode=design&t=uq01cPwr96HDyFwP-1)
 >> - **[배포사이트]()**

@@ -10,7 +10,9 @@ const Users = () => {
             {/* 유저 프로필 */}
             <div>
               <div className="flex justify-start pb-6">
-                <div className="w-32 h-32 rounded-md bg-yellow-300"></div>
+                <div className="w-32 h-32 rounded-md bg-yellow-300">
+                  <h1 className="text-8xl py-auto leading-normal">🧑‍💻</h1>
+                </div>
                 <div className="flex flex-col justify-center ml-4">
                   {/* 회원 이름 */}
                   <div>
