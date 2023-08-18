@@ -1,6 +1,7 @@
 package com.codinghaezo.stackOverFlow.member;
 
 import com.codinghaezo.stackOverFlow.audit.Auditable;
+import com.codinghaezo.stackOverFlow.domain.question.entity.Question;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -28,5 +29,8 @@ public class Member extends Auditable {
     public Member(String email) {
         this.email = email;
     }
+
+    @OneToMany(mappedBy = "author")
+    private List<Question> questions = new ArrayList<>();
 
 }
