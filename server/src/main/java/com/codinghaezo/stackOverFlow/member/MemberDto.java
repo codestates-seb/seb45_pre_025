@@ -1,12 +1,16 @@
 package com.codinghaezo.stackOverFlow.member;
 
+import com.codinghaezo.stackOverFlow.answer.PageInfo;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.context.annotation.Primary;
+import org.springframework.data.domain.Page;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import java.util.List;
 
 public class MemberDto {
     @Getter
@@ -18,6 +22,8 @@ public class MemberDto {
         @Email
         private String email;
 
+        private String nickName;
+
         private String password;
     }
     @Getter
@@ -26,7 +32,10 @@ public class MemberDto {
     @Setter
     public static class MemberPatchDto{
         private long memberId;
+
+        private String nickName;
         private String password;
+
     }
 
     @Getter
@@ -37,6 +46,8 @@ public class MemberDto {
 
         private String email;
 
+        private String nickName;
+
         private String password;
 
     }
@@ -44,5 +55,17 @@ public class MemberDto {
     @Getter
     public static class SingleResponseDto<T>{
         private T data;
+    }
+
+    @Getter
+    public static class MultiResponseDto<T> {
+        private List<T> data;
+        private PageInfo pageInfo;
+
+        public MultiResponseDto(List<T> data, Page page) {
+            this.data = data;
+            this.pageInfo = new PageInfo(page.getNumber() + 1,
+                    page.getSize(), page.getTotalElements(), page.getTotalPages());
+        }
     }
 }

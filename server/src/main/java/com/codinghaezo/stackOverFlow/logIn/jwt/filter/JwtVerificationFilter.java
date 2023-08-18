@@ -1,7 +1,8 @@
-package com.codinghaezo.stackOverFlow.logIn.oauth2_jwt.auth.filter;
+package com.codinghaezo.stackOverFlow.logIn.jwt.filter;
 
-import com.codinghaezo.stackOverFlow.logIn.oauth2_jwt.jwt.JwtTokenizer;
-import com.codinghaezo.stackOverFlow.logIn.oauth2_jwt.utils.CustomAuthorityUtils;
+import com.codinghaezo.stackOverFlow.logIn.jwt.jwt.JwtTokenizer;
+
+import com.codinghaezo.stackOverFlow.logIn.utils.CustomAuthorityUtils;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;

@@ -21,9 +21,11 @@ public class QuestionService {
 
     private final QuestionRepository questionRepository;
 
+
     private final MemberRepository memberRepository;
 
     public QuestionService(QuestionRepository questionRepository, MemberRepository memberRepository) {
+
         this.questionRepository = questionRepository;
         this.memberRepository = memberRepository;
     }
@@ -71,6 +73,7 @@ public class QuestionService {
         questionRepository.delete(foundQuestion);
     }
 
+
     private Member findMemberByEmail(String email) {
         return memberRepository.findByEmail(email)
             .orElseThrow(() -> new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
@@ -82,4 +85,5 @@ public class QuestionService {
             throw new BusinessLogicException(ExceptionCode.CANNOT_CHANGE_QUESTION);
         }
     }
+
 }
