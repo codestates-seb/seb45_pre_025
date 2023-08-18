@@ -52,7 +52,7 @@ const Home = () => {
               </div>
             </div>
             <div className="w-full ml-4 flex flex-col">
-              <Link to="/questions/id">
+              <Link to="/questions/view">
                 {/* 타이틀 */}
                 <div className="text-blue-700 text-xl">
                   How do atomics larger than the CPU&rsquo;s native support work
