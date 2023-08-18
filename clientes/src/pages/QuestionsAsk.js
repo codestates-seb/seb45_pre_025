@@ -2,26 +2,36 @@ import { useState, useEffect } from 'react';
 //import axios from 'axios';
 import Editor from '@toast-ui/editor';
 import '@toast-ui/editor/dist/toastui-editor.css';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 const QuestionsAsk = () => {
   const [editorContent1, setEditorContent1] = useState('');
   const [editorContent2, setEditorContent2] = useState('');
   const [title, setTitle] = useState('');
-  const [displayedMergedContent, setDisplayedMergedContent] = useState('');
-  const [nextButtonClicked, setNextButtonClicked] = useState(false);
+  const [displayedMergedContent, setDisplayedMergedContent] = useState(''); //테스트용
+  const [selectedStep, setSelectedStep] = useState(1);
+  const navigate = useNavigate();
+
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
+  const questionId = searchParams.get('id');
 
   let editor1 = undefined;
   let editor2 = undefined;
+
   useEffect(() => {
     editor1 = new Editor({
       el: document.querySelector('#editor1'),
       height: 'auto',
       initialEditType: 'markdown',
+      initialValue: editorContent1,
       previewStyle: 'tab',
-      autofocus: true,
       events: {
         change: () => {
           setEditorContent1(editor1.getMarkdown());
+        },
+        keydown: () => {
+          handleStepChange(2);
         },
       },
     });
@@ -30,10 +40,14 @@ const QuestionsAsk = () => {
       el: document.querySelector('#editor2'),
       height: 'auto',
       initialEditType: 'markdown',
+      initialValue: editorContent2,
       previewStyle: 'tab',
       events: {
         change: () => {
           setEditorContent2(editor2.getMarkdown());
+        },
+        keydown: () => {
+          handleStepChange(3);
         },
       },
     });
@@ -44,41 +58,87 @@ const QuestionsAsk = () => {
     };
   }, []);
 
-  useEffect(() => {
-    setNextButtonClicked(false);
-  }, [title, editorContent1, editorContent2]);
-
-  const handleNextButtonClick = () => {
-    setNextButtonClicked(!nextButtonClicked);
+  const handleStepChange = (step) => {
+    setSelectedStep(step);
   };
 
   const handleDiscard = () => {
     setEditorContent1('');
     setEditorContent2('');
     setTitle('');
+
     console.log(title);
     console.log(editorContent1);
     //window.location.reload();
+    navigate(`/questions`);
   };
+
+  useEffect(() => {
+    console.log(questionId);
+    if (questionId) {
+      // axios
+      //   .get('{baseURL}/questions/${questionId}')
+      //   .then((response) => {
+      //     const { title, bodyExpecting, bodyProblem } = response.data;
+      //     setTitle(title);
+      //     setEditorContent1(bodyExpecting);
+      //     setEditorContent2(bodyProblem);
+      //     if (editor1) {
+      //       editor1.setValue(bodyExpecting);
+      //     }
+      //     if (editor2) {
+      //       editor2.insertText(bodyProblem);
+      //     }
+      //   })
+      //   .catch((error) => {
+      //     // Handle error if needed
+      //     console.error(error);
+      //   });
+    }
+  }, [questionId]);
 
   const handleSubmit = () => {
-    const mergedContent = `${editorContent1}\n\n${editorContent2}`;
-    setDisplayedMergedContent(mergedContent);
+    const mergedContent = `${editorContent1}\n\n${editorContent2}`; //테스트
+    setDisplayedMergedContent(mergedContent); //테스트
+    console.log(mergedContent); //테스트
 
-    // const dataToSend = {
-    //   title: title,
-    //   content: mergedContent,
-    // };
-
-    // axios
-    //   .post('/your-server-endpoint', dataToSend)
-    //   .then((response) => {
-    //     // Handle server response if needed
-    //   })
-    //   .catch((error) => {
-    //     // Handle error if needed
-    //   });
+    if (questionId) {
+      //Edit question (/ask?id={id})
+      // const dataToSend = {
+      //   title: title,
+      //   bodyExpecting: editorContent1,
+      //   bodyProblem: editorContent2,
+      // };
+      // axios
+      //   .patch('{baseURL}/questions/${questionId}', dataToSend)
+      //   .then((response) => {
+      //    navigate(`/questions/view?id=${questionId}`);
+      //   })
+      //   .catch((error) => {
+      //     // Handle error if needed
+      //     console.error(error);
+      //   });
+    } else {
+      //craete question (/ask)
+      // const dataToSend = {
+      //   title: title,
+      //   bodyExpecting: editorContent1,
+      //   bodyProblem: editorContent2,
+      // };
+      // axios
+      //   .post('{baseURL}/questions', dataToSend)
+      //   .then((response) => {
+      //    const newQuestionId = response.headers.location.split('=').pop();
+      //    navigate(`/questions/view?id=${newQuestionId}`);
+      //   })
+      //   .catch((error) => {
+      //     // Handle error if needed
+      //   });
+    }
   };
+
+  //bodyExpecting, bodyProblem
+
   useEffect(() => {
     const viewer = Editor.factory({
       el: document.querySelector('#viewer'),
@@ -90,10 +150,10 @@ const QuestionsAsk = () => {
     return () => {
       viewer.destroy();
     };
-  }, [displayedMergedContent]);
+  }, [displayedMergedContent]); //테스트
 
   return (
-    <div className="bg-[#F8F9F9] min-h-screen">
+    <div className="bg-[#F8F9F9]  min-h-screen min-w-full">
       <div className="flex justify-center xl:justify-center pt-20 h-min">
         <div className="felx flex-col px-3 pb-6 lg:px-60 w-full max-w-screen-2xl">
           <div className="">
@@ -170,41 +230,45 @@ const QuestionsAsk = () => {
                   className="w-full border rounded-md focus:outline-none focus:border-sky-50 focus:ring-4 pl-2"
                   value={title}
                   onChange={(event) => setTitle(event.target.value)}
+                  onKeyDown={() => handleStepChange(1)}
                 />
               </div>
               <button
                 className={`flex p-2 mt-6 bg-[#0A95FF] text-white rounded-md text-sm cursor-pointer hover:bg-[#0A95FF]/50 ${
-                  title.length > 20 && !nextButtonClicked ? '' : 'hidden'
+                  title.length > 20 && selectedStep === 1 ? '' : 'hidden'
                 }`}
-                onClick={handleNextButtonClick}
               >
                 Next
               </button>
             </div>
-            <div
-              className={`border rounded-md bg-white shadow-md h-auto w-[95%] xl:absolute xl:w-[23%] xl:right-[7%] xl:top-0 
+            {selectedStep === 1 && (
+              <div
+                className={`border rounded-md bg-white shadow-md h-auto w-[95%] xl:absolute xl:w-[23%] xl:right-[7%] xl:top-0 
               `}
-            >
-              <div className="p-3 border-b border-slate-200 bg-[#F8F9F9]">
-                Introduce the problem
-              </div>
-              <div className="flex m-4">
-                <div>
-                  <img
-                    src="/images/write.png"
-                    alt="write"
-                    className="xl:min-w-[34px]"
-                  />
+              >
+                <div className="p-3 border-b border-slate-200 bg-[#F8F9F9]">
+                  Writing a good title
                 </div>
-                <div className="text-xs mx-2">
-                  <p className="mb-3">
-                    Explain how you encountered the problem you’re trying to
-                    solve, and any difficulties that have prevented you from
-                    solving it yourself.
-                  </p>
+                <div className="flex m-4">
+                  <div>
+                    <img
+                      src="/images/write.png"
+                      alt="write"
+                      className="xl:min-w-[34px]"
+                    />
+                  </div>
+                  <div className="text-xs mx-2">
+                    <p className="mb-3">
+                      Your title should summarize the problem.
+                    </p>
+                    <p className="mb-3">
+                      You might find that you have a better idea of your title
+                      after writing out the rest of the question.
+                    </p>
+                  </div>
                 </div>
               </div>
-            </div>
+            )}
           </div>
           <div className=" mt-4 flex flex-col xl:flex-row xl:mx-auto xl:relative">
             <div className="border rounded-md p-6 mb-4 bg-white w-[95%] xl:w-[68%]">
@@ -218,45 +282,39 @@ const QuestionsAsk = () => {
               <div id="editor1"></div>
               <button
                 className={`flex p-2 mt-6 bg-[#0A95FF] text-white rounded-md text-sm cursor-pointer hover:bg-[#0A95FF]/50 ${
-                  editorContent1.length > 20 ? '' : 'hidden'
+                  editorContent1.length > 20 && selectedStep === 2
+                    ? ''
+                    : 'hidden'
                 }`}
-                onClick={handleNextButtonClick}
               >
                 Next
               </button>
             </div>
-            <div
-              className={`border rounded-md bg-white shadow-md h-auto w-[95%] xl:absolute xl:w-[23%] xl:right-[7%] xl:top-0 `}
-            >
-              <div className="p-3 border-b border-slate-200 bg-[#F8F9F9]">
-                Expand on the problem
-              </div>
-              <div className="flex m-4">
-                <div>
-                  <img
-                    src="/images/write.png"
-                    alt="write"
-                    className="xl:min-w-[34px]"
-                  />
+            {selectedStep === 2 && (
+              <div
+                className={`border rounded-md bg-white shadow-md h-auto w-[95%] xl:absolute xl:w-[23%] xl:right-[7%] xl:top-0 `}
+              >
+                <div className="p-3 border-b border-slate-200 bg-[#F8F9F9]">
+                  Introduce the problem
                 </div>
-                <div className="text-xs mx-2">
-                  <p className="mb-3">
-                    Show what you’ve tried, tell us what happened, and why it
-                    didn’t meet your needs.
-                  </p>
-                  <p className="mb-3">
-                    Not all questions benefit from including code, but if your
-                    problem is better understood with code you’ve written, you
-                    should include a minimal, reproducible example.
-                  </p>
-                  <p className="mb-3">
-                    Please make sure to post code and errors as text directly to
-                    the question (and not as images), and format them
-                    appropriately.
-                  </p>
+                <div className="flex m-4">
+                  <div>
+                    <img
+                      src="/images/write.png"
+                      alt="write"
+                      className="xl:min-w-[34px]"
+                    />
+                  </div>
+                  <div className="text-xs mx-2">
+                    <p className="mb-3">
+                      Explain how you encountered the problem you’re trying to
+                      solve, and any difficulties that have prevented you from
+                      solving it yourself.
+                    </p>
+                  </div>
                 </div>
               </div>
-            </div>
+            )}
           </div>
           <div className="mt-4 flex flex-col xl:flex-row xl:mx-auto xl:relative">
             <div className="border rounded-md p-6 mb-4 bg-white w-[95%] xl:w-[68%]">
@@ -270,40 +328,48 @@ const QuestionsAsk = () => {
               <div id="editor2"></div>
               <button
                 className={`flex p-2 mt-6 bg-[#0A95FF] text-white rounded-md text-sm cursor-pointer hover:bg-[#0A95FF]/50 ${
-                  editorContent2.length > 15 && !nextButtonClicked
+                  editorContent2.length > 20 && selectedStep === 3
                     ? ''
                     : 'hidden'
                 }`}
-                onClick={handleNextButtonClick}
               >
                 Next
               </button>
             </div>
-            <div
-              className={`border rounded-md bg-white shadow-md h-auto w-[95%] xl:absolute xl:w-[23%] xl:right-[7%] xl:top-0 `}
-            >
-              <div className="p-3 border-b border-slate-200 bg-[#F8F9F9]">
-                Writing a good tittle
-              </div>
-              <div className="flex m-4">
-                <div>
-                  <img
-                    src="/images/write.png"
-                    alt="write"
-                    className="xl:min-w-[34px]"
-                  />
+            {selectedStep === 3 && (
+              <div
+                className={`border rounded-md bg-white shadow-md h-auto w-[95%] xl:absolute xl:w-[23%] xl:right-[7%] xl:top-0 `}
+              >
+                <div className="p-3 border-b border-slate-200 bg-[#F8F9F9]">
+                  Expand on the problem
                 </div>
-                <div className="text-xs mx-2">
-                  <p className="mb-3">
-                    Your title should summarize the problem.
-                  </p>
-                  <p className="mb-3">
-                    You might find that you have a better idea of your title
-                    after writing out the rest of the question.
-                  </p>
+                <div className="flex m-4">
+                  <div>
+                    <img
+                      src="/images/write.png"
+                      alt="write"
+                      className="xl:min-w-[34px]"
+                    />
+                  </div>
+                  <div className="text-xs mx-2">
+                    <p className="mb-3">
+                      Show what you’ve tried, tell us what happened, and why it
+                      didn’t meet your needs.
+                    </p>
+                    <p className="mb-3">
+                      Not all questions benefit from including code, but if your
+                      problem is better understood with code you’ve written, you
+                      should include a minimal, reproducible example.
+                    </p>
+                    <p>
+                      Please make sure to post code and errors as text directly
+                      to the question (and not as images), and format them
+                      appropriately.
+                    </p>
+                  </div>
                 </div>
               </div>
-            </div>
+            )}
           </div>
           <div className="mt-4 flex flex-col xl:flex-row xl:mx-auto xl:relative">
             <div className="border rounded-md p-6 mb-4 bg-white w-[95%] xl:w-[68%]">
@@ -380,6 +446,7 @@ const QuestionsAsk = () => {
             >
               Discard draft
             </button>
+            {/* 테스트용 */}
             <div
               id="viewer"
               className="my-4 border rounded-md p-3 bg-white"
