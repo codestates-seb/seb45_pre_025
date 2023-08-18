@@ -1,6 +1,58 @@
 import { Link } from 'react-router-dom';
 import SideCartegory from '../components/SideCartegory';
 import Sidebar from '../components/Sidebar';
+// import { useEffect } from 'react';
+// import axios from 'axios';
+
+const QuestionParams = new URLSearchParams(window.location.search);
+const QuestionQuery = QuestionParams.get('id');
+// const [answer, setAnswer] = useState(null);
+
+// useEffect(() => {
+//   axios
+//     .get('{{baseURL}}/questions?page=1&size=3')
+//     .then((response) => {
+//       setAnswer(response.data);
+//     })
+//     .catch((error) => {
+//       console.log('Error', error);
+//     });
+// }, []);
+
+const answersDetails = [
+  {
+    id: 1,
+    title: '제목1',
+    body: '본문',
+    authorId: 0,
+    createdAt: '2023-08-16T23:19:49.0995',
+    modifiedAt: '2023-08-16T23:19:49.0995',
+  },
+  {
+    id: 2,
+    title: '제목2',
+    body: '본문',
+    authorId: 0,
+    createdAt: '2023-08-16T23:19:49.0995',
+    modifiedAt: '2023-08-16T23:19:49.0995',
+  },
+  {
+    id: 3,
+    title: '제목3',
+    body: '본문',
+    authorId: 0,
+    createdAt: '2023-08-16T23:19:49.0995',
+    modifiedAt: '2023-08-16T23:19:49.0995',
+  },
+  {
+    id: 4,
+    title: '제목3',
+    body: '본문',
+    authorId: 0,
+    createdAt: '2023-08-16T23:19:49.0995',
+    modifiedAt: '2023-08-16T23:19:49.0995',
+  },
+];
 
 const Questions = () => {
   return (
@@ -51,46 +103,49 @@ const Questions = () => {
               </div>
             </div>
           </div>
-          <div className="text-sm flex  p-5 border-b">
-            <div className="flex  flex-col justify-start items-end">
-              <div className="mx-1  px-1 py-1">
-                <span className="pr-1">0</span>
-                votes
-              </div>
-              <div className="mx-1 border border-green-600 text-green-600 rounded px-1 py-1">
-                <span className="pr-1">0</span>
-                answers
-              </div>
-              <div className="mx-1  px-1 py-1 text-yellow-900">
-                <span className="pr-1">0</span>
-                views
-              </div>
-            </div>
-            <div className="w-auto ml-3">
-              <Link to="/questions/id">
-                {/* 타이틀 */}
-                <div className="text-blue-900 text-xl">
-                  Why does tmap render 80 times faster than ggplot2? [Plotting
-                  shapefiles in R with ggplot2::geom_sf(), using XQuartz/X11
-                  graphics device on macOS]
+          {answersDetails.map((answer) => (
+            <div className="text-sm flex  p-5 border-b" key={answer.answerId}>
+              <div className="flex  flex-col justify-start items-end">
+                <div className="mx-1  px-1 py-1">
+                  <span className="pr-1">0</span>
+                  votes
                 </div>
-              </Link>
-              {/* Suv Title */}
-              <div className="text-yellow-900 text-sm mt-2">
-                Update/Edit/Reprex: Rendering the same spatial data with the
-                same graphics device takes 1 second with tmap versus 80 seconds
-                with ggplot2, even though the tmap plot&rsquo;s R object is 80x
-                larger in size. ...
+                <div className="mx-1 border border-green-600 text-green-600 rounded px-1 py-1">
+                  <span className="pr-1">0</span>
+                  answers
+                </div>
+                <div className="mx-1  px-1 py-1 text-yellow-900">
+                  <span className="pr-1">0</span>
+                  views
+                </div>
               </div>
-              <div className="flex text-xs justify-end mt-4">
-                {/* 작성자 */}
-                <div>dad 1,335</div>
-                {/* 작성 시간 */}
-                <div>asked Jul 1, 2018 at 18:42</div>
+              <div className="w-auto ml-3">
+                <Link to={`/questions/id?=${QuestionQuery}`}>
+                  {/* 타이틀 */}
+                  <div className="text-blue-900 text-xl">
+                    Why does tmap render 80 times faster than ggplot2? [Plotting
+                    shapefiles in R with ggplot2::geom_sf(), using XQuartz/X11
+                    graphics device on macOS]
+                  </div>
+                </Link>
+                {/* Suv Title */}
+                <div className="text-yellow-900 text-sm mt-2">
+                  Update/Edit/Reprex: Rendering the same spatial data with the
+                  same graphics device takes 1 second with tmap versus 80
+                  seconds with ggplot2, even though the tmap plot&rsquo;s R
+                  object is 80x larger in size. ...
+                </div>
+                <div className="flex text-xs justify-end mt-4">
+                  {/* 작성자 */}
+                  <div>dad 1,335</div>
+                  {/* 작성 시간 */}
+                  <div>asked Jul 1, 2018 at 18:42</div>
+                </div>
               </div>
             </div>
-          </div>
+          ))}
         </div>
+
         <div className="flex py-4 w-[36%]">
           <Sidebar />
         </div>
