@@ -2,8 +2,7 @@ package com.codinghaezo.stackOverFlow.member;
 
 import com.codinghaezo.stackOverFlow.exception.BusinessLogicException;
 import com.codinghaezo.stackOverFlow.exception.ExceptionCode;
-import com.codinghaezo.stackOverFlow.logIn.utils.CustomAuthorityUtils;
-import org.hibernate.metamodel.model.domain.internal.MapMember;
+
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.data.domain.Page;
@@ -84,13 +83,11 @@ public class MemberService {
     }
 
     @Transactional(readOnly = true)
-    public Member findVerifiedMember(long memberId){
-        Optional<Member> optionalMember =
-                memberRepository.findById(memberId);
-        Member findMember =
-                optionalMember.orElseThrow(() ->
-                        new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
-        return findMember;
+
+    public Member findVerifiedMember(long memberId) {
+        Optional<Member> optionalMember = memberRepository.findById(memberId);
+        return optionalMember.orElseThrow(() -> new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
+
     }
 
     private void verifyExistsEmail(String email)  {

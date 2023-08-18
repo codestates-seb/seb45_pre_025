@@ -18,73 +18,47 @@ import javax.validation.ConstraintViolationException;
 @Slf4j
 @RestControllerAdvice
 public class GlobalExceptionAdvice {
+
     @ExceptionHandler
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ErrorResponse handleMethodArgumentNotValidException(
-            MethodArgumentNotValidException e) {
-        final ErrorResponse response = ErrorResponse.of(e.getBindingResult());
-
-        return response;
+    public ErrorResponse handleMethodArgumentNotValidException(MethodArgumentNotValidException e) {
+        return ErrorResponse.of(e.getBindingResult());
     }
 
     @ExceptionHandler
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ErrorResponse handleConstraintViolationException(
-            ConstraintViolationException e) {
-        final ErrorResponse response = ErrorResponse.of(e.getConstraintViolations());
-
-        return response;
+    public ErrorResponse handleConstraintViolationException(ConstraintViolationException e) {
+        return ErrorResponse.of(e.getConstraintViolations());
     }
 
     @ExceptionHandler
-    public ResponseEntity handleBusinessLogicException(BusinessLogicException e) {
+    public ResponseEntity<ErrorResponse> handleBusinessLogicException(BusinessLogicException e) {
         final ErrorResponse response = ErrorResponse.of(e.getExceptionCode());
-
-        return new ResponseEntity<>(response, HttpStatus.valueOf(e.getExceptionCode()
-                .getStatus()));
+        return new ResponseEntity<>(response, HttpStatus.valueOf(e.getExceptionCode().getStatus()));
     }
 
     @ExceptionHandler
     @ResponseStatus(HttpStatus.METHOD_NOT_ALLOWED)
-    public ErrorResponse handleHttpRequestMethodNotSupportedException(
-            HttpRequestMethodNotSupportedException e) {
-
-        final ErrorResponse response = ErrorResponse.of(HttpStatus.METHOD_NOT_ALLOWED);
-
-        return response;
+    public ErrorResponse handleHttpRequestMethodNotSupportedException(HttpRequestMethodNotSupportedException e) {
+        return ErrorResponse.of(HttpStatus.METHOD_NOT_ALLOWED);
     }
 
     @ExceptionHandler
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ErrorResponse handleHttpMessageNotReadableException(
-            HttpMessageNotReadableException e) {
-
-        final ErrorResponse response = ErrorResponse.of(HttpStatus.BAD_REQUEST,
-                "Required request body is missing");
-
-        return response;
+    public ErrorResponse handleHttpMessageNotReadableException(HttpMessageNotReadableException e) {
+        return ErrorResponse.of(HttpStatus.BAD_REQUEST, "Required request body is missing");
     }
 
     @ExceptionHandler
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ErrorResponse handleMissingServletRequestParameterException(
-            MissingServletRequestParameterException e) {
-
-        final ErrorResponse response = ErrorResponse.of(HttpStatus.BAD_REQUEST,
-                e.getMessage());
-
-        return response;
+    public ErrorResponse handleMissingServletRequestParameterException(MissingServletRequestParameterException e) {
+        return ErrorResponse.of(HttpStatus.BAD_REQUEST, e.getMessage());
     }
 
     @ExceptionHandler
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public ErrorResponse handleException(Exception e) {
         log.error("# handle Exception", e);
-        // TODO 애플리케이션의 에러는 에러 로그를 로그에 기록하고, 관리자에게 이메일이나 카카오 톡,
-        //  슬랙 등으로 알려주는 로직이 있는게 좋습니다.
-
-        final ErrorResponse response = ErrorResponse.of(HttpStatus.INTERNAL_SERVER_ERROR);
-
-        return response;
+        return ErrorResponse.of(HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }
