@@ -20,13 +20,27 @@ public class Member extends Auditable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long memberId;
 
+    @Column
+    private String nickName;
+
     @Column(nullable = false, updatable = false, unique = true)
     private String email;
 
     @Column
     private String password;
+
+    @ElementCollection(fetch = FetchType.EAGER)
+    private List<String> roles = new ArrayList<>();
+
+
     public Member(String email) {
         this.email = email;
     }
 
+    public Member(String nickName, String email, String password, List<String> roles) {
+        this.nickName = nickName;
+        this.email = email;
+        this.password = password;
+        this.roles = roles;
+    }
 }

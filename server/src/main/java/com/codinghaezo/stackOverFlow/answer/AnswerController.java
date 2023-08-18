@@ -50,14 +50,14 @@ public class AnswerController {
         return ResponseEntity.ok(new AnswerDto.MultiResponseDto(mapper.answersToAnswerResponseDtos(answers), pageAnswer));
     }
 
-    @PatchMapping("/{answer-id}")
-    public ResponseEntity patchAnswer(@PathVariable("answer-id") @Positive long answerId,
-                                    @RequestBody AnswerDto.AnswerUpdateDto requestBody) {
-
-                Answer updatedAnswer = answerService.updateAnswer(mapper.answerUpdateDtoToAnswer(requestBody), answerId);
-
-        return ResponseEntity.ok(mapper.answerToAnswerResponseDto(updatedAnswer));
-    }
+//    @PatchMapping("/{answer-id}")
+//    public ResponseEntity patchAnswer(@PathVariable("answer-id") @Positive long answerId,
+//                                    @RequestBody AnswerDto.AnswerUpdateDto requestBody) {
+//
+//                Answer updatedAnswer = answerService.updateAnswer(mapper.answerUpdateDtoToAnswer(requestBody), answerId);
+//
+//        return ResponseEntity.ok(mapper.answerToAnswerResponseDto(updatedAnswer));
+//    }
 
 
     @DeleteMapping("/{answer-id}")
