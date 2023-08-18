@@ -3,10 +3,7 @@ package com.codinghaezo.stackOverFlow.domain.question.entity;
 import com.codinghaezo.stackOverFlow.answer.Answer;
 import com.codinghaezo.stackOverFlow.audit.Auditable;
 import com.codinghaezo.stackOverFlow.member.Member;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -32,14 +29,11 @@ public class Question extends Auditable {
     @Column(nullable = false)
     private String bodyExpecting;
 
+    @Setter
     @ManyToOne
     @JoinColumn(name = "author_id")
     private Member author;
 
-    @OneToMany(mappedBy = "question")
+    @OneToMany(mappedBy = "question", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Answer> answers = new ArrayList<>();
-
-    public void addAnswer(Answer answer) {
-        this.answers.add(answer);
-    }
 }
