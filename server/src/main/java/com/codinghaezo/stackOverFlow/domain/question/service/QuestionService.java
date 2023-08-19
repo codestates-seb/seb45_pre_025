@@ -46,11 +46,8 @@ public class QuestionService {
     }
 
     public Question findQuestion(long questionId) {
-        Question foundQuestion = questionRepository.findById(questionId)
+        return questionRepository.findById(questionId)
             .orElseThrow(() -> new BusinessLogicException(ExceptionCode.QUESTION_NOT_FOUND));
-        questionRepository.updateView(questionId);
-        foundQuestion.setViews(foundQuestion.getViews() + 1);
-        return foundQuestion;
     }
 
     public Page<Question> findQuestions(int page, int size) {
@@ -62,19 +59,16 @@ public class QuestionService {
         String signedInUserEmail = userAuthService.getSignedInUserEmail(request);
         Question foundQuestion = findQuestion(questionId);
         verifyAuthor(signedInUserEmail, foundQuestion);
-        Question updatedQuestion = Question.builder()
-            .id(questionId)
-            .title((question.getTitle() == null)
-                ? foundQuestion.getTitle()
-                : question.getTitle())
-            .bodyProblem((question.getBodyProblem() == null)
-                ? foundQuestion.getBodyProblem()
-                : question.getBodyProblem())
-            .bodyExpecting((question.getBodyExpecting() == null)
-                ? foundQuestion.getBodyExpecting()
-                : question.getBodyExpecting())
-            .build();
-        return questionRepository.save(updatedQuestion);
+        foundQuestion.setTitle((question.getTitle() == null)
+            ? foundQuestion.getTitle()
+            : question.getTitle());
+        foundQuestion.setBodyProblem((question.getBodyProblem() == null)
+            ? foundQuestion.getBodyProblem()
+            : question.getBodyProblem());
+        foundQuestion.setBodyExpecting((question.getBodyExpecting() == null)
+            ? foundQuestion.getBodyExpecting()
+            : question.getBodyExpecting());
+        return questionRepository.save(foundQuestion);
     }
 
     public void deleteQuestion(long questionId, HttpServletRequest request) {
@@ -82,6 +76,10 @@ public class QuestionService {
         Question foundQuestion = findQuestion(questionId);
         verifyAuthor(signedInUserEmail, foundQuestion);
         questionRepository.delete(foundQuestion);
+    }
+
+    public void increaseViews(long questionId) {
+        questionRepository.increaseViews(questionId);
     }
 
     private Member findMemberByEmail(String email) {

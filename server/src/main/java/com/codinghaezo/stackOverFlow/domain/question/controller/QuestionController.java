@@ -33,6 +33,8 @@ public class QuestionController {
     @GetMapping("/{question-id}")
     public ResponseEntity<SingleResponse> getQuestion(@PathVariable("question-id") long questionId) {
         Question foundQuestion = questionService.findQuestion(questionId);
+        questionService.increaseViews(questionId);
+        foundQuestion.setViews(foundQuestion.getViews() + 1);
         SingleResponse singleResponseDto = SingleResponse.parse(foundQuestion);
         return ResponseEntity.ok(singleResponseDto);
     }
