@@ -30,8 +30,7 @@ public class Question extends Auditable {
     private String bodyExpecting;
 
     @Setter
-    @Column(nullable = false)
-    private Integer views = 0;
+    private int views;
 
     @Setter
     @ManyToOne

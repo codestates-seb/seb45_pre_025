@@ -8,10 +8,9 @@ import com.codinghaezo.stackOverFlow.domain.question.entity.Question;
 import com.codinghaezo.stackOverFlow.domain.question.service.QuestionService;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.net.URI;
 
 @RequestMapping("/questions")
@@ -25,12 +24,9 @@ public class QuestionController {
     }
 
     @PostMapping
-    public ResponseEntity<?> postQuestion(
-        @RequestBody Post postDto,
-        @AuthenticationPrincipal UserDetails principal
-    ) {
+    public ResponseEntity<?> postQuestion(@RequestBody Post postDto, HttpServletRequest request) {
         Question question = postDto.toQuestion();
-        URI location = questionService.createQuestion(principal.getUsername(), question);
+        URI location = questionService.createQuestion(request, question);
         return ResponseEntity.created(location).build();
     }
 
@@ -55,10 +51,10 @@ public class QuestionController {
     public ResponseEntity<SingleResponse> patchQuestion(
         @PathVariable("question-id") long questionId,
         @RequestBody Patch patchDto,
-        @AuthenticationPrincipal UserDetails principal
+        HttpServletRequest request
     ) {
         Question question = patchDto.toQuestion();
-        Question updatedQuestion = questionService.updateQuestion(questionId, question, principal.getUsername());
+        Question updatedQuestion = questionService.updateQuestion(questionId, question, request);
         SingleResponse singleResponseDto = SingleResponse.parse(updatedQuestion);
         return ResponseEntity.ok(singleResponseDto);
     }
@@ -66,9 +62,9 @@ public class QuestionController {
     @DeleteMapping("/{question-id}")
     public ResponseEntity<?> deleteQuestion(
         @PathVariable("question-id") long questionId,
-        @AuthenticationPrincipal UserDetails principal
+        HttpServletRequest request
     ) {
-        questionService.deleteQuestion(questionId, principal.getUsername());
+        questionService.deleteQuestion(questionId, request);
         return ResponseEntity.noContent().build();
     }
 }

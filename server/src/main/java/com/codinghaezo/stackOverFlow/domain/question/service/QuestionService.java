@@ -5,6 +5,7 @@ import com.codinghaezo.stackOverFlow.domain.question.entity.Question;
 import com.codinghaezo.stackOverFlow.domain.question.repository.QuestionRepository;
 import com.codinghaezo.stackOverFlow.exception.BusinessLogicException;
 import com.codinghaezo.stackOverFlow.exception.ExceptionCode;
+import com.codinghaezo.stackOverFlow.logIn.utils.UserAuthService;
 import com.codinghaezo.stackOverFlow.member.Member;
 import com.codinghaezo.stackOverFlow.member.MemberRepository;
 import org.springframework.data.domain.Page;
@@ -13,25 +14,32 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.servlet.http.HttpServletRequest;
 import java.net.URI;
 
 @Service
 @Transactional
 public class QuestionService {
 
-    private final QuestionRepository questionRepository;
+    private final UserAuthService userAuthService;
 
+    private final QuestionRepository questionRepository;
 
     private final MemberRepository memberRepository;
 
-    public QuestionService(QuestionRepository questionRepository, MemberRepository memberRepository) {
-
+    public QuestionService(
+        UserAuthService userAuthService,
+        QuestionRepository questionRepository,
+        MemberRepository memberRepository
+    ) {
+        this.userAuthService = userAuthService;
         this.questionRepository = questionRepository;
         this.memberRepository = memberRepository;
     }
 
-    public URI createQuestion(String email, Question question) {
-        Member author = findMemberByEmail(email);
+    public URI createQuestion(HttpServletRequest request, Question question) {
+        String signedInUserEmail = userAuthService.getSignedInUserEmail(request);
+        Member author = findMemberByEmail(signedInUserEmail);
         question.setAuthor(author);
         long questionId = questionRepository.save(question).getId();
         return UriCreator.createUri("/questions", questionId);
@@ -40,7 +48,8 @@ public class QuestionService {
     public Question findQuestion(long questionId) {
         Question foundQuestion = questionRepository.findById(questionId)
             .orElseThrow(() -> new BusinessLogicException(ExceptionCode.QUESTION_NOT_FOUND));
-        foundQuestion.setViews(questionRepository.updateView(questionId));
+        questionRepository.updateView(questionId);
+        foundQuestion.setViews(foundQuestion.getViews() + 1);
         return foundQuestion;
     }
 
@@ -49,9 +58,10 @@ public class QuestionService {
         return questionRepository.findAll(pageRequest);
     }
 
-    public Question updateQuestion(long questionId, Question question, String principalEmail) {
+    public Question updateQuestion(long questionId, Question question, HttpServletRequest request) {
+        String signedInUserEmail = userAuthService.getSignedInUserEmail(request);
         Question foundQuestion = findQuestion(questionId);
-        verifyAuthor(principalEmail, foundQuestion);
+        verifyAuthor(signedInUserEmail, foundQuestion);
         Question updatedQuestion = Question.builder()
             .id(questionId)
             .title((question.getTitle() == null)
@@ -67,12 +77,12 @@ public class QuestionService {
         return questionRepository.save(updatedQuestion);
     }
 
-    public void deleteQuestion(long questionId, String principalEmail) {
+    public void deleteQuestion(long questionId, HttpServletRequest request) {
+        String signedInUserEmail = userAuthService.getSignedInUserEmail(request);
         Question foundQuestion = findQuestion(questionId);
-        verifyAuthor(principalEmail, foundQuestion);
+        verifyAuthor(signedInUserEmail, foundQuestion);
         questionRepository.delete(foundQuestion);
     }
-
 
     private Member findMemberByEmail(String email) {
         return memberRepository.findByEmail(email)
@@ -85,5 +95,4 @@ public class QuestionService {
             throw new BusinessLogicException(ExceptionCode.CANNOT_CHANGE_QUESTION);
         }
     }
-
 }
