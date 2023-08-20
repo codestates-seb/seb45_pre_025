@@ -16,6 +16,8 @@ const QuestionsAsk = () => {
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
   const questionId = searchParams.get('id');
+  //const baseURL = '{baswe}';
+  //const Authorization = localStorage.getItem('token');
 
   let editor1 = undefined;
   let editor2 = undefined;
@@ -78,18 +80,12 @@ const QuestionsAsk = () => {
     console.log(questionId);
     if (questionId) {
       // axios
-      //   .get('{baseURL}/questions/${questionId}')
+      //   .get('${baseURL}/questions/${questionId}')
       //   .then((response) => {
       //     const { title, bodyExpecting, bodyProblem } = response.data;
       //     setTitle(title);
-      //     setEditorContent1(bodyExpecting);
-      //     setEditorContent2(bodyProblem);
-      //     if (editor1) {
-      //       editor1.setValue(bodyExpecting);
-      //     }
-      //     if (editor2) {
-      //       editor2.insertText(bodyProblem);
-      //     }
+      //     setEditorContent1(bodyProblem);
+      //     setEditorContent2(bodyExpecting);
       //   })
       //   .catch((error) => {
       //     // Handle error if needed
@@ -103,42 +99,50 @@ const QuestionsAsk = () => {
     setDisplayedMergedContent(mergedContent); //테스트
     console.log(mergedContent); //테스트
 
-    if (questionId) {
-      //Edit question (/ask?id={id})
-      // const dataToSend = {
-      //   title: title,
-      //   bodyExpecting: editorContent1,
-      //   bodyProblem: editorContent2,
-      // };
-      // axios
-      //   .patch('{baseURL}/questions/${questionId}', dataToSend)
-      //   .then((response) => {
-      //    navigate(`/questions/view?id=${questionId}`);
-      //   })
-      //   .catch((error) => {
-      //     // Handle error if needed
-      //     console.error(error);
-      //   });
-    } else {
-      //craete question (/ask)
-      // const dataToSend = {
-      //   title: title,
-      //   bodyExpecting: editorContent1,
-      //   bodyProblem: editorContent2,
-      // };
-      // axios
-      //   .post('{baseURL}/questions', dataToSend)
-      //   .then((response) => {
-      //    const newQuestionId = response.headers.location.split('=').pop();
-      //    navigate(`/questions/view?id=${newQuestionId}`);
-      //   })
-      //   .catch((error) => {
-      //     // Handle error if needed
-      //   });
-    }
+    // if (questionId) {
+    //   //Edit question (/ask?id={id})
+    //   const dataToSend = {
+    //     title: title,
+    //     bodyExpecting: editorContent1,
+    //     bodyProblem: editorContent2,
+    //   };
+    //   axios
+    //     .patch('${baseURL}/questions/${questionId}', dataToSend, {
+    //       headers: {
+    //         Authorization: `Bearer ${Authorization}`,
+    //       },
+    //     })
+    //     .then((response) => {
+    //       navigate(`/questions/view?id=${questionId}`);
+    //     })
+    //     .catch((error) => {
+    //       // Handle error if needed
+    //       console.error(error);
+    //       console.error('Error editing a question:', error);
+    //     });
+    // } else {
+    //   //craete question (/ask)
+    //   const dataToSend = {
+    //     title: title,
+    //     bodyExpecting: editorContent1,
+    //     bodyProblem: editorContent2,
+    //   };
+    //   axios
+    //     .post('${baseURL}/questions', dataToSend, {
+    //       headers: {
+    //         Authorization: `Bearer ${Authorization}`,
+    //       },
+    //     })
+    //     .then((response) => {
+    //       const newQuestionId = response.headers.location.split('=').pop();
+    //       navigate(`/questions/view?id=${newQuestionId}`);
+    //     })
+    //     .catch((error) => {
+    //       // Handle error if needed
+    //       console.error('Error posting a question:', error);
+    //     });
+    // }
   };
-
-  //bodyExpecting, bodyProblem
 
   useEffect(() => {
     const viewer = Editor.factory({

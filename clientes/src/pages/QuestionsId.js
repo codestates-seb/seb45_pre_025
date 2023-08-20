@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useState, useEffect } from 'react';
 //import axios from 'axios';
 import { useLocation, Link } from 'react-router-dom';
 import Editor from '@toast-ui/editor';
@@ -11,11 +11,14 @@ const QuestionsId = () => {
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
   const questionId = searchParams.get('id');
+  //const [error, setError] = useState(null);
+  //const [questionDetails, setQuestionDetails] = useState([]);
+  //const [answersDetails, setAnswersDetails] = useState([]);
+  const [newAnswer, setNewAnswer] = useState('');
+  //const [commentsDetails, setCommentsDetails] = useState([]);
 
-  //const [questionDetails, setQuestionDetails] = useState(null);
-  //const [answersDetails, setAnswersDetails] = useState(null);
-  //const [commentsDetails, setCommentsDetails] = useState(null);
-  //const [editorContent, setEditorContent] = useState('');
+  //const apiUrl = '{api-url}';
+  //const Authorization = localStorage.getItem('token'); // Replace with your auth token.
 
   const questionDetails = [
     {
@@ -23,13 +26,12 @@ const QuestionsId = () => {
       title: '제목',
       bodyExpecting: '기대하는 바',
       bodyProblem: '문제점',
-      authorId: 0,
+      authorId: 'pepe the frog',
+      views: 3,
       createdAt: '2023-08-16T23:19:49.0995',
       modifiedAt: '2023-08-16T23:19:49.0995',
     },
   ];
-
-  //const answersDetails = undefined;
 
   const answersDetails = [
     {
@@ -55,6 +57,7 @@ const QuestionsId = () => {
       commentId: 1,
       createdAt: '2023-08-16T23:19:49.0995',
       modifiedAt: '2023-08-16T23:19:49.0995',
+      userId: 'pepe the frog',
     },
     {
       answerId: 1,
@@ -80,102 +83,122 @@ const QuestionsId = () => {
   ];
 
   useEffect(() => {
-    const questionBody = `${questionDetails[0].bodyExpecting}\n\n${questionDetails[0].bodyProblem}`;
-    const question = Editor.factory({
-      el: document.querySelector('#question'),
-      initialValue: questionBody,
-      height: 'auto',
-      viewer: true,
-    });
+    let question = undefined;
+    if (questionDetails.length > 0) {
+      const questionBody = `${questionDetails[0].bodyProblem}\n\n${questionDetails[0].bodyExpecting}`;
+      question = Editor.factory({
+        el: document.querySelector('#question'),
+        initialValue: questionBody,
+        height: 'auto',
+        viewer: true,
+      });
 
-    // const answer = Editor.factory({
-    //   el: document.querySelector('#answer'), //id={`answer-${answer.answerId}`}
-    //   initialValue: answersDetails.content, //answerContent, //answer.content
-    //   height: 'auto',
-    //   viewer: true,
-    // });
-
-    return () => {
-      question.destroy();
-      //answer.destroy();
-    };
+      return () => {
+        question.destroy();
+      };
+    }
   }, [questionDetails]); //테스트용/api 연결하면 수정
 
-  // useEffect(() => {
-  //   const apiUrl = `{api-url}/questions/${questionId}`;
-  //   axios
-  //     .get(apiUrl)
-  //     .then((response) => {
-  //       setQuestionDetails(response.data);
-  //     })
-  //     .catch((error) => {
-  //       console.error('Error fetching question details:', error);
-  //     });
-  // }, []);
-
-  // useEffect(() => {
-  //   const fetchAnswersAndComments = async () => {
-  //     try {
-  //       const answersResponse = await axios.get(`${apiUrl}/${questionId}/answers`);
-  //       const fetchedAnswers = answersResponse.data;
-
-  //       setAnswersDetails(fetchedAnswers);
-
-  //       fetchedAnswers.forEach(async (answer) => {
-  //         try {
-  //           const commentsResponse = await axios.get(`${apiUrl}/answers/${answer.answerId}/comments`);
-  //           const commentsForAnswer = commentsResponse.data;
-  //           setCommentsDetails((prevComments) => [...prevComments, ...commentsForAnswer]);
-  //         } catch (error) {
-  //           console.error(`Error fetching comments for answer ${answer.answerId}:`, error);
-  //         }
-  //       });
-  //     } catch (error) {
-  //       console.error('Error fetching answers:', error);
-  //     }
-  //   };
-
-  //   fetchAnswersAndComments();
-  // }, [questionId]);
-
-  // useEffect(() => {
-  //   const apiUrl = `{api-url}/${questionId}/answers}`;
-  //   axios
-  //     .get(apiUrl)
-  //     .then((response) => {
-  //       setAnswersDetails(response.data);
-  //     })
-  //     .catch((error) => {
-  //       console.error('Error fetching question details:', error);
-  //     });
-  // }, []);
-
-  // useEffect(() => {
-  //   const apiUrl = `{api-url}/answers/${answersDetail.answerId}/comments}`;
-  //   axios
-  //     .get(apiUrl)
-  //     .then((response) => {
-  //       setCommentsDetails(response.data);
-  //     })
-  //     .catch((error) => {
-  //       console.error('Error fetching question details:', error);
-  //     });
-  // }, []);
+  useEffect(() => {
+    // axios
+    //   .get(`${apiUrl}/questions/${questionId}`)
+    //   .then((response) => {
+    //     setQuestionDetails(response.data);
+    //   })
+    //   .catch((error) => {
+    //     console.error('Error fetching question details:', error);
+    //     setError('An error occurred while fetching data.');
+    //   });
+  }, []);
 
   useEffect(() => {
-    const editor = new Editor({
-      el: document.querySelector('#editor'),
-      height: 'auto',
-      initialEditType: 'markdown',
-      previewStyle: 'tab',
-      placeholder:
-        'Please be sure to answer the question. Provide details and share your research!',
-    });
+    // const fetchAnswersAndComments = async () => {
+    //   try {
+    //     // Fetch answers
+    //     const answersResponse = await axios.get(
+    //       `${apiUrl}/${questionId}/answers`,
+    //     );
+    //     const fetchedAnswers = answersResponse.data.map((answer) => {
+    //       // Extract user ID from email
+    //       const userEmail = answer.userEmail;
+    //       const userId = userEmail.split('@')[0];
+    //       return {
+    //         ...answer,
+    //         userId: userId, // Add the user ID to the answer object
+    //       };
+    //     });
+    //     // Fetch comments for each answer and accumulate them
+    //     const allComments = [];
+    //     for (const answer of fetchedAnswers) {
+    //       const commentsResponse = await axios.get(
+    //         `${apiUrl}/answers/${answer.answerId}/comments`,
+    //       );
+    //       const commentsForAnswer = commentsResponse.data.map((comment) => {
+    //         // Extract user ID from email
+    //         const userEmail = comment.userEmail;
+    //         const userId = userEmail.split('@')[0];
+    //         return {
+    //           ...comment,
+    //           userId: userId, // Add the user ID to the comment object
+    //         };
+    //       });
+    //       allComments.push(...commentsForAnswer);
+    //     }
+    //     // Set answers and accumulated comments in state
+    //     setAnswersDetails(fetchedAnswers);
+    //     setCommentsDetails(allComments);
+    //   } catch (error) {
+    //     console.error('Error fetching answers and comments:', error);
+    //     setError('An error occurred while fetching data.');
+    //   }
+    // };
+    // fetchAnswersAndComments();
+  }, [questionId, newAnswer]);
 
-    return () => {
-      editor.destroy();
-    };
-  }, []);
+  const handleNewAnswerSubmit = () => {
+    // Create a new answer
+    // const dataToSend = {
+    //   content: newAnswer,
+    //   headers: {
+    //   Authorization: `Bearer ${Authorization}`,
+    //   },
+    // };
+
+    // axios
+    //   .post(`${apiUrl}/${questionId}/answer`, dataToSend)
+    //   .then((response) => {
+    //     console.log('Successfully submitted answer:', response);
+    //   })
+    //   .catch((error) => {
+    //     console.error('Error submitting answer:', error);
+    //   });
+    setNewAnswer('');
+  };
+
+  const handleQuestionDelete = () => {
+    // // Delete current question
+    // const dataToSend = {
+    //   questionId: questionId,
+    //   headers: {
+    //   Authorization: `Bearer ${Authorization}`,
+    //   },
+    // };
+    // axios
+    //   .delete(`${apiUrl}/questions/${questionId}`, dataToSend)
+    //   .then((response) => {
+    //     console.log('Successfully deleted answer:', response);
+    //     navigate('/questions');
+    //   })
+    //   .catch((error) => {
+    //     console.error('Error submitting answer:', error);
+    //   });
+  };
+
+  const handleCommentDelete = () => {};
+
+  const handleAnswerDelete = () => {};
+
+  const handleAnswerEdit = () => {};
 
   return (
     <div className="flex justify-center py-[2%] w-full">
@@ -185,36 +208,52 @@ const QuestionsId = () => {
       <div className="flex flex-col justify-center pt-14 pl-6 mb-1.5 divide-y divide-slate-200 w-4/6 ">
         <div className="">
           <div className="flex justify-between">
-            <div className="mb-2 text-2xl">{questionDetails[0].title}</div>
-            <div>
+            {questionDetails[0] && (
+              <div className="mb-2 text-2xl">{questionDetails[0].title}</div>
+            )}
+            <div className="text-white text-sm cursor-pointer">
               {/* 로그인 정보 받으면 수정/삭제 버튼 보이게 */}
               <Link to={`/questions/ask?id=${questionId}`}>
-                <button className=" p-2 mt-6 bg-[#0A95FF] text-white rounded-md text-sm ">
+                <button className=" p-2 mt-6 bg-[#0A95FF] rounded-md hover:bg-[#0A95FF]/50">
                   Edit
                 </button>
               </Link>
-              <button className="p-2 mt-6 bg-[#0A95FF] text-white rounded-md text-sm cursor-not-allowed">
+              <button
+                onClick={handleQuestionDelete}
+                className="p-2 mt-6 ml-1 bg-red-700/80 hover:bg-red-700/20 rounded-md"
+              >
                 Delete
               </button>
               <Link to="/questions/ask">
-                <button className="p-2 bg-[#0A95FF] text-white rounded-md text-sm cursor-pointer">
+                <button className="p-2 ml-1 bg-[#0A95FF] rounded-md hover:bg-[#0A95FF]/50">
                   Ask Question
                 </button>
               </Link>
             </div>
-          </div>
-          <div className="flex mb-2">
-            <div className="mr-4 text-xs font-light">
-              Asked{' '}
-              {formatDistanceToNow(new Date(questionDetails[0].createdAt))} ago
+          </div>{' '}
+          {questionDetails[0] && (
+            <div className="flex mb-2">
+              <div className="mr-4 text-xs font-light">
+                Asked{' '}
+                {formatDistanceToNow(new Date(questionDetails[0].createdAt))}{' '}
+                ago
+              </div>
+              <div className="mr-4 text-xs font-light">
+                Modified{' '}
+                {formatDistanceToNow(new Date(questionDetails[0].modifiedAt))}{' '}
+                ago
+              </div>
+              <div className="text-xs font-light">
+                Viewed{` ${questionDetails[0].views}`}
+              </div>
             </div>
-            <div className="mr-4 text-xs font-light">
-              Modified{' '}
-              {formatDistanceToNow(new Date(questionDetails[0].modifiedAt))} ago
-            </div>
-            {/* <div className="text-xs font-light">{`Viewed`}</div> */}
-          </div>
+          )}
         </div>
+        {/* {error ? (
+          <div>
+            <p>{error}</p>
+          </div>
+        ) : questionDetails && questionDetails[0] ? ( */}
         <div className="flex justify-between ">
           <div className="w-3/4">
             <div className="flex grow py-4 min-h-[12%]">
@@ -248,7 +287,7 @@ const QuestionsId = () => {
                   <div
                     id="question"
                     className="mb-4 border rounded-md p-3 bg-white"
-                  ></div>
+                  >{`${questionDetails[0].bodyExpecting}\n\n${questionDetails[0].bodyProblem}`}</div>
                 </div>
                 {/* <ul className="relative">
                   <li className="inline-block space-x-1 p-1.5 bg-[#E1ECF4] text-[#39739D] rounded-md text-xs">
@@ -266,14 +305,13 @@ const QuestionsId = () => {
                       at{' '}
                       {format(new Date(questionDetails[0].createdAt), 'HH:mm')}
                     </div>
-                    <div className="flex">
+                    <div className="flex pt-1">
                       <img
-                        src="/images/Vector.svg"
+                        src="https://www.freeiconspng.com/thumbs/pepe-png/hd-pepe-png-transparent-background-4.png"
                         alt="user"
                         className="h-8 w-8"
                       />
-                      <div className="text-[#0074CC] ml-2">
-                        {/* {유저이름 받아와야함} */}
+                      <div className="text-[#0074CC] ml-2.5">
                         {questionDetails[0].authorId}
                       </div>
                     </div>
@@ -335,7 +373,13 @@ const QuestionsId = () => {
                       tag
                     </li>
                   </ul> */}
-                      <div className="flex justify-end">
+                      <div className="flex justify-between">
+                        <div className="flex items-end mb-4 text-[#6A737C] text-sm">
+                          <button onClick={handleAnswerEdit} className="mr-2">
+                            Edit
+                          </button>
+                          <button onClick={handleAnswerDelete}>Delete</button>
+                        </div>
                         <div className="  my-4 p-1.5 text-[#39739D] text-xs">
                           <div className="text-[#6A737C]">
                             {format(
@@ -343,13 +387,15 @@ const QuestionsId = () => {
                               "'answered' MMM d, yyyy 'at' HH:mm",
                             )}
                           </div>
-                          <div className="flex">
+                          <div className="flex pt-1">
                             <img
-                              src="/images/Vector.svg"
+                              src="https://e7.pngegg.com/pngimages/281/279/png-clipart-pepe-the-frog-batman-internet-meme-pepe-frog-comics-mammal-thumbnail.png"
                               alt="user"
                               className="h-8 w-8"
                             />
-                            <div className="text-[#0074CC] ml-2">user name</div>
+                            <div className="text-[#0074CC] ml-2.5">
+                              {answer.userId}
+                            </div>
                           </div>
                         </div>
                       </div>
@@ -363,14 +409,23 @@ const QuestionsId = () => {
                               className="w-full border-t"
                               key={comment.commentId}
                             >
-                              <div className="flex justify-between py-[1.5%] mr-[.5%] ml-[6%] text-xs">
-                                <div>{comment.content}</div>
+                              <div className="flex py-[1.5%] mr-[.5%] ml-[6%] text-xs">
+                                <span>{comment.content}&nbsp;</span>
+                                <div className="mx-1 text-[#0074CC] text-xs">
+                                  -{comment.userId}&nbsp;
+                                </div>
                                 <div className="text-[#6A737C]">
                                   {format(
                                     new Date(comment.createdAt),
                                     "'answered' MMM d, yyyy 'at' HH:mm",
                                   )}
                                 </div>
+                                <button
+                                  onClick={handleCommentDelete}
+                                  className="flex mx-1 text-[7px]"
+                                >
+                                  &#10060;
+                                </button>
                               </div>
                             </div>
                           </div>
@@ -388,10 +443,20 @@ const QuestionsId = () => {
                   </div>
                 ))}
               <div></div>
-              <div>
-                <h2 className="pt-5 mb-5 text-2xl">Your Answer</h2>
-                <div id="editor" className="pb-5"></div>
-                <button className="flex p-2 bg-[#0A95FF] text-white rounded-md text-sm cursor-pointer hover:bg-[#0A95FF]/50">
+              <div className="">
+                <h2 className="pt-5 mb-2 text-2xl">Your Answer</h2>
+                <textarea
+                  type="text"
+                  //id="editor"
+                  className="pb-[30%] pt-[2%] px-[2%] w-full h-auto border rounded-md focus:outline-none focus:border-sky-50 focus:ring-4"
+                  placeholder="Please be sure to answer the question. Provide details and share your research!"
+                  onChange={(event) => setNewAnswer(event.target.value)}
+                  value={newAnswer}
+                />
+                <button
+                  onClick={handleNewAnswerSubmit}
+                  className="flex p-2 mt-3 bg-[#0A95FF] text-white rounded-md text-sm cursor-pointer hover:bg-[#0A95FF]/50"
+                >
                   Post Your Answer
                 </button>
               </div>
@@ -401,6 +466,11 @@ const QuestionsId = () => {
             <Sidebar />
           </div>
         </div>
+        {/* ) : ( 
+        <div>
+          <p>Loading...</p>
+        </div> */}
+        {/* )} */}
       </div>
     </div>
   );
