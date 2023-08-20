@@ -19,3 +19,20 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+/* 메인 에니메이션 효과 */
+@keyframes slideOut {
+  0% {
+    transform: translateY(-20px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.animate-slideOut {
+  animation: slideOut 2s forwards;
+  animation-iteration-count:infinite;
+}
