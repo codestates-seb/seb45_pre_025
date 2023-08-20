@@ -55,6 +55,13 @@ public class QuestionService {
         return questionRepository.findAll(pageRequest);
     }
 
+    public Page<Question> findQuestionsOfUser(HttpServletRequest request, int page, int size) {
+        String signedInUserEmail = userAuthService.getSignedInUserEmail(request);
+        long authorId = findMemberByEmail(signedInUserEmail).getMemberId();
+        PageRequest pageRequest = PageRequest.of(page, size, Sort.by("id").descending());
+        return questionRepository.findAllOfUser(authorId, pageRequest);
+    }
+
     public Question updateQuestion(long questionId, Question question, HttpServletRequest request) {
         String signedInUserEmail = userAuthService.getSignedInUserEmail(request);
         Question foundQuestion = findQuestion(questionId);

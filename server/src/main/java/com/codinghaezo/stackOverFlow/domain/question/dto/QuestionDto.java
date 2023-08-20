@@ -100,7 +100,7 @@ public class QuestionDto {
                 .totalContents(questionPage.getTotalElements())
                 .pageSize(questionPage.getSize())
                 .totalPages(questionPage.getTotalPages())
-                .pageNumber(questionPage.getNumber())
+                .pageNumber(questionPage.getNumber() + 1)
                 .contents(questionPage.getContent()
                     .stream()
                     .map(SingleResponse::parse)

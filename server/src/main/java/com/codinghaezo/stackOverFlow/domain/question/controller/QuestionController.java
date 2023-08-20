@@ -39,12 +39,23 @@ public class QuestionController {
         return ResponseEntity.ok(singleResponseDto);
     }
 
-    @GetMapping
+    @GetMapping("/all")
     public ResponseEntity<PaginatedResponse> getPaginatedQuestions(
         @RequestParam int page,
         @RequestParam int size
     ) {
         Page<Question> questionPage = questionService.findQuestions(page - 1, size);
+        PaginatedResponse paginatedResponseDto = PaginatedResponse.parse(questionPage);
+        return ResponseEntity.ok(paginatedResponseDto);
+    }
+
+    @GetMapping("/my")
+    public ResponseEntity<PaginatedResponse> getPaginatedQuestionOfUser(
+        @RequestParam int page,
+        @RequestParam int size,
+        HttpServletRequest request
+    ) {
+        Page<Question> questionPage = questionService.findQuestionsOfUser(request, page - 1, size);
         PaginatedResponse paginatedResponseDto = PaginatedResponse.parse(questionPage);
         return ResponseEntity.ok(paginatedResponseDto);
     }
