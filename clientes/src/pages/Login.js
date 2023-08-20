@@ -24,7 +24,7 @@ const Login = () => {
 
     axios
       .post(
-        'https://f53f-2406-5900-1084-b81a-1592-6236-d078-6c13.ngrok-free.app/members/membership',
+        'http://ec2-52-79-212-94.ap-northeast-2.compute.amazonaws.com:8080/auth/login',
         {
           email: email,
           password: password,
