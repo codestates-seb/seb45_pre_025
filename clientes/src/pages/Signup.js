@@ -37,11 +37,14 @@ const Signup = () => {
     }
 
     axios
-      .post('http://localhost:3000/signup', {
-        username: userName,
-        email: email,
-        password: password,
-      })
+      .post(
+        'http://ec2-52-79-212-94.ap-northeast-2.compute.amazonaws.com:8080/users/signup',
+        {
+          username: userName,
+          email: email,
+          password: password,
+        },
+      )
       .then((res) => {
         console.log('success!');
         console.log('User profile', res.data.user);

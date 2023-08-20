@@ -10,14 +10,10 @@ const Users = () => {
             {/* 유저 프로필 */}
             <div>
               <div className="flex justify-start pb-6">
-                <div className="w-32 h-32 rounded-md bg-yellow-300">
-                  <h1 className="text-8xl py-auto leading-normal">🧑‍💻</h1>
-                </div>
+                <div className="w-32 h-32 rounded-md bg-yellow-300" />
                 <div className="flex flex-col justify-center ml-4">
                   {/* 회원 이름 */}
-                  <div>
-                    <h1 className="text-4xl">User Name</h1>
-                  </div>
+                  <h1 className="text-4xl">User Name</h1>
 
                   {/* 회원 상세정보 */}
                   <div className="flex mt-2 text-sm">
@@ -108,17 +104,25 @@ const Users = () => {
             <div className="flex justify-start items-center h-16 w-full">
               <div className="flex justify-between items-center text-sm w-auto">
                 <div className="flex items-center h-8 text-gray-500">
-                  <button className="px-2.5 h-full">
-                    <span className="">Profile</span>
+                  <button className="h-full">
+                    <span className="text-gray-900 hover:bg-orange-400 hover:text-white p-2.5 rounded-3xl">
+                      Questions
+                    </span>
                   </button>
-                  <button className=" px-2.5 h-full">
-                    <span className="">Activity</span>
+                  <button className="h-full">
+                    <span className="text-gray-900 hover:bg-orange-400 hover:text-white p-2.5 rounded-3xl">
+                      Answers
+                    </span>
                   </button>
-                  <button className=" px-2.5 h-full">
-                    <span className="">Saves</span>
+                  <button className="h-full">
+                    <span className="text-gray-900 hover:bg-orange-400 hover:text-white p-2.5 rounded-3xl">
+                      Comments
+                    </span>
                   </button>
-                  <button>
-                    <span className="h-full px-2.5">Settings</span>
+                  <button className="h-full">
+                    <span className="text-gray-900 hover:bg-orange-400 hover:text-white p-2.5 rounded-3xl">
+                      Bookmarks
+                    </span>
                   </button>
                 </div>
               </div>
