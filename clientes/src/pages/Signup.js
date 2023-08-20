@@ -11,7 +11,29 @@ const Signup = () => {
   const register = () => {
     if (userName === '' || email === '' || password === '') {
       alert('빈칸 없이 모두 작성해주세요');
-      return;
+      return false;
+    }
+    // 회원이름 2글자 이하면 오류문자 출력
+    if (userName.length < 2) {
+      alert('이름을 2글자 이상 입력하세요.');
+      return false;
+    }
+    // 이메일에 ('@', '.', '5글자 이하')이면 오류문자 출력
+    if (
+      email.indexOf('@') === -1 ||
+      email.indexOf('.') === -1 ||
+      email.length <= 5
+    ) {
+      alert('잘못된 이메일 형식입니다.');
+      return false;
+    }
+    // 비밀번호 (8자 이상, 문자(소문자+대문자)와 숫자 조합)
+    let reg = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,}$/;
+    if (!reg.test(password)) {
+      alert(
+        '비밀번호는 최소 1개의 소문자와 대문자 숫자를 포함하여 8자 이상이어야 합니다.',
+      );
+      return false;
     }
 
     axios
@@ -183,8 +205,7 @@ const Signup = () => {
               />
 
               <span className="text-xs tracking-tight text-gray-500 flex my-1">
-                Passwords must contain at least eight characters, including at
-                least 1 letter and 1 number.
+                비밀번호는 소문자, 대문자, 숫자 조합으로 8자 이상이어야 합니다.
               </span>
             </div>
 
