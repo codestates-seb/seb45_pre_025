@@ -1,6 +1,31 @@
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
 const Main = () => {
+  const texts = [
+    'game developer',
+    'data scientist',
+    'system admin',
+    'mobile developer',
+    'developer',
+  ]; // 반복될 텍스트 배열
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [animationClass, setAnimationClass] = useState('');
+
+  useEffect(() => {
+    // 텍스트 변경과 함께 애니메이션 효과 적용
+    setAnimationClass('animate-slideOut');
+    const intervalId = setInterval(() => {
+      setCurrentIndex((prevIndex) => (prevIndex + 1) % texts.length);
+      setAnimationClass('animate-slideOut');
+      setTimeout(() => {
+        setAnimationClass(''); // 애니메이션 클래스 제거하여 반복 효과를 위해 리셋
+      }, 1000); // setTimeout 시간을 더 길게 지정
+    }, 2000); // 2초마다 텍스트 변경
+
+    return () => clearInterval(intervalId);
+  }, [currentIndex]);
+
   return (
     <main className="relative min-h-screen">
       <section>
@@ -76,7 +101,11 @@ const Main = () => {
             {/* 움직이는 글자 */}
             <div className="flex flex-col items-center font-Roboto font-bold text-white text-6xl my-20">
               <span className="my-2">Every</span>
-              <span className="text-orange-500 my-2">game developer</span>
+              <span
+                className={`text-orange-500 my-2 animate-slideOut ${animationClass}`}
+              >
+                {texts[currentIndex]}
+              </span>
               <span className="my-2">has a tab open to</span>
               <span className="my-2">Stack Overflow</span>
             </div>
