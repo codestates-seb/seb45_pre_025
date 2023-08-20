@@ -12,6 +12,15 @@ const Login = () => {
       alert('빈칸 없이 모두 작성해주세요');
       return;
     }
+    // 이메일에 ('@', '.', '5글자 이하')이면 오류문자 출력
+    if (
+      email.indexOf('@') === -1 ||
+      email.indexOf('.') === -1 ||
+      email.length <= 5
+    ) {
+      alert('잘못된 이메일 형식입니다.');
+      return false;
+    }
 
     axios
       .post(
