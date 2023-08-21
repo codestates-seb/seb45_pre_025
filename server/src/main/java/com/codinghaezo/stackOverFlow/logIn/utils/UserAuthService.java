@@ -18,7 +18,10 @@ public class UserAuthService {
     }
 
     public String getSignedInUserEmail(HttpServletRequest request) {
-        String jws = request.getHeader("Authorization").replace("Bearer ", "");
+        String jws = request.getHeader("Authorization");
+        if (jws.startsWith("Bearer ")) {
+            jws = jws.substring(7);
+        }
         String base64EncodedSecretKey = jwtTokenizer.encodeBase64SecretKey(jwtTokenizer.getSecretKey());
         Map<String, Object> claims = jwtTokenizer.getClaims(jws, base64EncodedSecretKey).getBody();
         String email = (String) claims.get("username");
