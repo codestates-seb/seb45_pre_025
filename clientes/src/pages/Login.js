@@ -1,6 +1,46 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { useState } from 'react';
+import axios from 'axios';
 
 const Login = () => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const navigate = useNavigate();
+
+  const register = () => {
+    if (email === '' || password === '') {
+      alert('빈칸 없이 모두 작성해주세요');
+      return;
+    }
+    // 이메일에 ('@', '.', '5글자 이하')이면 오류문자 출력
+    if (
+      email.indexOf('@') === -1 ||
+      email.indexOf('.') === -1 ||
+      email.length <= 5
+    ) {
+      alert('잘못된 이메일 형식입니다.');
+      return false;
+    }
+
+    axios
+      .post(
+        'https://f53f-2406-5900-1084-b81a-1592-6236-d078-6c13.ngrok-free.app/members/membership',
+        {
+          email: email,
+          password: password,
+        },
+      )
+      .then((res) => {
+        console.log('success!');
+        console.log('User token', res.data.jwt);
+        localStorage.setItem('token', res.data.jwt);
+        navigate('/');
+      })
+      .catch((err) => {
+        console.log('error', err.res);
+      });
+  };
+
   return (
     <main className="w-full relative">
       <div className="absolute top-14 w-full h-screen bg-gray-100 flex flex-wrap justify-center items-center">
@@ -67,8 +107,16 @@ const Login = () => {
           </div>
           <div className="w-72 bg-white rounded-md p-6 drop-shadow-lg mb-6">
             <div>
+              {/* 이메일 입력폼 */}
               <h1 className="font-semibold">Email</h1>
-              <input className="border border-zinc-300 rounded-md w-full px-2 py-1 mt-1 font-light" />
+              <input
+                className="border border-zinc-300 rounded-md w-full px-2 py-1 mt-1 font-light"
+                value={email}
+                onChange={(e) => {
+                  setEmail(e.target.value);
+                  console.log(e.target.value);
+                }}
+              />
             </div>
             <div>
               <div className="flex justify-between items-center mt-4">
@@ -77,13 +125,26 @@ const Login = () => {
                   Forgot password?
                 </span>
               </div>
+
+              {/* 비밀번호 입력 폼 */}
               <input
                 type="password"
                 className="border border-zinc-300 rounded-md w-full px-2 py-1 mt-1 font-light"
+                value={password}
+                onChange={(e) => {
+                  setPassword(e.target.value);
+                  console.log(e.target.value);
+                }}
               />
             </div>
             <div className="w-full">
-              <button className="w-full bg-blue-500 rounded-md my-4 py-2">
+              {/* 로그인 버튼 */}
+              <button
+                className="w-full bg-blue-500 hover:bg-blue-600 rounded-md my-4 py-2"
+                onClick={() => {
+                  register();
+                }}
+              >
                 <h1 className="text-white">Log in</h1>
               </button>
             </div>
@@ -92,23 +153,25 @@ const Login = () => {
             <div className=" flex w-ful justify-center">
               <h1 className="mr-1.5">Don&rsquo;t have an account?</h1>
               <Link to="/signup">
-                <button className="text-blue-500">Sign up</button>
+                <button className="text-blue-500 hover:text-blue-300">
+                  Sign up
+                </button>
               </Link>
             </div>
             <div className="flex justify-center w-ful mt-3">
               <h1>Are you an employer?</h1>
-              <Link to="https://talent.stackoverflow.com/users/login">
-                <button className="text-blue-500 flex items-center w-ful">
+              <a href="https://talent.stackoverflow.com/users/login">
+                <button className="text-blue-500 hover:text-blue-300 fill-blue-500 hover:fill-blue-300 flex items-center w-ful">
                   <h1 className="mx-1.5">Sign up on Talent</h1>
                   <svg
                     aria-hidden="true"
-                    className="va-text-bottom sm:d-none svg-icon iconShareSm w-3.5 h-3.5 fill-blue-500"
+                    className="va-text-bottom sm:d-none svg-icon iconShareSm w-3.5 h-3.5 "
                     viewBox="0 0 14 14"
                   >
                     <path d="M5 1H3a2 2 0 0 0-2 2v8c0 1.1.9 2 2 2h8a2 2 0 0 0 2-2V9h-2v2H3V3h2V1Zm2 0h6v6h-2V4.5L6.5 9 5 7.5 9.5 3H7V1Z" />
                   </svg>
                 </button>
-              </Link>
+              </a>
             </div>
           </div>
         </div>

@@ -13,7 +13,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import java.util.Arrays;
 
 @Configuration
-@EnableWebMvc
+//@EnableWebMvc
 public class GlobalCorsConfiguration implements WebMvcConfigurer {
 
     @Override

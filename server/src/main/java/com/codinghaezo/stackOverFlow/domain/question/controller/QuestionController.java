@@ -39,7 +39,7 @@ public class QuestionController {
         return ResponseEntity.ok(singleResponseDto);
     }
 
-    @GetMapping
+    @GetMapping("/all")
     public ResponseEntity<PaginatedResponse> getPaginatedQuestions(
             @RequestParam int page,
             @RequestParam int size
@@ -49,11 +49,24 @@ public class QuestionController {
         return ResponseEntity.ok(paginatedResponseDto);
     }
 
+    @GetMapping("/my")
+    public ResponseEntity<PaginatedResponse> getPaginatedQuestionOfUser(
+        @RequestParam int page,
+        @RequestParam int size,
+        HttpServletRequest request
+    ) {
+        Page<Question> questionPage = questionService.findQuestionsOfUser(request, page - 1, size);
+        PaginatedResponse paginatedResponseDto = PaginatedResponse.parse(questionPage);
+        return ResponseEntity.ok(paginatedResponseDto);
+    }
+
     @PatchMapping("/{question-id}")
     public ResponseEntity<SingleResponse> patchQuestion(
+
             @PathVariable("question-id") long questionId,
             @RequestBody Patch patchDto,
             HttpServletRequest request
+
     ) {
         Question question = patchDto.toQuestion();
         Question updatedQuestion = questionService.updateQuestion(questionId, question, request);
@@ -63,8 +76,10 @@ public class QuestionController {
 
     @DeleteMapping("/{question-id}")
     public ResponseEntity<?> deleteQuestion(
+
             @PathVariable("question-id") long questionId,
             HttpServletRequest request
+
     ) {
         questionService.deleteQuestion(questionId, request);
         return ResponseEntity.noContent().build();

@@ -97,15 +97,17 @@ public class QuestionDto {
 
         public static PaginatedResponse parse(Page<Question> questionPage) {
             return PaginatedResponse.builder()
-                    .totalContents(questionPage.getTotalElements())
-                    .pageSize(questionPage.getSize())
-                    .totalPages(questionPage.getTotalPages())
-                    .pageNumber(questionPage.getNumber())
-                    .contents(questionPage.getContent()
-                            .stream()
-                            .map(SingleResponse::parse)
-                            .collect(Collectors.toList()))
-                    .build();
+
+                .totalContents(questionPage.getTotalElements())
+                .pageSize(questionPage.getSize())
+                .totalPages(questionPage.getTotalPages())
+                .pageNumber(questionPage.getNumber() + 1)
+                .contents(questionPage.getContent()
+                    .stream()
+                    .map(SingleResponse::parse)
+                    .collect(Collectors.toList()))
+                .build();
+
         }
     }
 }

@@ -28,9 +28,11 @@ public class QuestionService {
     private final MemberRepository memberRepository;
 
     public QuestionService(
+
             UserAuthService userAuthService,
             QuestionRepository questionRepository,
             MemberRepository memberRepository
+
     ) {
         this.userAuthService = userAuthService;
         this.questionRepository = questionRepository;
@@ -47,7 +49,9 @@ public class QuestionService {
 
     public Question findQuestion(long questionId) {
         return questionRepository.findById(questionId)
+
                 .orElseThrow(() -> new BusinessLogicException(ExceptionCode.QUESTION_NOT_FOUND));
+
     }
 
     public Page<Question> findQuestions(int page, int size) {
@@ -55,11 +59,21 @@ public class QuestionService {
         return questionRepository.findAll(pageRequest);
     }
 
+
+    public Page<Question> findQuestionsOfUser(HttpServletRequest request, int page, int size) {
+        String signedInUserEmail = userAuthService.getSignedInUserEmail(request);
+        long authorId = findMemberByEmail(signedInUserEmail).getMemberId();
+        PageRequest pageRequest = PageRequest.of(page, size, Sort.by("id").descending());
+        return questionRepository.findAllOfUser(authorId, pageRequest);
+    }
+
+
     public Question updateQuestion(long questionId, Question question, HttpServletRequest request) {
         String signedInUserEmail = userAuthService.getSignedInUserEmail(request);
         Question foundQuestion = findQuestion(questionId);
         verifyAuthor(signedInUserEmail, foundQuestion);
         foundQuestion.setTitle((question.getTitle() == null)
+
                 ? foundQuestion.getTitle()
                 : question.getTitle());
         foundQuestion.setBodyProblem((question.getBodyProblem() == null)
@@ -68,6 +82,7 @@ public class QuestionService {
         foundQuestion.setBodyExpecting((question.getBodyExpecting() == null)
                 ? foundQuestion.getBodyExpecting()
                 : question.getBodyExpecting());
+
         return questionRepository.save(foundQuestion);
     }
 

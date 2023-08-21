@@ -1,21 +1,39 @@
 import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
-const Cartegory = () => {
+const Category = ({ setIsMenuDropdown, hideMenu }) => {
+  const hideCategory = () => {
+    setIsMenuDropdown(false);
+  };
+
+  // props를 받아오고, 작동도 잘되지만.. setIsMenuIcon 상속 오류로 인해 타입 정의
+  Category.propTypes = {
+    setIsMenuDropdown: PropTypes.func.isRequired,
+  };
+
+  Category.propTypes = {
+    hideMenu: PropTypes.func.isRequired,
+  };
+
   return (
     <main className="relative">
-      <div className=" absolute top-0 w-60 h-auto bg-white drop-shadow-lg pt-6 pb-3 -ml-2 overflow-y-auto">
+      <div className=" absolute top-14 w-60 h-auto bg-white drop-shadow-lg pt-6 pb-3 -ml-2 overflow-y-auto">
         <Link to="/">
-          <div className="pl-2 py-1 hover:text-black hover:font-bold">
-            <button>
-              <h1 className="text-sm text-gray-600 ">Home</h1>
-            </button>
-          </div>
+          <button
+            onClick={hideCategory}
+            className="pl-2 py-1 hover:text-black hover:font-bold"
+          >
+            <h1 className="text-sm text-gray-600 ">Home</h1>
+          </button>
         </Link>
         <div className="pl-2 py-1">
           <h1 className="text-xs pt-3 pb-1 text-gray-600">PUBLIC</h1>
           <div className="flex flex-col items-start ">
-            <Link to="/questions">
-              <button className="flex items-center py-1 text-sm hover:text-black w-full hover:font-bold">
+            <Link to="/questions" onClick={hideMenu}>
+              <button
+                onClick={hideCategory}
+                className="flex items-center py-1 text-sm hover:text-black w-full hover:font-bold"
+              >
                 <svg
                   aria-hidden="true"
                   className="svg-icon iconGlobe fill-slate-500"
@@ -28,16 +46,16 @@ const Cartegory = () => {
                 <h1 className="pl-1 text-gray-600">Questions</h1>
               </button>
             </Link>
-            <Link to="/tags">
-              <button className="py-1 text-sm text-left w-full hover:text-black hover:font-bold">
-                <h1 className="pl-6 text-gray-600">Tags</h1>
-              </button>
-            </Link>
-            <Link to="/users">
+
+            <button className="py-1 text-sm text-left w-full hover:text-black hover:font-bold cursor-not-allowed">
+              <h1 className="pl-6 text-gray-600">Tags</h1>
+            </button>
+            <Link to="/users" onClick={hideMenu}>
               <button className="py-1 text-sm text-left w-full hover:text-black hover:font-bold">
                 <h1 className="pl-6 text-gray-600">Users</h1>
               </button>
             </Link>
+
             <button className="py-1 text-sm text-left w-full hover:text-black hover:font-bold cursor-not-allowed">
               <h1 className="pl-6 text-gray-600">Companies</h1>
             </button>
@@ -224,4 +242,4 @@ const Cartegory = () => {
   );
 };
 
-export default Cartegory;
+export default Category;
