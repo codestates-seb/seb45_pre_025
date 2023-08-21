@@ -2,10 +2,8 @@ package com.codinghaezo.stackOverFlow.member;
 
 import com.codinghaezo.stackOverFlow.audit.Auditable;
 import com.codinghaezo.stackOverFlow.domain.question.entity.Question;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import com.codinghaezo.stackOverFlow.logIn.OAuth2.OAuthProvider;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -22,7 +20,7 @@ public class Member extends Auditable {
     private long memberId;
 
     @Column
-    private String nickName;
+    private String userName;
 
     @Column(nullable = false, updatable = false, unique = true)
     private String email;
@@ -33,19 +31,26 @@ public class Member extends Auditable {
     @ElementCollection(fetch = FetchType.EAGER)
     private List<String> roles = new ArrayList<>();
 
+    @Column
+    private String profileImageUrl;
 
     public Member(String email) {
         this.email = email;
     }
 
 
-    public Member(String nickName, String email, String password, List<String> roles) {
-        this.nickName = nickName;
+    public Member(String userName, String email,
+                  String password,
+                  List<String> roles,
+                  String profileImageUrl
+             ) {
+        this.userName = userName;
         this.email = email;
         this.password = password;
         this.roles = roles;
+        this.profileImageUrl = profileImageUrl;
     }
-  
+
     @OneToMany(mappedBy = "author")
     private List<Question> questions = new ArrayList<>();
 
