@@ -8,10 +8,9 @@ import com.codinghaezo.stackOverFlow.domain.question.entity.Question;
 import com.codinghaezo.stackOverFlow.domain.question.service.QuestionService;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.net.URI;
 
 @RequestMapping("/questions")
@@ -25,26 +24,25 @@ public class QuestionController {
     }
 
     @PostMapping
-    public ResponseEntity<?> postQuestion(
-        @RequestBody Post postDto,
-        @AuthenticationPrincipal UserDetails principal
-    ) {
+    public ResponseEntity<?> postQuestion(@RequestBody Post postDto, HttpServletRequest request) {
         Question question = postDto.toQuestion();
-        URI location = questionService.createQuestion(principal.getUsername(), question);
+        URI location = questionService.createQuestion(request, question);
         return ResponseEntity.created(location).build();
     }
 
     @GetMapping("/{question-id}")
     public ResponseEntity<SingleResponse> getQuestion(@PathVariable("question-id") long questionId) {
         Question foundQuestion = questionService.findQuestion(questionId);
+        questionService.increaseViews(questionId);
+        foundQuestion.setViews(foundQuestion.getViews() + 1);
         SingleResponse singleResponseDto = SingleResponse.parse(foundQuestion);
         return ResponseEntity.ok(singleResponseDto);
     }
 
     @GetMapping
     public ResponseEntity<PaginatedResponse> getPaginatedQuestions(
-        @RequestParam int page,
-        @RequestParam int size
+            @RequestParam int page,
+            @RequestParam int size
     ) {
         Page<Question> questionPage = questionService.findQuestions(page - 1, size);
         PaginatedResponse paginatedResponseDto = PaginatedResponse.parse(questionPage);
@@ -53,22 +51,22 @@ public class QuestionController {
 
     @PatchMapping("/{question-id}")
     public ResponseEntity<SingleResponse> patchQuestion(
-        @PathVariable("question-id") long questionId,
-        @RequestBody Patch patchDto,
-        @AuthenticationPrincipal UserDetails principal
+            @PathVariable("question-id") long questionId,
+            @RequestBody Patch patchDto,
+            HttpServletRequest request
     ) {
         Question question = patchDto.toQuestion();
-        Question updatedQuestion = questionService.updateQuestion(questionId, question, principal.getUsername());
+        Question updatedQuestion = questionService.updateQuestion(questionId, question, request);
         SingleResponse singleResponseDto = SingleResponse.parse(updatedQuestion);
         return ResponseEntity.ok(singleResponseDto);
     }
 
     @DeleteMapping("/{question-id}")
     public ResponseEntity<?> deleteQuestion(
-        @PathVariable("question-id") long questionId,
-        @AuthenticationPrincipal UserDetails principal
+            @PathVariable("question-id") long questionId,
+            HttpServletRequest request
     ) {
-        questionService.deleteQuestion(questionId, principal.getUsername());
+        questionService.deleteQuestion(questionId, request);
         return ResponseEntity.noContent().build();
     }
 }
