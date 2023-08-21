@@ -13,6 +13,7 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 @Getter
+@Setter
 @Entity
 public class Question extends Auditable {
 
@@ -29,15 +30,12 @@ public class Question extends Auditable {
     @Column(nullable = false)
     private String bodyExpecting;
 
-    @Setter
-    @Column(nullable = false)
-    private Integer views = 0;
+    private int views;
 
-    @Setter
     @ManyToOne
     @JoinColumn(name = "author_id")
     private Member author;
 
-    @OneToMany(mappedBy = "question", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "question", cascade = CascadeType.ALL)
     private List<Answer> answers = new ArrayList<>();
 }
