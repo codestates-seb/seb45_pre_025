@@ -22,7 +22,7 @@ public class MemberDto {
         @Email
         private String email;
 
-        private String nickName;
+        private String userName;
 
         private String password;
     }
@@ -33,7 +33,7 @@ public class MemberDto {
     public static class MemberPatchDto{
         private long memberId;
 
-        private String nickName;
+        private String userName;
         private String password;
 
     }
@@ -46,7 +46,7 @@ public class MemberDto {
 
         private String email;
 
-        private String nickName;
+        private String userName;
 
         private String password;
 

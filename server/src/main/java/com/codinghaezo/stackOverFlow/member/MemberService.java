@@ -3,7 +3,8 @@ package com.codinghaezo.stackOverFlow.member;
 import com.codinghaezo.stackOverFlow.exception.BusinessLogicException;
 import com.codinghaezo.stackOverFlow.exception.ExceptionCode;
 
-import org.springframework.context.ApplicationEventPublisher;
+import com.codinghaezo.stackOverFlow.logIn.OAuth2.OAuthProvider;
+import com.codinghaezo.stackOverFlow.logIn.utils.CustomAuthorityUtils;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -48,10 +49,11 @@ public class MemberService {
         // DB에 저장된 정보가 없다면
         List<String> roles = authorityUtils.createRoles(member.getEmail());
         Member beSavedMember = new Member(
-                "",          // DisplayName null (이후 추가로 변경하는 창을 redirection 할 수 있음)
+                member.getUserName(),          // DisplayName null (이후 추가로 변경하는 창을 redirection 할 수 있음)
                 member.getEmail(), // 구글 이메일을 DB에 등록
                 "",                //암호화된 비밀번호 빈 문자열
-                roles               //권한 목록
+                roles,               //권한 목록
+                member.getProfileImageUrl()
         );
 
         verifyExistsEmail(member.getEmail());

@@ -1,11 +1,11 @@
 package com.codinghaezo.stackOverFlow.logIn.jwt.config;
 
+import com.codinghaezo.stackOverFlow.logIn.OAuth2.handler.OAuth2MemberSuccessHandler;
 import com.codinghaezo.stackOverFlow.logIn.jwt.filter.JwtAuthenticationFilter;
 import com.codinghaezo.stackOverFlow.logIn.jwt.handler.MemberAuthenticationFailureHandler;
 import com.codinghaezo.stackOverFlow.logIn.jwt.handler.MemberAuthenticationSuccessHandler;
 import com.codinghaezo.stackOverFlow.logIn.jwt.filter.JwtVerificationFilter;
 import com.codinghaezo.stackOverFlow.logIn.jwt.jwt.JwtTokenizer;
-import com.codinghaezo.stackOverFlow.logIn.oauth2_jwt.auth.handler.OAuth2MemberSuccessHandler;
 import com.codinghaezo.stackOverFlow.logIn.utils.CustomAuthorityUtils;
 import com.codinghaezo.stackOverFlow.member.MemberService;
 import org.springframework.context.annotation.Bean;
@@ -19,11 +19,6 @@ import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.client.web.OAuth2LoginAuthenticationFilter;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.web.cors.CorsConfiguration;
-import org.springframework.web.cors.CorsConfigurationSource;
-import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
-
-import java.util.Arrays;
 
 @Configuration
 public class SecurityConfiguration {

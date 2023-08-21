@@ -9,6 +9,6 @@ import java.util.List;
 @Setter
 public class CustomUserDetails {
     private String userId;
-    private String username;
+    private String email;
     private List<String> roles;
 }

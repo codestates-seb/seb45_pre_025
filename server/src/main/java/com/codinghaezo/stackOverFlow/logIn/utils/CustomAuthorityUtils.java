@@ -12,11 +12,12 @@ import java.util.stream.Collectors;
 public class CustomAuthorityUtils {
 
     private final List<GrantedAuthority> USER_ROLES = AuthorityUtils.createAuthorityList("ROLE_USER");
-
+    private final List<GrantedAuthority> SECESSION_USER_ROLES = AuthorityUtils.createAuthorityList("ROLE_SECESSION_USER");
     private final List<String> USER_ROLES_STRING = List.of("USER");
+    private final List<String> SECESSION_USER_ROLES_STRING = List.of("SECESSION_USER");
+
 
     // 게스트 권한 추가 필요
-
 
     public List<GrantedAuthority> createAuthorities(String email) {
 
