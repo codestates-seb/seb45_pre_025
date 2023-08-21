@@ -20,7 +20,7 @@ public class MyController {
 
     @GetMapping("/some-resource")
     public ResponseEntity<String> getSomeResource(HttpServletRequest request) {
-        String findUsername = userAuthService.isUserLoggedIn(request);
+        String findUsername = userAuthService.getSignedInUserEmail(request);
             return new ResponseEntity<String>(findUsername, HttpStatus.OK);
         }
     }
