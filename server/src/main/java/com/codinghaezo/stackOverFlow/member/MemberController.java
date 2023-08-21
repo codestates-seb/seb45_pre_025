@@ -26,6 +26,7 @@ public class MemberController {
 
 
 
+    @CrossOrigin(origins = "http://pre-project-deploy.s3-website.ap-northeast-2.amazonaws.com")
     @PostMapping("/signup")
     public ResponseEntity postMember(@RequestBody MemberDto.MemberPostDto memberPostDto) {
         Member member = memberService.createMember(mapper.memberPostDtoToMember(memberPostDto));
