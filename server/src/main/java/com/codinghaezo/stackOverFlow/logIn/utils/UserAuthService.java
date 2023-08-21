@@ -25,7 +25,7 @@ public class UserAuthService {
 
             // 여기서는 사용자의 식별 정보가 클레임에 "username" 키로 포함되어 있다고 가정합니다.
             // 실제 클레임 구조에 맞게 수정해야 합니다.
-            String username = (String) claims.get("username");
+            String username = (String) claims.get("Id");
 
             // 사용자의 식별 정보(username)를 사용하여 로그인 상태 여부를 판단합니다.
             // 예를 들어, 해당 사용자의 정보를 데이터베이스에서 가져와 로그인 상태 여부를 판단할 수 있습니다.
