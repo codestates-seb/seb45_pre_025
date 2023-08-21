@@ -1,9 +1,10 @@
 import { useState, useEffect, useRef } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const HeaderOn = () => {
   const [isMenuDropdown, setIsMenuDropdown] = useState(false);
   const [isSearchDropdown, setIsSearchDropdown] = useState(false);
+  const navigate = useNavigate();
 
   const inputDropdown = () => {
     setIsSearchDropdown((prevState) => !prevState);
@@ -47,6 +48,20 @@ const HeaderOn = () => {
       window.removeEventListener('mousedown', closeSearchDropdown);
     };
   }, [isSearchDropdown]);
+
+  const handleLogout = () => {
+    // 로그아웃 처리: 토큰 삭제
+    // localStorage에서 토큰 삭제
+    localStorage.removeItem('token');
+
+    // Header 컴포넌트로 변경하는 로직
+    // 여기에서는 기존의 HeaderOn 컴포넌트 대신 Header 컴포넌트를 렌더링하도록 설정합니다.
+    setIsMenuDropdown(false); // 닫힌 상태로 초기화
+    setIsSearchDropdown(false); // 닫힌 상태로 초기화
+
+    // '/' 페이지로 이동
+    navigate('/');
+  };
 
   return (
     <header className="z-50 bg-white w-full h-14 fixed border-b border-t-[3px] border-t-orange-400 px-2">
@@ -246,7 +261,10 @@ const HeaderOn = () => {
           </button>
 
           {/* 로그아웃 버튼 */}
-          <button className="bg-blue-500 hover:bg-blue-600 rounded-md px-3 py-1 ml-1">
+          <button
+            className="bg-blue-500 hover:bg-blue-600 rounded-md px-3 py-1 ml-1"
+            onClick={handleLogout}
+          >
             <span className="text-sm text-white">Log out</span>
           </button>
         </div>

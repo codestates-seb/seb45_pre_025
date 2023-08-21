@@ -12,6 +12,15 @@ const Login = () => {
       alert('빈칸 없이 모두 작성해주세요');
       return;
     }
+    // 이메일에 ('@', '.', '5글자 이하')이면 오류문자 출력
+    if (
+      email.indexOf('@') === -1 ||
+      email.indexOf('.') === -1 ||
+      email.length <= 5
+    ) {
+      alert('잘못된 이메일 형식입니다.');
+      return false;
+    }
 
     axios
       .post(
@@ -151,7 +160,7 @@ const Login = () => {
             </div>
             <div className="flex justify-center w-ful mt-3">
               <h1>Are you an employer?</h1>
-              <Link to="https://talent.stackoverflow.com/users/login">
+              <a href="https://talent.stackoverflow.com/users/login">
                 <button className="text-blue-500 hover:text-blue-300 fill-blue-500 hover:fill-blue-300 flex items-center w-ful">
                   <h1 className="mx-1.5">Sign up on Talent</h1>
                   <svg
@@ -162,7 +171,7 @@ const Login = () => {
                     <path d="M5 1H3a2 2 0 0 0-2 2v8c0 1.1.9 2 2 2h8a2 2 0 0 0 2-2V9h-2v2H3V3h2V1Zm2 0h6v6h-2V4.5L6.5 9 5 7.5 9.5 3H7V1Z" />
                   </svg>
                 </button>
-              </Link>
+              </a>
             </div>
           </div>
         </div>
