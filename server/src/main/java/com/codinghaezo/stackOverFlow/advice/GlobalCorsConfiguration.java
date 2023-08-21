@@ -23,8 +23,7 @@ public class GlobalCorsConfiguration implements WebMvcConfigurer {
                 .allowedMethods("GET", "POST", "PATCH", "DELETE")
                 .allowCredentials(true);
     }
+
+
 }
-
-
-
 
