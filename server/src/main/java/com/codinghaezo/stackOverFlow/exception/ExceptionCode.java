@@ -10,6 +10,8 @@ public enum ExceptionCode {
     ANSWER_CODE_EXISTS(409, "Answer Code exists"),
     QUESTION_NOT_FOUND(404, "Question not found"),
     CANNOT_CHANGE_QUESTION(403, "Question cannot change"),
+    CANNOT_CHANGE_ANSWER(403, "Answer cannot change"),
+    CANNOT_CHANGE_COMMENT(403, "Comment cannot change"),
     NOT_IMPLEMENTATION(501, "Not Implementation"),
     INVALID_MEMBER_STATUS(400, "Invalid member status");
 

@@ -22,10 +22,10 @@ public class QuestionDto {
 
         public Question toQuestion() {
             return Question.builder()
-                .title(this.title)
-                .bodyProblem(this.bodyProblem)
-                .bodyExpecting(this.bodyExpecting)
-                .build();
+                    .title(this.title)
+                    .bodyProblem(this.bodyProblem)
+                    .bodyExpecting(this.bodyExpecting)
+                    .build();
         }
     }
 
@@ -40,10 +40,10 @@ public class QuestionDto {
 
         public Question toQuestion() {
             return Question.builder()
-                .title(this.title)
-                .bodyProblem(this.bodyProblem)
-                .bodyExpecting(this.bodyExpecting)
-                .build();
+                    .title(this.title)
+                    .bodyProblem(this.bodyProblem)
+                    .bodyExpecting(this.bodyExpecting)
+                    .build();
         }
     }
 
@@ -69,15 +69,15 @@ public class QuestionDto {
 
         public static SingleResponse parse(Question question) {
             return SingleResponse.builder()
-                .id(question.getId())
-                .title(question.getTitle())
-                .bodyProblem(question.getBodyProblem())
-                .bodyExpecting(question.getBodyExpecting())
-                .authorId(question.getAuthor().getMemberId())
-                .views(question.getViews())
-                .createdAt(question.getCreatedAt())
-                .modifiedAt(question.getModifiedAt())
-                .build();
+                    .id(question.getId())
+                    .title(question.getTitle())
+                    .bodyProblem(question.getBodyProblem())
+                    .bodyExpecting(question.getBodyExpecting())
+                    .authorId(question.getAuthor().getMemberId())
+                    .views(question.getViews())
+                    .createdAt(question.getCreatedAt())
+                    .modifiedAt(question.getModifiedAt())
+                    .build();
         }
     }
 
@@ -97,6 +97,7 @@ public class QuestionDto {
 
         public static PaginatedResponse parse(Page<Question> questionPage) {
             return PaginatedResponse.builder()
+
                 .totalContents(questionPage.getTotalElements())
                 .pageSize(questionPage.getSize())
                 .totalPages(questionPage.getTotalPages())
@@ -106,6 +107,7 @@ public class QuestionDto {
                     .map(SingleResponse::parse)
                     .collect(Collectors.toList()))
                 .build();
+
         }
     }
 }

@@ -1,5 +1,4 @@
 package com.codinghaezo.stackOverFlow.domain.question.repository;
-
 import com.codinghaezo.stackOverFlow.domain.question.entity.Question;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -16,3 +15,4 @@ public interface QuestionRepository extends JpaRepository<Question, Long> {
     @Query("select q from Question q where q.author.memberId = :authorId")
     Page<Question> findAllOfUser(long authorId, Pageable pageable);
 }
+

@@ -28,9 +28,11 @@ public class QuestionService {
     private final MemberRepository memberRepository;
 
     public QuestionService(
-        UserAuthService userAuthService,
-        QuestionRepository questionRepository,
-        MemberRepository memberRepository
+
+            UserAuthService userAuthService,
+            QuestionRepository questionRepository,
+            MemberRepository memberRepository
+
     ) {
         this.userAuthService = userAuthService;
         this.questionRepository = questionRepository;
@@ -47,13 +49,16 @@ public class QuestionService {
 
     public Question findQuestion(long questionId) {
         return questionRepository.findById(questionId)
-            .orElseThrow(() -> new BusinessLogicException(ExceptionCode.QUESTION_NOT_FOUND));
+
+                .orElseThrow(() -> new BusinessLogicException(ExceptionCode.QUESTION_NOT_FOUND));
+
     }
 
     public Page<Question> findQuestions(int page, int size) {
         PageRequest pageRequest = PageRequest.of(page, size, Sort.by("id").descending());
         return questionRepository.findAll(pageRequest);
     }
+
 
     public Page<Question> findQuestionsOfUser(HttpServletRequest request, int page, int size) {
         String signedInUserEmail = userAuthService.getSignedInUserEmail(request);
@@ -62,19 +67,22 @@ public class QuestionService {
         return questionRepository.findAllOfUser(authorId, pageRequest);
     }
 
+
     public Question updateQuestion(long questionId, Question question, HttpServletRequest request) {
         String signedInUserEmail = userAuthService.getSignedInUserEmail(request);
         Question foundQuestion = findQuestion(questionId);
         verifyAuthor(signedInUserEmail, foundQuestion);
         foundQuestion.setTitle((question.getTitle() == null)
-            ? foundQuestion.getTitle()
-            : question.getTitle());
+
+                ? foundQuestion.getTitle()
+                : question.getTitle());
         foundQuestion.setBodyProblem((question.getBodyProblem() == null)
-            ? foundQuestion.getBodyProblem()
-            : question.getBodyProblem());
+                ? foundQuestion.getBodyProblem()
+                : question.getBodyProblem());
         foundQuestion.setBodyExpecting((question.getBodyExpecting() == null)
-            ? foundQuestion.getBodyExpecting()
-            : question.getBodyExpecting());
+                ? foundQuestion.getBodyExpecting()
+                : question.getBodyExpecting());
+
         return questionRepository.save(foundQuestion);
     }
 
@@ -91,7 +99,7 @@ public class QuestionService {
 
     private Member findMemberByEmail(String email) {
         return memberRepository.findByEmail(email)
-            .orElseThrow(() -> new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
+                .orElseThrow(() -> new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
     }
 
     private void verifyAuthor(String principalEmail, Question question) {
