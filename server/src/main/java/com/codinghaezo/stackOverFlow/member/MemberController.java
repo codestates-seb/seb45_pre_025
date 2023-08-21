@@ -23,15 +23,12 @@ public class MemberController {
         this.mapper = mapper;
     }
 
-
-
-
     @CrossOrigin(origins = "http://pre-project-deploy.s3-website.ap-northeast-2.amazonaws.com")
     @PostMapping("/signup")
     public ResponseEntity postMember(@RequestBody MemberDto.MemberPostDto memberPostDto) {
         Member member = memberService.createMember(mapper.memberPostDtoToMember(memberPostDto));
         /*
-        토큰 발행 메서드
+권한을 데이터베이스에서 조회 탈퇴한 회원 예외처리
          */
         return new ResponseEntity<>(
                 new MemberDto.SingleResponseDto<>(mapper.memberToMemberResponseDto(member)),

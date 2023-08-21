@@ -38,7 +38,6 @@ public class Member extends Auditable {
         this.email = email;
     }
 
-
     public Member(String userName, String email,
                   String password,
                   List<String> roles,
@@ -51,7 +50,7 @@ public class Member extends Auditable {
         this.profileImageUrl = profileImageUrl;
     }
 
-    @OneToMany(mappedBy = "author")
+    @OneToMany(mappedBy = "author", cascade = CascadeType.ALL)
     private List<Question> questions = new ArrayList<>();
 
 }
