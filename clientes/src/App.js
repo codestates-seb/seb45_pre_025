@@ -27,7 +27,7 @@ function App() {
   const showFooter = () => showFooterPaths.includes(location.pathname);
 
   // 로그인 상태에 따라 Header 컴포넌트를 교체
-  const logIn = localStorage.getItem('token');
+  const logIn = localStorage.getItem('accessToken');
   const HeaderComponent = logIn ? HeaderOn : Header;
 
   return (
