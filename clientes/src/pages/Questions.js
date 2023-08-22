@@ -155,7 +155,7 @@ const Questions = () => {
                 </div>
               </div>
               <div className="w-auto ml-3">
-                <Link to={`/question/id?=${question.id}`}>
+                <Link to={`/question/view?id=${question.id}`}>
                   <div className="text-blue-900 text-xl">{question.title}</div>
                 </Link>
                 <div className="text-yellow-900 text-sm mt-2">
