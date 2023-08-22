@@ -1,4 +1,4 @@
-package com.codinghaezo.stackOverFlow.logIn.oauth2_jwt.jwt;
+package com.codinghaezo.stackOverFlow.logIn.jwt.jwt;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;

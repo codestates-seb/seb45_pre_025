@@ -1,5 +1,7 @@
-package com.codinghaezo.stackOverFlow.logIn.oauth2_jwt.auth.handler;
+package com.codinghaezo.stackOverFlow.logIn.jwt.handler;
 
+
+import com.codinghaezo.stackOverFlow.logIn.utils.ErrorResponder;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.AuthenticationException;
@@ -19,7 +21,7 @@ public class MemberAuthenticationEntryPoint implements AuthenticationEntryPoint 
                          HttpServletResponse response,
                          AuthenticationException authException) throws IOException, ServletException {
         Exception exception = (Exception) request.getAttribute("exception");
-//        ErrorResponder.sendErrorResponse(response, HttpStatus.UNAUTHORIZED);
+        ErrorResponder.sendErrorResponse(response, HttpStatus.UNAUTHORIZED);
 
         logExceptionMessage(authException, exception);
     }
