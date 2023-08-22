@@ -23,20 +23,20 @@ const QuestionsId = () => {
     'http://ec2-52-79-212-94.ap-northeast-2.compute.amazonaws.com:8080';
   const Authorization = localStorage.getItem('token');
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get(`${apiUrl}/questions/auth/login`);
-        // Handle the successful response
-        console.log(response);
-      } catch (error) {
-        console.error('An error occurred:', error);
-        // Handle the error case (e.g., show a user-friendly message)
-      }
-    };
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       const response = await axios.get(`${apiUrl}/questions/auth/login`);
+  //       // Handle the successful response
+  //       console.log(response);
+  //     } catch (error) {
+  //       console.error('An error occurred:', error);
+  //       // Handle the error case (e.g., show a user-friendly message)
+  //     }
+  //   };
 
-    fetchData();
-  }, []);
+  //   fetchData();
+  // }, []);
 
   // const questionDetails = [
   //   {
