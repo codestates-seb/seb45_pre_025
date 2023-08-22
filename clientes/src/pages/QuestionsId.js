@@ -19,7 +19,6 @@ const QuestionsId = () => {
   const [commentsDetails, setCommentsDetails] = useState(undefined);
   const navigate = useNavigate();
 
-
   const apiUrl =
     'http://ec2-52-79-212-94.ap-northeast-2.compute.amazonaws.com:8080';
   const Authorization = localStorage.getItem('accessToken');

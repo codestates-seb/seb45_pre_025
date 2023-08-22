@@ -1,7 +1,45 @@
 import SideCartegory from '../components/SideCartegory';
+import axios from 'axios';
 
 const Users = () => {
   const userProfile = localStorage.getItem('userProfile');
+  let accessToken = localStorage.getItem('accessToken');
+
+  const handleWithdrawal = () => {
+    if (!userProfile || !accessToken) {
+      console.error('User profile or access token not found.');
+      return;
+    }
+
+    axios
+      .delete(
+        'http://ec2-52-79-212-94.ap-northeast-2.compute.amazonaws.com:8080/users/delete',
+        {
+          headers: {
+            Authorization: accessToken,
+          },
+        },
+      )
+      .then((res) => {
+        localStorage.setItem('accessToken', accessToken);
+
+        accessToken = res.data.accessToken;
+
+        if (res.status === 200) {
+          console.log('User has been deleted.');
+          const accessToken = res.headers['authorization'];
+          const refreshToken = res.headers['refresh'];
+
+          localStorage.setItem('access_token', accessToken);
+          localStorage.setItem('refresh_token', refreshToken);
+        } else {
+          console.error('Failed to delete user.');
+        }
+      })
+      .catch((err) => {
+        console.err('Error while deleting user:', err);
+      });
+  };
 
   return (
     <main className="relative top-14  max-w-7xl w-full flex justify-between my-0 mx-auto">
@@ -80,7 +118,10 @@ const Users = () => {
                 </button>
 
                 {/* 회원탈퇴 */}
-                <button className="flex items-center fill-slate-600 text-slate-600 bg-white border border-slate-400 rounded-md px-2 py-1 text-sm ml-2">
+                <button
+                  className="flex items-center fill-slate-600 text-slate-600 bg-white border border-slate-400 rounded-md px-2 py-1 text-sm ml-2"
+                  onClick={handleWithdrawal}
+                >
                   <svg
                     aria-hidden="true"
                     className="native mln2 mr2 svg-icon iconLogoSEXxs"
