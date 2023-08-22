@@ -1,69 +1,92 @@
 import { Link } from 'react-router-dom';
 import SideCartegory from '../components/SideCartegory';
 import Sidebar from '../components/Sidebar';
-import Pagination from '../components/Pagination';
-// import { useEffect } from 'react';
+// import Pagination from '../components/Pagination';
+import { useEffect, useState } from 'react';
+import { format } from 'date-fns';
 // import axios from 'axios';
 
-const QuestionParams = new URLSearchParams(window.location.search);
-const QuestionQuery = QuestionParams.get('id');
-// const [answer, setAnswer] = useState(null);
+// const QuestionParams = new URLSearchParams(window.location.search);
+// const QuestionQuery = QuestionParams.get('questionID');
 
-// useEffect(() => {
-//   axios
-//     .get('{baseURL}/questions/all')
-//     .then((response) => {
-//       setAnswer(response.data);
-//     })
-//     .catch((error) => {
-//       console.log('Error', error);
-//     });
-// }, []);
-
-const answersDetails = [
-  {
-    id: 1,
-    title: '제목1',
-    body: '본문',
-    authorId: 0,
-    createdAt: '2023-08-16T23:19:49.0995',
-    modifiedAt: '2023-08-16T23:19:49.0995',
-  },
-  {
-    id: 2,
-    title: '제목2',
-    body: '본문',
-    authorId: 0,
-    createdAt: '2023-08-16T23:19:49.0995',
-    modifiedAt: '2023-08-16T23:19:49.0995',
-  },
-  {
-    id: 3,
-    title: '제목3',
-    body: '본문',
-    authorId: 0,
-    createdAt: '2023-08-16T23:19:49.0995',
-    modifiedAt: '2023-08-16T23:19:49.0995',
-  },
-  {
-    id: 4,
-    title: '제목3',
-    body: '본문',
-    authorId: 0,
-    createdAt: '2023-08-16T23:19:49.0995',
-    modifiedAt: '2023-08-16T23:19:49.0995',
-  },
-  {
-    id: 5,
-    title: '제목3',
-    body: '본문',
-    authorId: 0,
-    createdAt: '2023-08-16T23:19:49.0995',
-    modifiedAt: '2023-08-16T23:19:49.0995',
-  },
-];
+// const answersDetails = [
+//   {
+//     id: 1,
+//     title: '제목1',
+//     body: '본문',
+//     authorId: 0,
+//     createdAt: '2023-08-16T23:19:49.0995',
+//     modifiedAt: '2023-08-16T23:19:49.0995',
+//   },
+//   {
+//     id: 2,
+//     title: '제목2',
+//     body: '본문',
+//     authorId: 0,
+//     createdAt: '2023-08-16T23:19:49.0995',
+//     modifiedAt: '2023-08-16T23:19:49.0995',
+//   },
+//   {
+//     id: 3,
+//     title: '제목3',
+//     body: '본문',
+//     authorId: 0,
+//     createdAt: '2023-08-16T23:19:49.0995',
+//     modifiedAt: '2023-08-16T23:19:49.0995',
+//   },
+//   {
+//     id: 4,
+//     title: '제목3',
+//     body: '본문',
+//     authorId: 0,
+//     createdAt: '2023-08-16T23:19:49.0995',
+//     modifiedAt: '2023-08-16T23:19:49.0995',
+//   },
+//   {
+//     id: 5,
+//     title: '제목3',
+//     body: '본문',
+//     authorId: 0,
+//     createdAt: '2023-08-16T23:19:49.0995',
+//     modifiedAt: '2023-08-16T23:19:49.0995',
+//   },
+// ];
 
 const Questions = () => {
+  const [questions, setQuestions] = useState([]);
+  const [totalContents, setTotalContents] = useState(0);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage, setItemsPerPage] = useState(15);
+  const [totalPages, setTotalPages] = useState(0);
+
+  const apiUrl =
+    'http://ec2-52-79-212-94.ap-northeast-2.compute.amazonaws.com:8080';
+
+  useEffect(() => {
+    const fetchQuestions = async () => {
+      try {
+        const response = await fetch(
+          `${apiUrl}/questions/all?page=${currentPage}&size=${itemsPerPage}`,
+        );
+        const data = await response.json();
+        setQuestions(data.contents);
+        setTotalContents(data.totalContents);
+        setTotalPages(data.totalPages);
+      } catch (error) {
+        console.error('Error fetching questions:', error);
+      }
+    };
+    fetchQuestions();
+  }, [currentPage, itemsPerPage]);
+
+  const handlePageChange = (newPage) => {
+    setCurrentPage(newPage);
+  };
+
+  const handleItemsPerPageChange = (newItemsPerPage) => {
+    setItemsPerPage(newItemsPerPage);
+    setCurrentPage(1);
+  };
   return (
     <main className="relative top-14  max-w-7xl w-full flex justify-between my-0 mx-auto">
       <SideCartegory />
@@ -81,7 +104,7 @@ const Questions = () => {
             <div className="flex justify-between items-center h-16 w-full">
               <div className="flex w-1/3 mr-4">
                 <h2 className="text-lg text-gray-600 box-content">
-                  7,308,283 questions with no upvoted or accepted answers
+                  {totalContents} questions
                 </h2>
               </div>
               <div className="flex justify-between items-center text-sm w-auto">
@@ -91,6 +114,9 @@ const Questions = () => {
                   </button>
                   <button className="border-l border-r px-2.5 h-full">
                     <span className="">Active</span>
+                  </button>
+                  <button className="border-r px-2.5 h-full">
+                    <span className="">Bountied</span>
                   </button>
                   <button className="border-r px-2.5 h-full">
                     <span className="">Unanswered</span>
@@ -112,8 +138,8 @@ const Questions = () => {
               </div>
             </div>
           </div>
-          {answersDetails.map((answer) => (
-            <div className="text-sm flex  p-5 border-b" key={answer.answerId}>
+          {questions.map((question) => (
+            <div className="text-sm flex  p-5 border-b" key={question.id}>
               <div className="flex  flex-col justify-start items-end">
                 <div className="mx-1  px-1 py-1">
                   <span className="pr-1">0</span>
@@ -124,43 +150,108 @@ const Questions = () => {
                   answers
                 </div>
                 <div className="mx-1  px-1 py-1 text-yellow-900">
-                  <span className="pr-1">0</span>
+                  <span className="pr-1">{question.views}</span>
                   views
                 </div>
               </div>
               <div className="w-auto ml-3">
-                <Link to={`/questions/id?=${QuestionQuery}`}>
-                  {/* 타이틀 */}
-                  <div className="text-blue-900 text-xl">
-                    Why does tmap render 80 times faster than ggplot2? [Plotting
-                    shapefiles in R with ggplot2::geom_sf(), using XQuartz/X11
-                    graphics device on macOS]
-                  </div>
+                <Link to={`/question/id?=${question.id}`}>
+                  <div className="text-blue-900 text-xl">{question.title}</div>
                 </Link>
-                {/* Suv Title */}
                 <div className="text-yellow-900 text-sm mt-2">
-                  Update/Edit/Reprex: Rendering the same spatial data with the
-                  same graphics device takes 1 second with tmap versus 80
-                  seconds with ggplot2, even though the tmap plot&rsquo;s R
-                  object is 80x larger in size. ...
+                  {question.bodyProblem}
                 </div>
                 <div className="flex text-xs justify-end mt-4">
-                  {/* 작성자 */}
-                  <div>dad 1,335</div>
-                  {/* 작성 시간 */}
-                  <div>asked Jul 1, 2018 at 18:42</div>
+                  <div>{question.authorId}</div>
+
+                  <div>
+                    asked{' '}
+                    {format(
+                      new Date(question.createdAt),
+                      "MMM d, yyyy 'at' HH:mm",
+                    )}
+                  </div>
                 </div>
               </div>
             </div>
           ))}
-          <div>
-            <Pagination />
+          <div className="flex justify-between items-center mt-10">
+            <div className="flex">
+              <button
+                onClick={() => handlePageChange(currentPage - 1)}
+                className={`px-4 py-2 mx-1 rounded-md ${
+                  currentPage === 1
+                    ? 'hidden'
+                    : 'hover:bg-gray-200 rounded-md border'
+                }`}
+                disabled={currentPage === 1}
+              >
+                Prev
+              </button>
+              {Array.from({ length: totalPages }, (_, index) => (
+                <button
+                  key={index}
+                  onClick={() => handlePageChange(index + 1)}
+                  className={`px-4 py-2 mx-1 rounded-md ${
+                    currentPage === index + 1
+                      ? 'bg-orange-500 text-white'
+                      : 'hover:bg-gray-200 rounded-md border'
+                  }`}
+                >
+                  {index + 1}
+                </button>
+              ))}
+              <button
+                onClick={() => handlePageChange(currentPage + 1)}
+                className={`px-4 py-2 mx-1 rounded-md ${
+                  currentPage === totalPages
+                    ? 'hidden'
+                    : 'hover:bg-gray-200 rounded-md border'
+                }`}
+                disabled={currentPage === totalPages}
+              >
+                Next
+              </button>
+            </div>
+            <div className="flex justify-end">
+              <button
+                className={`px-2 py-1 rounded-md border ${
+                  itemsPerPage === 15
+                    ? 'bg-orange-500 text-white'
+                    : 'bg-white hover:bg-gray-200'
+                }`}
+                onClick={() => handleItemsPerPageChange(15)}
+              >
+                15
+              </button>
+              <button
+                className={`px-2 py-1 ml-1 rounded-md border ${
+                  itemsPerPage === 30
+                    ? 'bg-orange-500 text-white'
+                    : 'bg-white hover:bg-gray-200'
+                }`}
+                onClick={() => handleItemsPerPageChange(30)}
+              >
+                30
+              </button>
+              <button
+                className={`px-2 py-1 ml-1 rounded-md border ${
+                  itemsPerPage === 50
+                    ? 'bg-orange-500 text-white'
+                    : 'bg-white hover:bg-gray-200'
+                }`}
+                onClick={() => handleItemsPerPageChange(50)}
+              >
+                50
+              </button>
+              <div className="ml-3">Per page</div>
+            </div>
           </div>
         </div>
+      </div>
 
-        <div className="flex py-4 w-[36%]">
-          <Sidebar />
-        </div>
+      <div className="flex py-4 w-[36%]">
+        <Sidebar />
       </div>
     </main>
   );
