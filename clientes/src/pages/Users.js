@@ -3,27 +3,25 @@ import axios from 'axios';
 
 const Users = () => {
   const userProfile = localStorage.getItem('userProfile');
-  let accessToken = localStorage.getItem('accessToken');
+  const apiUrl =
+    'http://ec2-52-79-212-94.ap-northeast-2.compute.amazonaws.com:8080';
+  const Authorization = localStorage.getItem('accessToken');
 
   const handleWithdrawal = () => {
-    if (!userProfile || !accessToken) {
+    const config = {
+      headers: {
+        Authorization: Authorization,
+      },
+    };
+    if (!userProfile || !Authorization) {
       console.error('User profile or access token not found.');
       return;
     }
 
     axios
-      .delete(
-        'http://ec2-52-79-212-94.ap-northeast-2.compute.amazonaws.com:8080/users/delete',
-        {
-          headers: {
-            Authorization: accessToken,
-          },
-        },
-      )
+      .delete(`${apiUrl}/users`, config)
       .then((res) => {
-        localStorage.setItem('accessToken', accessToken);
-
-        accessToken = res.data.accessToken;
+        localStorage.setItem('accessToken', Authorization);
 
         if (res.status === 200) {
           console.log('User has been deleted.');
