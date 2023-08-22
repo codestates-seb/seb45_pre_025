@@ -1,12 +1,11 @@
 import { useState, useEffect } from 'react';
 import Pagination from 'react-js-pagination';
-// import 'react-js-pagination/dist/Pagination.css';
 import axios from 'axios';
 
 function PaginationComponent() {
   const [data, setData] = useState([]); // 가져온 데이터 저장
   const [activePage, setActivePage] = useState(1);
-  const itemsPerPage = 10; // 페이지당 보여줄 아이템 수
+  const itemsPerPage = 5; // 페이지당 보여줄 아이템 수
   const totalItems = 100; // 전체 아이템 수
 
   useEffect(() => {
@@ -14,7 +13,7 @@ function PaginationComponent() {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          `{baseURL}/questions/all=${activePage}&limit=${itemsPerPage}`,
+          `http://ec2-52-79-212-94.ap-northeast-2.compute.amazonaws.com:8080/questions/all=${activePage}&limit=${itemsPerPage}`,
         );
         setData(response.data);
       } catch (error) {
@@ -32,7 +31,7 @@ function PaginationComponent() {
   return (
     <div className="flex w-72">
       {/* 데이터 출력 부분 */}
-      <ul>
+      <ul className="flex">
         {data.map((item) => (
           <li key={item.id}>{item.name}</li>
         ))}
