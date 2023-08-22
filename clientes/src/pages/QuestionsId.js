@@ -13,11 +13,13 @@ const QuestionsId = () => {
   const questionId = searchParams.get('id');
   //const [error, setError] = useState(null);
   const [questionDetails, setQuestionDetails] = useState(undefined);
-  const [answersDetails, setAnswersDetails] = useState([]);
+  const [answersDetails, setAnswersDetails] = useState(undefined);
   const [newAnswer, setNewAnswer] = useState('');
   const [newComment, setNewComment] = useState('');
-  const [commentsDetails, setCommentsDetails] = useState([]);
+  const [commentsDetails, setCommentsDetails] = useState(undefined);
   const navigate = useNavigate();
+
+  const [answerIds, setAnswerIds] = useState([]);
 
   const apiUrl =
     'http://ec2-52-79-212-94.ap-northeast-2.compute.amazonaws.com:8080';
@@ -131,49 +133,137 @@ const QuestionsId = () => {
   }, []);
 
   useEffect(() => {
-    const fetchAnswersAndComments = async () => {
-      try {
-        // Fetch answers
-        const answersResponse = await axios.get(
-          `${apiUrl}/question/${questionId}/answers`,
-        );
-        const fetchedAnswers = answersResponse.data.map((answer) => {
-          // Extract user ID from email
+    axios
+      .get(`${apiUrl}/question/${questionId}/answers`)
+      .then((response) => {
+        const fetchedAnswers = response.data.map((answer) => {
           const userEmail = answer.userEmail;
           const userId = userEmail.split('@')[0];
+
           return {
             ...answer,
-            userId: userId, // Add the user ID to the answer object
+            userId: userId,
           };
         });
-        // Fetch comments for each answer and accumulate them
-        const allComments = [];
-        for (const answer of fetchedAnswers) {
-          const commentsResponse = await axios.get(
-            `${apiUrl}/answers/${answer.answerId}/comments`,
-          );
-          const commentsForAnswer = commentsResponse.data.map((comment) => {
-            // Extract user ID from email
-            const userEmail = comment.userEmail;
-            const userId = userEmail.split('@')[0];
-            return {
-              ...comment,
-              userId: userId, // Add the user ID to the comment object
-            };
-          });
-          allComments.push(...commentsForAnswer);
-        }
-        // Set answers and accumulated comments in state
-        //console.log(response);
+
+        // const answerIds = fetchedAnswers.map((answer) => answer.answerId);
+        // console.log('Extracted answerIds:', answerIds);
+        // setAnswerIds(answerIds);
+
         setAnswersDetails(fetchedAnswers);
-        setCommentsDetails(allComments);
-      } catch (error) {
-        console.error('Error fetching answers and comments:', error);
-        //setError('An error occurred while fetching data.');
-      }
-    };
-    fetchAnswersAndComments();
-  }, [questionId, newAnswer]);
+        console.log('Fetched answers:', fetchedAnswers);
+      })
+      .catch((error) => {
+        console.error('Error fetching answers:', error);
+      });
+  }, []);
+
+  // useEffect(() => {
+  //   axios
+  //     .get(`${apiUrl}/question/${questionId}/answers`)
+  //     .then((response) => {
+  //       const fetchedAnswers = response.data.map((answer) => {
+  //         const userEmail = answer.userEmail;
+  //         const userId = userEmail.split('@')[0];
+  //         return {
+  //           ...answer,
+  //           userId: userId,
+  //           comments: [], // Initialize an empty array to store comments for this answer
+  //         };
+  //       });
+
+  //       setAnswersDetails(fetchedAnswers);
+  //       console.log('Fetched answers:', fetchedAnswers);
+
+  //       // Fetch comments for each answer
+  //       fetchedAnswers.forEach((answer) => {
+  //         axios
+  //           .get(`${apiUrl}/answers/${answer.answerId}/comments`)
+  //           .then((response) => {
+  //             const commentsForAnswer = response.data.map((comment) => {
+  //               const userEmail = comment.userEmail;
+  //               const userId = userEmail.split('@')[0];
+  //               return {
+  //                 ...comment,
+  //                 userId: userId,
+  //               };
+  //             });
+
+  //             // Update the comments array for this answer in your state or data structure
+  //             const updatedAnswers = answersDetails.map((a) => {
+  //               if (a.answerId === answer.answerId) {
+  //                 return {
+  //                   ...a,
+  //                   comments: commentsForAnswer,
+  //                 };
+  //               }
+  //               return a;
+  //             });
+
+  //             setAnswersDetails(updatedAnswers);
+  //             console.log('Comments for answer:', commentsForAnswer);
+  //           })
+  //           .catch((error) => {
+  //             console.error('Error fetching comments:', error);
+  //           });
+  //       });
+  //     })
+  //     .catch((error) => {
+  //       console.error('Error fetching answers:', error);
+  //     });
+  // }, []);
+
+  // useEffect(() => {
+  //   const fetchAnswersAndComments = async () => {
+  //     try {
+  //       // Fetch answers
+  //       const answersResponse = await axios.get(
+  //         `${apiUrl}/question/${questionId}/answers`,
+  //       );
+  //       console.log('Answers response:', answersResponse.data);
+  //       console.log('Answers response:', answersResponse);
+  //       const fetchedAnswers = answersResponse.data.map((answer) => {
+  //         // Extract user ID from email
+  //         const userEmail = answer.userEmail;
+  //         const userId = userEmail.split('@')[0];
+  //         return {
+  //           ...answer,
+  //           userId: userId, // Add the user ID to the answer object
+  //         };
+  //       });
+  //       console.log('Fetched answers:', fetchedAnswers);
+  //       // Fetch comments for each answer and accumulate them
+  //       const allComments = [];
+  //       for (const answer of fetchedAnswers) {
+  //         const commentsResponse = await axios.get(
+  //           `${apiUrl}/answers/${answer.answerId}/comments`,
+  //         );
+  //         console.log('Comments response:', commentsResponse);
+  //         const commentsForAnswer = commentsResponse.data.map((comment) => {
+  //           // Extract user ID from email
+  //           const userEmail = comment.userEmail;
+  //           const userId = userEmail.split('@')[0];
+  //           return {
+  //             ...comment,
+  //             userId: userId, // Add the user ID to the comment object
+  //           };
+  //         });
+  //         console.log('Comments for answer:', commentsForAnswer);
+  //         allComments.push(...commentsForAnswer);
+  //       }
+  //       console.log('All comments:', allComments);
+  //       // Set answers and accumulated comments in state
+  //       setAnswersDetails(fetchedAnswers);
+  //       setCommentsDetails(allComments);
+  //       console.log(answersDetails);
+  //       console.log(commentsDetails);
+  //     } catch (error) {
+  //       console.error('Error fetching answers and comments:', error);
+  //       //setError('An error occurred while fetching data.');
+  //     }
+  //   };
+  //   fetchAnswersAndComments();
+  // }, [questionId, newAnswer]);
 
   const handleNewAnswerSubmit = () => {
     // Create a new answer
