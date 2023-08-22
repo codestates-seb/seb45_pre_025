@@ -2,7 +2,7 @@ import { Routes, Route, useLocation } from 'react-router-dom';
 import './index.css';
 import Main from './pages/Main';
 import Header from './components/Header';
-// import HeaderOn from './components/HeaderOn';
+import HeaderOn from './components/HeaderOn';
 import Footer from './components/Footer';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
@@ -25,10 +25,13 @@ function App() {
   // 현재 경로가 showFooterPaths에 속하는지 확인하는 함수
   const showFooter = () => showFooterPaths.includes(location.pathname);
 
+  // 로그인 상태에 따라 Header 컴포넌트를 교체
+  const logIn = localStorage.getItem('token');
+  const HeaderComponent = logIn ? HeaderOn : Header;
+
   return (
     <div className="w-full">
-      {/* <Header /> */}
-      <Header />
+      <HeaderComponent />
       <Routes>
         <Route path="/" element={<Main />}></Route>
         <Route path="/login" element={<Login />}></Route>

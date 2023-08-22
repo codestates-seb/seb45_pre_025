@@ -1,8 +1,11 @@
 ## 프로젝트_코딩해'조' 
 
+<img width="300px" height="300px" src="clientes/public/images/코딩해조_로고.png">
+
+
 > 프로젝트 기간 : 08.04 ~ 08.23
 >> - [Figma Link](https://www.figma.com/file/n40SeKU2OlbZN8wwQZ1Zv7/%5B%EC%BD%94%EB%94%A9%ED%95%B4%EC%A1%B0%5D-pre-project?type=design&node-id=0%3A1&mode=design&t=uq01cPwr96HDyFwP-1)
->> - **[배포사이트]()**
+>> - **[배포사이트](http://pre-project-deploy.s3-website.ap-northeast-2.amazonaws.com)**
 
 <br>
 
@@ -18,10 +21,6 @@
 |---|---|---|
 |<img width="150px" height="150px" src ="clientes/public/images/chan-woo.jpg" />|<img width="150px" height="150px" src ="clientes/public/images/seok-wan.jpg" />|<img width="150px" height="150px" src ="clientes/public/images/jin-ho.jpg" />|
 |<center>[@chanwoopark9301](https://github.com/chanwoopark9301)</center>|<center>[@blacksg](https://github.com/blacksg)</center>|<center>[@yang-jin-ho](https://github.com/yang-jin-ho)</center>|
-<br>
-
-## 디렉토리 구조
-
 
 <br>
 
@@ -38,18 +37,37 @@
 <br>
 
 ## 📝 Documents
-### 사용자 요구사항 정의서
+
+<details>
+<summary> 사용자 요구사항 정의서</summary>
+<div markdown="1">
+
 <img src="clientes/public/images/사용자 요구사항 정의서_25조_코딩해조.png">
 
+</div>
+</details>
+
 <br>
 
-### User Flow
+<details>
+<summary> User Flow </summary>
+<div markdown="1">
+
 <img src="clientes/public/images/[코딩해조] User Flow.png">
 
+</div>
+</details>
+
 <br>
 
-### 테이블 설계도
+<details>
+<summary> 테이블 설계도 </summary>
+<div markdown="1">
+
 <img src="clientes/public/images/table.png">
+
+</div>
+</details>
 
 <br>
 
@@ -82,3 +100,8 @@
 |Refactor|코드 리팩토링|
 |Test|테스트 코드, 리팩토링 테스트 코드 추가|
 |Chore|빌드 업무 수정, 패키지 매니저 수정|
+
+<br>
+
+## 디렉토리 구조
+

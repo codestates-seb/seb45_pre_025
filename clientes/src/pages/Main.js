@@ -1,6 +1,24 @@
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
 const Main = () => {
+  const texts = [
+    'game developer',
+    'data scientist',
+    'system admin',
+    'mobile developer',
+    'developer',
+  ]; // 반복될 텍스트 배열
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  useEffect(() => {
+    // 텍스트 변경과 함께 애니메이션 효과 적용
+    const intervalId = setInterval(() => {
+      setCurrentIndex((index) => (index + 1) % texts.length);
+    }, 2000); // 2초마다 텍스트 변경
+    return () => clearInterval(intervalId);
+  }, [currentIndex]);
+
   return (
     <main className="relative min-h-screen">
       <section>
@@ -74,11 +92,18 @@ const Main = () => {
             {/* 말풍선 박스 끝 */}
 
             {/* 움직이는 글자 */}
-            <div className="flex flex-col items-center font-Roboto font-bold text-white text-6xl my-20">
-              <span className="my-2">Every</span>
-              <span className="text-orange-500 my-2">game developer</span>
-              <span className="my-2">has a tab open to</span>
-              <span className="my-2">Stack Overflow</span>
+            <div className="w-auto flex flex-col items-center font-Roboto font-bold text-white text-6xl my-20">
+              <div>
+                <span className="my-2">Every</span>
+                <span className="w-auto text-orange-500 my-2 mx-4 animate-slideOut">
+                  {texts[currentIndex]}
+                </span>
+                <span className="my-2">has a</span>
+              </div>
+              <div>
+                <span className="my-2">tab open to</span>
+                <span className="my-2">Stack Overflow</span>
+              </div>
             </div>
             {/* 움직이는 글자 끝 */}
             <div className="h-2 w-16 bg-gray-500 rounded-md mx-auto" />

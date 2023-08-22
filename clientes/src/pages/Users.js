@@ -10,14 +10,10 @@ const Users = () => {
             {/* 유저 프로필 */}
             <div>
               <div className="flex justify-start pb-6">
-                <div className="w-32 h-32 rounded-md bg-yellow-300">
-                  <h1 className="text-8xl py-auto leading-normal">🧑‍💻</h1>
-                </div>
+                <div className="w-32 h-32 rounded-md bg-yellow-300" />
                 <div className="flex flex-col justify-center ml-4">
                   {/* 회원 이름 */}
-                  <div>
-                    <h1 className="text-4xl">User Name</h1>
-                  </div>
+                  <h1 className="text-4xl">User Name</h1>
 
                   {/* 회원 상세정보 */}
                   <div className="flex mt-2 text-sm">
@@ -67,7 +63,7 @@ const Users = () => {
               </div>
               <div className="flex w-max absolute top-0 right-0 mt-6">
                 {/* 프로필 수정 */}
-                <button className="flex items-center fill-slate-600 text-slate-600 bg-white border border-slate-400  rounded-md p-2 text-sm">
+                <button className="flex items-center fill-slate-600 text-slate-600 bg-white border border-slate-400  rounded-md px-2 py-1 text-sm">
                   <svg
                     aria-hidden="true"
                     className="svg-icon iconPencil"
@@ -78,11 +74,11 @@ const Users = () => {
                     <path d="m2 13.13 8.5-8.5 2.88 2.88-8.5 8.5H2v-2.88Z" />
                     <path d="m13.68 2.15 2.17 2.17c.2.2.2.51 0 .71L14.5 6.39l-2.88-2.88 1.35-1.36c.2-.2.51-.2.71 0Z" />
                   </svg>
-                  <span>Edit profile</span>
+                  <span className="ml-1 font-semibold">Edit profile</span>
                 </button>
 
-                {/* 네트워크 프로필 */}
-                <button className="flex items-center fill-slate-600 text-slate-600 bg-white border border-slate-400  rounded-md p-2 text-sm ml-2">
+                {/* 회원탈퇴 */}
+                <button className="flex items-center fill-slate-600 text-slate-600 bg-white border border-slate-400 rounded-md px-2 py-1 text-sm ml-2">
                   <svg
                     aria-hidden="true"
                     className="native mln2 mr2 svg-icon iconLogoSEXxs"
@@ -101,24 +97,37 @@ const Users = () => {
                     <path fill="#46A2D9" d="M3 5h12v2H3z" />
                     <path fill="#2D6DB5" d="M3 8h12v2H3z" />
                   </svg>
-                  <span>Network profile</span>
+                  <div className="flex flex-col ml-1">
+                    <span className="font-semibold">withdrawal</span>
+                    <span className="text-xs text-slate-400">
+                      (from membership)
+                    </span>
+                  </div>
                 </button>
               </div>
             </div>
             <div className="flex justify-start items-center h-16 w-full">
               <div className="flex justify-between items-center text-sm w-auto">
                 <div className="flex items-center h-8 text-gray-500">
-                  <button className="px-2.5 h-full">
-                    <span className="">Profile</span>
+                  <button className="h-full">
+                    <span className="text-gray-900 hover:bg-orange-400 hover:text-white p-2.5 rounded-3xl">
+                      Questions
+                    </span>
                   </button>
-                  <button className=" px-2.5 h-full">
-                    <span className="">Activity</span>
+                  <button className="h-full">
+                    <span className="text-gray-900 hover:bg-orange-400 hover:text-white p-2.5 rounded-3xl">
+                      Answers
+                    </span>
                   </button>
-                  <button className=" px-2.5 h-full">
-                    <span className="">Saves</span>
+                  <button className="h-full">
+                    <span className="text-gray-900 hover:bg-orange-400 hover:text-white p-2.5 rounded-3xl">
+                      Comments
+                    </span>
                   </button>
-                  <button>
-                    <span className="h-full px-2.5">Settings</span>
+                  <button className="h-full">
+                    <span className="text-gray-900 hover:bg-orange-400 hover:text-white p-2.5 rounded-3xl">
+                      Bookmarks
+                    </span>
                   </button>
                 </div>
               </div>

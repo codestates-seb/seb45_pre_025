@@ -1,20 +1,24 @@
 import { useState, useEffect } from 'react';
-//import axios from 'axios';
+import axios from 'axios';
 import Editor from '@toast-ui/editor';
 import '@toast-ui/editor/dist/toastui-editor.css';
+
 import { useNavigate, useLocation } from 'react-router-dom';
 
 const QuestionsAsk = () => {
   const [editorContent1, setEditorContent1] = useState('');
   const [editorContent2, setEditorContent2] = useState('');
   const [title, setTitle] = useState('');
-  const [displayedMergedContent, setDisplayedMergedContent] = useState(''); //테스트용
+  //const [displayedMergedContent, setDisplayedMergedContent] = useState(''); //테스트용
   const [selectedStep, setSelectedStep] = useState(1);
   const navigate = useNavigate();
 
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
   const questionId = searchParams.get('id');
+  const baseURL =
+    'http://ec2-52-79-212-94.ap-northeast-2.compute.amazonaws.com:8080';
+  const Authorization = localStorage.getItem('token');
 
   let editor1 = undefined;
   let editor2 = undefined;
@@ -76,81 +80,84 @@ const QuestionsAsk = () => {
   useEffect(() => {
     console.log(questionId);
     if (questionId) {
-      // axios
-      //   .get('{baseURL}/questions/${questionId}')
-      //   .then((response) => {
-      //     const { title, bodyExpecting, bodyProblem } = response.data;
-      //     setTitle(title);
-      //     setEditorContent1(bodyExpecting);
-      //     setEditorContent2(bodyProblem);
-      //     if (editor1) {
-      //       editor1.setValue(bodyExpecting);
-      //     }
-      //     if (editor2) {
-      //       editor2.insertText(bodyProblem);
-      //     }
-      //   })
-      //   .catch((error) => {
-      //     // Handle error if needed
-      //     console.error(error);
-      //   });
+      axios
+        .get(`${baseURL}/questions/${questionId}`)
+        .then((response) => {
+          const { title, bodyExpecting, bodyProblem } = response.data;
+          setTitle(title);
+          setEditorContent1(bodyProblem);
+          setEditorContent2(bodyExpecting);
+        })
+        .catch((error) => {
+          // Handle error if needed
+          console.error(error);
+        });
     }
   }, [questionId]);
 
   const handleSubmit = () => {
-    const mergedContent = `${editorContent1}\n\n${editorContent2}`; //테스트
-    setDisplayedMergedContent(mergedContent); //테스트
-    console.log(mergedContent); //테스트
+    // const mergedContent = `${editorContent1}\n\n${editorContent2}`; //테스트
+    // setDisplayedMergedContent(mergedContent); //테스트
+    // console.log(mergedContent); //테스트
 
     if (questionId) {
       //Edit question (/ask?id={id})
-      // const dataToSend = {
-      //   title: title,
-      //   bodyExpecting: editorContent1,
-      //   bodyProblem: editorContent2,
-      // };
-      // axios
-      //   .patch('{baseURL}/questions/${questionId}', dataToSend)
-      //   .then((response) => {
-      //    navigate(`/questions/view?id=${questionId}`);
-      //   })
-      //   .catch((error) => {
-      //     // Handle error if needed
-      //     console.error(error);
-      //   });
+      const dataToSend = {
+        title: title,
+        bodyExpecting: editorContent1,
+        bodyProblem: editorContent2,
+      };
+      axios
+        .patch(`${baseURL}/questions/${questionId}`, dataToSend, {
+          headers: {
+            Authorization: `Bearer ${Authorization}`,
+          },
+        })
+        .then((response) => {
+          const updatedQuestionId = response.data.id;
+          navigate(`/questions/view?id=${updatedQuestionId}`);
+        })
+        .catch((error) => {
+          // Handle error if needed
+          console.error(error);
+          console.error('Error editing a question:', error);
+        });
     } else {
       //craete question (/ask)
-      // const dataToSend = {
-      //   title: title,
-      //   bodyExpecting: editorContent1,
-      //   bodyProblem: editorContent2,
-      // };
-      // axios
-      //   .post('{baseURL}/questions', dataToSend)
-      //   .then((response) => {
-      //    const newQuestionId = response.headers.location.split('=').pop();
-      //    navigate(`/questions/view?id=${newQuestionId}`);
-      //   })
-      //   .catch((error) => {
-      //     // Handle error if needed
-      //   });
+      const dataToSend = {
+        title: title,
+        bodyExpecting: editorContent1,
+        bodyProblem: editorContent2,
+      };
+      axios
+        .post(`${baseURL}/questions`, dataToSend, {
+          headers: {
+            Authorization: `Bearer ${Authorization}`,
+          },
+        })
+        .then((response) => {
+          const newQuestionId = response.headers.location.split('=').pop();
+          navigate(`/questions/view?id=${newQuestionId}`);
+        })
+        .catch((error) => {
+          // Handle error if needed
+          console.error('Error posting a question:', error);
+        });
     }
   };
 
-  //bodyExpecting, bodyProblem
+  // useEffect(() => {
+  //   const viewer = Editor.factory({
+  //     el: document.querySelector('#viewer'),
+  //     initialValue: displayedMergedContent,
+  //     height: 'auto',
+  //     viewer: true,
+  //   });
 
-  useEffect(() => {
-    const viewer = Editor.factory({
-      el: document.querySelector('#viewer'),
-      initialValue: displayedMergedContent,
-      height: 'auto',
-      viewer: true,
-    });
-
-    return () => {
-      viewer.destroy();
-    };
-  }, [displayedMergedContent]); //테스트
+  //   return () => {
+  //     viewer.destroy();
+  //   };
+  // }, [displayedMergedContent]); //테스트
 
   return (
     <div className="bg-[#F8F9F9]  min-h-screen min-w-full">
@@ -447,10 +454,10 @@ const QuestionsAsk = () => {
               Discard draft
             </button>
             {/* 테스트용 */}
-            <div
+            {/* <div
               id="viewer"
               className="my-4 border rounded-md p-3 bg-white"
-            ></div>
+            ></div> */}
           </div>
         </div>
       </div>
