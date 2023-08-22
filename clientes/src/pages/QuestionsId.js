@@ -12,7 +12,7 @@ const QuestionsId = () => {
   const searchParams = new URLSearchParams(location.search);
   const questionId = searchParams.get('id');
   //const [error, setError] = useState(null);
-  const [questionDetails, setQuestionDetails] = useState([]);
+  const [questionDetails, setQuestionDetails] = useState(undefined);
   const [answersDetails, setAnswersDetails] = useState([]);
   const [newAnswer, setNewAnswer] = useState('');
   const [newComment, setNewComment] = useState('');
@@ -102,8 +102,8 @@ const QuestionsId = () => {
 
   useEffect(() => {
     let question = undefined;
-    if (questionDetails.length > 0) {
-      const questionBody = `${questionDetails[0].bodyProblem}\n\n${questionDetails[0].bodyExpecting}`;
+    if (questionDetails) {
+      const questionBody = `${questionDetails.bodyProblem}\n\n${questionDetails.bodyExpecting}`;
       question = Editor.factory({
         el: document.querySelector('#question'),
         initialValue: questionBody,
@@ -122,6 +122,7 @@ const QuestionsId = () => {
       .get(`${apiUrl}/questions/${questionId}`)
       .then((response) => {
         setQuestionDetails(response.data);
+        console.log(response);
       })
       .catch((error) => {
         console.error('Error fetching question details:', error);
@@ -163,6 +164,7 @@ const QuestionsId = () => {
           allComments.push(...commentsForAnswer);
         }
         // Set answers and accumulated comments in state
+        //console.log(response);
         setAnswersDetails(fetchedAnswers);
         setCommentsDetails(allComments);
       } catch (error) {
@@ -261,8 +263,10 @@ const QuestionsId = () => {
       <div className="flex flex-col justify-center pt-14 pl-6 mb-1.5 divide-y divide-slate-200 w-4/6 ">
         <div className="">
           <div className="flex justify-between">
-            {questionDetails[0] && (
-              <div className="mb-2 text-2xl">{questionDetails[0].title}</div>
+            {questionDetails && (
+              <div className="mb-2 text-2xl">
+                {questionDetails.title && questionDetails.title}
+              </div>
             )}
             <div className="text-white text-sm cursor-pointer">
               {/* 로그인 정보 받으면 수정/삭제 버튼 보이게 */}
@@ -284,25 +288,23 @@ const QuestionsId = () => {
               </Link>
             </div>
           </div>{' '}
-          {questionDetails[0] && (
+          {questionDetails && (
             <div className="flex mb-2">
               <div className="mr-4 text-xs font-light">
-                Asked{' '}
-                {formatDistanceToNow(new Date(questionDetails[0].createdAt))}{' '}
+                Asked {formatDistanceToNow(new Date(questionDetails.createdAt))}{' '}
                 ago
               </div>
               <div className="mr-4 text-xs font-light">
                 Modified{' '}
-                {formatDistanceToNow(new Date(questionDetails[0].modifiedAt))}{' '}
-                ago
+                {formatDistanceToNow(new Date(questionDetails.modifiedAt))} ago
               </div>
               <div className="text-xs font-light">
-                Viewed{` ${questionDetails[0].views}`}
+                Viewed{` ${questionDetails.views}`}
               </div>
             </div>
           )}
         </div>
-        {questionDetails[0] && (
+        {questionDetails && (
           <div className="flex justify-between ">
             <div className="w-3/4">
               <div className="flex grow py-4 min-h-[12%]">
@@ -336,7 +338,7 @@ const QuestionsId = () => {
                     <div
                       id="question"
                       className="mb-4 border rounded-md p-3 bg-white"
-                    >{`${questionDetails[0].bodyExpecting}\n\n${questionDetails[0].bodyProblem}`}</div>
+                    >{`${questionDetails.bodyExpecting}\n\n${questionDetails.bodyProblem}`}</div>
                   </div>
                   {/* <ul className="relative">
                   <li className="inline-block space-x-1 p-1.5 bg-[#E1ECF4] text-[#39739D] rounded-md text-xs">
@@ -348,14 +350,11 @@ const QuestionsId = () => {
                       <div className="text-[#6A737C]">
                         Asked{' '}
                         {format(
-                          new Date(questionDetails[0].createdAt),
+                          new Date(questionDetails.createdAt),
                           'MMM d, yyyy',
                         )}{' '}
                         at{' '}
-                        {format(
-                          new Date(questionDetails[0].createdAt),
-                          'HH:mm',
-                        )}
+                        {format(new Date(questionDetails.createdAt), 'HH:mm')}
                       </div>
                       <div className="flex pt-1">
                         <img
@@ -364,7 +363,7 @@ const QuestionsId = () => {
                           className="h-8 w-8"
                         />
                         <div className="text-[#0074CC] ml-2.5">
-                          {questionDetails[0].authorId}
+                          {questionDetails.authorId}
                         </div>
                       </div>
                     </div>
