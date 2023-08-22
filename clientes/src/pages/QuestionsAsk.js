@@ -18,7 +18,7 @@ const QuestionsAsk = () => {
   const questionId = searchParams.get('id');
   const baseURL =
     'http://ec2-52-79-212-94.ap-northeast-2.compute.amazonaws.com:8080';
-  const Authorization = localStorage.getItem('token');
+  const Authorization = localStorage.getItem('accessToken');
 
   let editor1 = undefined;
   let editor2 = undefined;
