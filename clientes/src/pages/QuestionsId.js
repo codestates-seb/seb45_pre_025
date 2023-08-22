@@ -11,13 +11,14 @@ const QuestionsId = () => {
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
   const questionId = searchParams.get('id');
-  //const [error, setError] = useState(null);
+  // const [error, setError] = useState(null);
   const [questionDetails, setQuestionDetails] = useState(undefined);
   const [answersDetails, setAnswersDetails] = useState(undefined);
   const [newAnswer, setNewAnswer] = useState('');
   const [newComment, setNewComment] = useState('');
   const [commentsDetails, setCommentsDetails] = useState(undefined);
   const navigate = useNavigate();
+
 
   const apiUrl =
     'http://ec2-52-79-212-94.ap-northeast-2.compute.amazonaws.com:8080';

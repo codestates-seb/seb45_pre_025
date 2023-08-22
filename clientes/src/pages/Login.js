@@ -22,6 +22,9 @@ const Login = () => {
       return false;
     }
 
+    // 서버에서 받아온 accessToken
+    let accessToken = ''; // 초기화
+
     axios
       .post(
         'http://ec2-52-79-212-94.ap-northeast-2.compute.amazonaws.com:8080/auth/login',
@@ -29,24 +32,28 @@ const Login = () => {
           email: email,
           password: password,
         },
+        {
+          headers: {
+            Authorization: accessToken, // 헤더에 값을 포함
+          },
+        },
       )
       .then((res) => {
         console.log('Response Object:', res); // 응답 객체 자체를 로그로 출력
         console.log('Response Object:', res.data);
         console.log('success!');
 
-        const accessToken = res.data.accessToken;
+        accessToken = res.data.accessToken; // 받아온 accessToken으로 업데이트
         const refreshToken = res.data.refreshToken;
 
-        console.log('authorization test', accessToken);
-        console.log('refreshToken test', refreshToken);
+        console.log('authorization test : ', accessToken);
+        console.log('refreshToken test : ', refreshToken);
 
         localStorage.setItem('accessToken', accessToken);
         localStorage.setItem('refreshToken', refreshToken);
 
         navigate('/');
       })
-
       .catch((err) => {
         console.log('error', err.res);
       });

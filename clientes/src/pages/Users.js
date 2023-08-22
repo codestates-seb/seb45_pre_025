@@ -1,6 +1,8 @@
 import SideCartegory from '../components/SideCartegory';
 
 const Users = () => {
+  const userProfile = localStorage.getItem('userProfile');
+
   return (
     <main className="relative top-14  max-w-7xl w-full flex justify-between my-0 mx-auto">
       <SideCartegory />
@@ -13,7 +15,7 @@ const Users = () => {
                 <div className="w-32 h-32 rounded-md bg-yellow-300" />
                 <div className="flex flex-col justify-center ml-4">
                   {/* 회원 이름 */}
-                  <h1 className="text-4xl">User Name</h1>
+                  <h1 className="text-4xl">{userProfile}</h1>
 
                   {/* 회원 상세정보 */}
                   <div className="flex mt-2 text-sm">
