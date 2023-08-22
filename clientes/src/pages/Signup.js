@@ -40,7 +40,7 @@ const Signup = () => {
       .post(
         'http://ec2-52-79-212-94.ap-northeast-2.compute.amazonaws.com:8080/users/signup',
         {
-          username: userName,
+          userName: userName,
           email: email,
           password: password,
         },
@@ -49,7 +49,13 @@ const Signup = () => {
         console.log('success!');
         console.log('User profile', res.data.userName);
         console.log('User token', res.data.jwt);
+        console.log('jwt', jwt);
+
+        const authHeader = res.headers.authorization;
+        const jwt = authHeader ? authHeader.split('')[1] : null;
+
         localStorage.setItem('token', res.data.jwt);
+        localStorage.setItem('token', jwt);
         navigate('/');
       })
       .catch((err) => {
