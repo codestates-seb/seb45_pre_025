@@ -1,10 +1,26 @@
 import { useState, useEffect, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import Category from './Category';
 
 const HeaderOn = () => {
   const [isMenuDropdown, setIsMenuDropdown] = useState(false);
   const [isSearchDropdown, setIsSearchDropdown] = useState(false);
   const navigate = useNavigate();
+
+  // 메뉴 아이콘이 특정 사이트에서는 block / none 처리되는 상태
+  const [isHideMenu, setIsHideMenu] = useState(true);
+
+  const hideMenu = () => {
+    setIsHideMenu(false);
+  };
+
+  const showMenu = () => {
+    setIsHideMenu(true);
+  };
+
+  const menuDropdown = () => {
+    setIsMenuDropdown((prevState) => !prevState);
+  };
 
   const inputDropdown = () => {
     setIsSearchDropdown((prevState) => !prevState);
@@ -66,7 +82,28 @@ const HeaderOn = () => {
   return (
     <header className="z-50 bg-white w-full h-14 fixed border-b border-t-[3px] border-t-orange-400 px-2">
       <div className="h-full max-w-full w-[80rem] flex items-center justify-center mx-auto my-0">
-        <Link to="/">
+        {isHideMenu && (
+          <div>
+            {isMenuDropdown && (
+              <Category
+                setIsMenuDropdown={setIsMenuDropdown}
+                hideMenu={hideMenu}
+              />
+            )}
+            <button
+              className="h-full flex items-center justify-center px-2"
+              onClick={menuDropdown}
+              ref={menuButtonRef}
+            >
+              <img
+                src={isMenuDropdown ? '/images/close.png' : '/images/menu.png'}
+                alt={isMenuDropdown ? '메뉴 아이콘' : '닫기 아이콘'}
+                className="h-6 w-6 my-3.5"
+              />
+            </button>
+          </div>
+        )}
+        <Link to="/" onClick={showMenu}>
           <div className="flex items-center cursor-pointer ">
             <svg
               aria-hidden="true"
