@@ -63,7 +63,7 @@ const Users = () => {
               </div>
               <div className="flex w-max absolute top-0 right-0 mt-6">
                 {/* 프로필 수정 */}
-                <button className="flex items-center fill-slate-600 text-slate-600 bg-white border border-slate-400  rounded-md p-2 text-sm">
+                <button className="flex items-center fill-slate-600 text-slate-600 bg-white border border-slate-400  rounded-md px-2 py-1 text-sm">
                   <svg
                     aria-hidden="true"
                     className="svg-icon iconPencil"
@@ -78,7 +78,7 @@ const Users = () => {
                 </button>
 
                 {/* 회원탈퇴 */}
-                <button className="flex items-center fill-slate-600 text-slate-600 bg-white border border-slate-400 rounded-md p-2 text-sm ml-2">
+                <button className="flex items-center fill-slate-600 text-slate-600 bg-white border border-slate-400 rounded-md px-2 py-1 text-sm ml-2">
                   <svg
                     aria-hidden="true"
                     className="native mln2 mr2 svg-icon iconLogoSEXxs"
