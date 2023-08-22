@@ -47,13 +47,17 @@ const Signup = () => {
       )
 
       .then((res) => {
+        console.log('Response Object:', res); // 응답 객체 자체를 로그로 출력
+        console.log('Response Object:', res.data);
+        console.log('Response Object:', res.data.data.userName);
+        console.log('Response Object:', res.data.data.email);
+        console.log('Response Object:', res.data.data.memberId);
+
         console.log('success!');
-        console.log('User profile', res.data.userName);
-        console.log('User profile', res.data.email);
 
-        const userName = res.data.userName;
+        const userName = res.data.data.userName;
 
-        localStorage.setItem('User profile', userName);
+        localStorage.setItem('userProfile', userName);
         navigate('/');
       })
 
