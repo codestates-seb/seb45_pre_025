@@ -37,6 +37,18 @@ security:
           scope:
             - email
             - profile
+oauth:
+  kakao:
+    client-id: ${KAKAO_CLIENT-ID}
+    url:
+      auth: https://kauth.kakao.com
+      api: https://kapi.kakao.com
+  naver:
+    secret: ${NAVER_CLIENT-SECRET}
+    client-id: ${NAVER_CLIENT-ID}
+    url:
+      auth: https://nid.naver.com
+      api: https://openapi.naver.com
 jwt:
   key:
     secret: ${JWT_SECRET_KEY}

@@ -15,8 +15,10 @@
 //    @Getter
 //    @JsonIgnoreProperties(ignoreUnknown = true)
 //    static class Response {
+//
 //        private String email;
-//        private String nickname;
+//        private String userName;
+//        public String profileImageUrl;
 //    }
 //
 //    @Override
@@ -26,11 +28,15 @@
 //
 //    @Override
 //    public String getNickname() {
-//        return response.nickname;
+//        return response.userName;
 //    }
 //
 //    @Override
 //    public OAuthProvider getOAuthProvider() {
 //        return OAuthProvider.NAVER;
+//    }
+//    @Override
+//    public String getProfileImageUrl() {
+//        return response.profileImageUrl;
 //    }
 //}

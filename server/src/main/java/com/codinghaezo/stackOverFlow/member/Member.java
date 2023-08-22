@@ -53,4 +53,13 @@ public class Member extends Auditable {
     @OneToMany(mappedBy = "author", cascade = CascadeType.ALL)
     private List<Question> questions = new ArrayList<>();
 
+
+//    private OAuthProvider oAuthProvider;
+//
+//    @Builder
+//    public Member(String email, String userName, OAuthProvider oAuthProvider) {
+//        this.email = email;
+//        this.userName = userName;
+//        this.oAuthProvider = oAuthProvider;
+//    }
 }
