@@ -2,7 +2,7 @@ package com.codinghaezo.stackOverFlow.member;
 
 import com.codinghaezo.stackOverFlow.audit.Auditable;
 import com.codinghaezo.stackOverFlow.domain.question.entity.Question;
-import com.codinghaezo.stackOverFlow.logIn.OAuth2.OAuthProvider;
+
 import lombok.*;
 
 import javax.persistence.*;
@@ -54,12 +54,5 @@ public class Member extends Auditable {
     private List<Question> questions = new ArrayList<>();
 
 
-//    private OAuthProvider oAuthProvider;
-//
-//    @Builder
-//    public Member(String email, String userName, OAuthProvider oAuthProvider) {
-//        this.email = email;
-//        this.userName = userName;
-//        this.oAuthProvider = oAuthProvider;
-//    }
+
 }
