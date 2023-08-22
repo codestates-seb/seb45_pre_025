@@ -74,11 +74,11 @@ const Users = () => {
                     <path d="m2 13.13 8.5-8.5 2.88 2.88-8.5 8.5H2v-2.88Z" />
                     <path d="m13.68 2.15 2.17 2.17c.2.2.2.51 0 .71L14.5 6.39l-2.88-2.88 1.35-1.36c.2-.2.51-.2.71 0Z" />
                   </svg>
-                  <span>Edit profile</span>
+                  <span className="ml-1 font-semibold">Edit profile</span>
                 </button>
 
-                {/* 네트워크 프로필 */}
-                <button className="flex items-center fill-slate-600 text-slate-600 bg-white border border-slate-400  rounded-md p-2 text-sm ml-2">
+                {/* 회원탈퇴 */}
+                <button className="flex items-center fill-slate-600 text-slate-600 bg-white border border-slate-400 rounded-md p-2 text-sm ml-2">
                   <svg
                     aria-hidden="true"
                     className="native mln2 mr2 svg-icon iconLogoSEXxs"
@@ -97,7 +97,12 @@ const Users = () => {
                     <path fill="#46A2D9" d="M3 5h12v2H3z" />
                     <path fill="#2D6DB5" d="M3 8h12v2H3z" />
                   </svg>
-                  <span>Network profile</span>
+                  <div className="flex flex-col ml-1">
+                    <span className="font-semibold">withdrawal</span>
+                    <span className="text-xs text-slate-400">
+                      (from membership)
+                    </span>
+                  </div>
                 </button>
               </div>
             </div>
