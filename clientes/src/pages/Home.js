@@ -9,7 +9,7 @@ const Home = () => {
   const [questions, setQuestions] = useState([]);
   const [totalContents, setTotalContents] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage, setItemsPerPage] = useState(3);
+  const [itemsPerPage, setItemsPerPage] = useState(15);
   const [totalPages, setTotalPages] = useState(0);
 
   const apiUrl =

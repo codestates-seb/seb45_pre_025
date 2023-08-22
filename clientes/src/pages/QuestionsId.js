@@ -11,7 +11,7 @@ const QuestionsId = () => {
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
   const questionId = searchParams.get('id');
-  const [error, setError] = useState(null);
+  //const [error, setError] = useState(null);
   const [questionDetails, setQuestionDetails] = useState([]);
   const [answersDetails, setAnswersDetails] = useState([]);
   const [newAnswer, setNewAnswer] = useState('');
@@ -115,7 +115,7 @@ const QuestionsId = () => {
         question.destroy();
       };
     }
-  }, [questionDetails]); //테스트용/api 연결하면 수정
+  }, []); // questionsDetails가 바뀔 때마다 editor를 생성하면 안되기 때문에 빈 배열을 넣어줌?
 
   useEffect(() => {
     axios
@@ -125,7 +125,7 @@ const QuestionsId = () => {
       })
       .catch((error) => {
         console.error('Error fetching question details:', error);
-        setError('An error occurred while fetching data.');
+        //setError('An error occurred while fetching data.');
       });
   }, []);
 
@@ -134,7 +134,7 @@ const QuestionsId = () => {
       try {
         // Fetch answers
         const answersResponse = await axios.get(
-          `${apiUrl}/${questionId}/answers`,
+          `${apiUrl}/question/${questionId}/answers`,
         );
         const fetchedAnswers = answersResponse.data.map((answer) => {
           // Extract user ID from email
@@ -167,7 +167,7 @@ const QuestionsId = () => {
         setCommentsDetails(allComments);
       } catch (error) {
         console.error('Error fetching answers and comments:', error);
-        setError('An error occurred while fetching data.');
+        //setError('An error occurred while fetching data.');
       }
     };
     fetchAnswersAndComments();
@@ -183,7 +183,7 @@ const QuestionsId = () => {
     };
 
     axios
-      .post(`${apiUrl}/${questionId}/answer`, dataToSend)
+      .post(`${apiUrl}/question/${questionId}/answer`, dataToSend)
       .then((response) => {
         console.log('Successfully submitted answer:', response);
       })
@@ -205,7 +205,7 @@ const QuestionsId = () => {
     if (type === 'question') {
       deleteEndpoint = `${apiUrl}/questions/${id}`;
     } else if (type === 'answer') {
-      deleteEndpoint = `${apiUrl}/answer/question/${id}`;
+      deleteEndpoint = `${apiUrl}/question/answer/${id}`;
     } else if (type === 'comment') {
       deleteEndpoint = `${apiUrl}/answer/comment/${id}`;
     }
@@ -302,11 +302,7 @@ const QuestionsId = () => {
             </div>
           )}
         </div>
-        {error ? (
-          <div>
-            <p>{error}</p>
-          </div>
-        ) : questionDetails && questionDetails[0] ? (
+        {questionDetails[0] && (
           <div className="flex justify-between ">
             <div className="w-3/4">
               <div className="flex grow py-4 min-h-[12%]">
@@ -538,10 +534,6 @@ const QuestionsId = () => {
             <div className="flex py-4 pl-4 w-[30%]">
               <Sidebar />
             </div>
-          </div>
-        ) : (
-          <div>
-            <p>Loading...</p>
           </div>
         )}
       </div>
