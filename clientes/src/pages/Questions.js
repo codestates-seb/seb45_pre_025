@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import SideCartegory from '../components/SideCartegory';
 import Sidebar from '../components/Sidebar';
+import Pagination from '../components/Pagination';
 // import { useEffect } from 'react';
 // import axios from 'axios';
 
@@ -10,7 +11,7 @@ const QuestionQuery = QuestionParams.get('id');
 
 // useEffect(() => {
 //   axios
-//     .get('{{baseURL}}/questions?page=1&size=3')
+//     .get('{baseURL}/questions/all')
 //     .then((response) => {
 //       setAnswer(response.data);
 //     })
@@ -46,6 +47,14 @@ const answersDetails = [
   },
   {
     id: 4,
+    title: '제목3',
+    body: '본문',
+    authorId: 0,
+    createdAt: '2023-08-16T23:19:49.0995',
+    modifiedAt: '2023-08-16T23:19:49.0995',
+  },
+  {
+    id: 5,
     title: '제목3',
     body: '본문',
     authorId: 0,
@@ -144,6 +153,9 @@ const Questions = () => {
               </div>
             </div>
           ))}
+          <div>
+            <Pagination />
+          </div>
         </div>
 
         <div className="flex py-4 w-[36%]">
