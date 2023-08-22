@@ -1,62 +1,14 @@
 import { Link } from 'react-router-dom';
 import SideCartegory from '../components/SideCartegory';
 import Sidebar from '../components/Sidebar';
-// import Pagination from '../components/Pagination';
 import { useEffect, useState } from 'react';
 import { format } from 'date-fns';
-// import axios from 'axios';
-
-// const QuestionParams = new URLSearchParams(window.location.search);
-// const QuestionQuery = QuestionParams.get('questionID');
-
-// const answersDetails = [
-//   {
-//     id: 1,
-//     title: '제목1',
-//     body: '본문',
-//     authorId: 0,
-//     createdAt: '2023-08-16T23:19:49.0995',
-//     modifiedAt: '2023-08-16T23:19:49.0995',
-//   },
-//   {
-//     id: 2,
-//     title: '제목2',
-//     body: '본문',
-//     authorId: 0,
-//     createdAt: '2023-08-16T23:19:49.0995',
-//     modifiedAt: '2023-08-16T23:19:49.0995',
-//   },
-//   {
-//     id: 3,
-//     title: '제목3',
-//     body: '본문',
-//     authorId: 0,
-//     createdAt: '2023-08-16T23:19:49.0995',
-//     modifiedAt: '2023-08-16T23:19:49.0995',
-//   },
-//   {
-//     id: 4,
-//     title: '제목3',
-//     body: '본문',
-//     authorId: 0,
-//     createdAt: '2023-08-16T23:19:49.0995',
-//     modifiedAt: '2023-08-16T23:19:49.0995',
-//   },
-//   {
-//     id: 5,
-//     title: '제목3',
-//     body: '본문',
-//     authorId: 0,
-//     createdAt: '2023-08-16T23:19:49.0995',
-//     modifiedAt: '2023-08-16T23:19:49.0995',
-//   },
-// ];
 
 const Questions = () => {
   const [questions, setQuestions] = useState([]);
   const [totalContents, setTotalContents] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage, setItemsPerPage] = useState(15);
+  const [itemsPerPage, setItemsPerPage] = useState(5);
   const [totalPages, setTotalPages] = useState(0);
 
   const apiUrl =
@@ -154,17 +106,16 @@ const Questions = () => {
                   views
                 </div>
               </div>
-              <div className="w-auto ml-3">
-                <Link to={`/question/view?id=${question.id}`}>
+              <div className="w-full ml-3">
+                <Link to={`/questions/view?id=${question.id}`}>
                   <div className="text-blue-900 text-xl">{question.title}</div>
                 </Link>
                 <div className="text-yellow-900 text-sm mt-2">
                   {question.bodyProblem}
                 </div>
-                <div className="flex text-xs justify-end mt-4">
-                  <div>{question.authorId}</div>
-
-                  <div>
+                <div className="flex justify-end text-xs mt-2.5">
+                  <div className="text-[#0074CC]">{question.authorId}</div>
+                  <div className="ml-2 text-[#6A737C]">
                     asked{' '}
                     {format(
                       new Date(question.createdAt),
@@ -249,7 +200,6 @@ const Questions = () => {
           </div>
         </div>
       </div>
-
       <div className="flex py-4 w-[36%]">
         <Sidebar />
       </div>
