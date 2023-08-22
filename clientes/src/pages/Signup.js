@@ -63,10 +63,10 @@ const Signup = () => {
       client_id:
         process.env
           .REACT_APP_SPRING_SECURITY_OAUTH2_CLIENT_REGISTRATION_GOOGLE_CLIENT_ID,
-      // redirect_uri:
-      // { 리디렉션 URI },
+      redirect_uri:
+        'http://pre-project-deploy.s3-website.ap-northeast-2.amazonaws.com/',
       response_type: 'code',
-      scope: 'email profile',
+      scope: 'name email profile',
     });
 
     const fullUrl = `${url}?${queryParams.toString()}`;
