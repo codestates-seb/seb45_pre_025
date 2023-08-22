@@ -113,7 +113,7 @@ const Home = () => {
         <div className=" m-6 max-w-5xl w-full">
           <div className="border-b w-full">
             <div className="flex justify-between pb-6">
-              <h1 className="text-3xl">All Questions</h1>
+              <h1 className="text-3xl">Top Questions</h1>
               <Link to="/questions/ask">
                 <button className="p-2 bg-[#0A95FF] text-white rounded-md text-sm cursor-pointer">
                   Ask Question

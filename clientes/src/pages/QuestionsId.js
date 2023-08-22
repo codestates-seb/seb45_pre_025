@@ -19,11 +19,9 @@ const QuestionsId = () => {
   const [commentsDetails, setCommentsDetails] = useState(undefined);
   const navigate = useNavigate();
 
-  const [answerIds, setAnswerIds] = useState([]);
-
   const apiUrl =
     'http://ec2-52-79-212-94.ap-northeast-2.compute.amazonaws.com:8080';
-  const Authorization = localStorage.getItem('token');
+  const Authorization = localStorage.getItem('accessToken');
 
   // useEffect(() => {
   //   const fetchData = async () => {
@@ -146,17 +144,69 @@ const QuestionsId = () => {
           };
         });
 
-        // const answerIds = fetchedAnswers.map((answer) => answer.answerId);
-        // console.log('Extracted answerIds:', answerIds);
-        // setAnswerIds(answerIds);
-
         setAnswersDetails(fetchedAnswers);
         console.log('Fetched answers:', fetchedAnswers);
+        setCommentsDetails(commentsDetails); //테스용
       })
       .catch((error) => {
         console.error('Error fetching answers:', error);
       });
   }, []);
+
+  // useEffect(() => {
+  //   // Fetch answers for the question
+  //   axios
+  //     .get(`${apiUrl}/question/${questionId}/answers`)
+  //     .then((response) => {
+  //       const fetchedAnswers = response.data.map((answer) => {
+  //         const userEmail = answer.userEmail;
+  //         const userId = userEmail.split('@')[0];
+  //         return {
+  //           ...answer,
+  //           userId: userId,
+  //         };
+  //       });
+  //       setAnswersDetails(fetchedAnswers);
+
+  //       // Fetch comments for each answer
+  //       const fetchCommentsForAnswers = async () => {
+  //         const fetchedComments = [];
+
+  //         for (const answer of fetchedAnswers) {
+  //           try {
+  //             const commentsResponse = await axios.get(
+  //               `${apiUrl}/answers/${answer.answerId}/comments`,
+  //             );
+  //             const commentsForAnswer = commentsResponse.data.map((comment) => {
+  //               const userEmail = comment.userEmail;
+  //               const userId = userEmail.split('@')[0];
+  //               return {
+  //                 ...comment,
+  //                 userId: userId,
+  //               };
+  //             });
+
+  //             fetchedComments.push(...commentsForAnswer);
+  //             console.log('Comments for answer:', commentsForAnswer);
+
+  //             //console.log('Comments for answer:', fetchedComments);
+  //           } catch (error) {
+  //             console.error(
+  //               `Error fetching comments for answer ${answer.answerId}:`,
+  //               error,
+  //             );
+  //           }
+  //         }
+
+  //         setCommentsDetails(fetchedComments);
+  //       };
+
+  //       fetchCommentsForAnswers();
+  //     })
+  //     .catch((error) => {
+  //       console.error('Error fetching answers:', error);
+  //     });
+  // }, [questionId]);
 
   // useEffect(() => {
   //   axios
@@ -546,39 +596,43 @@ const QuestionsId = () => {
                             </div>
                           </div>
                         </div>
-                        {commentsDetails
-                          .filter(
-                            (comment) => comment.answerId === answer.answerId,
-                          )
-                          .map((comment) => (
-                            <div key={comment.commentId}>
-                              <div
-                                className="w-full border-t"
-                                key={comment.commentId}
-                              >
-                                <div className="flex py-[1.5%] mr-[.5%] ml-[6%] text-xs">
-                                  <span>{comment.content}&nbsp;</span>
-                                  <div className="mx-1 text-[#0074CC] text-xs">
-                                    -{comment.userId}&nbsp;
+                        {commentsDetails &&
+                          commentsDetails
+                            .filter(
+                              (comment) => comment.answerId === answer.answerId,
+                            )
+                            .map((comment) => (
+                              <div key={comment.commentId}>
+                                <div
+                                  className="w-full border-t"
+                                  //key={comment.commentId}
+                                >
+                                  <div className="flex py-[1.5%] mr-[.5%] ml-[6%] text-xs">
+                                    <span>{comment.content}&nbsp;</span>
+                                    <div className="mx-1 text-[#0074CC] text-xs">
+                                      -{comment.userId}&nbsp;
+                                    </div>
+                                    <div className="text-[#6A737C]">
+                                      {format(
+                                        new Date(comment.createdAt),
+                                        "'answered' MMM d, yyyy 'at' HH:mm",
+                                      )}
+                                    </div>
+                                    <button
+                                      onClick={() =>
+                                        handleDelete(
+                                          'comment',
+                                          comment.commentId,
+                                        )
+                                      }
+                                      className="flex mx-1 text-[7px]"
+                                    >
+                                      &#10060;
+                                    </button>
                                   </div>
-                                  <div className="text-[#6A737C]">
-                                    {format(
-                                      new Date(comment.createdAt),
-                                      "'answered' MMM d, yyyy 'at' HH:mm",
-                                    )}
-                                  </div>
-                                  <button
-                                    onClick={() =>
-                                      handleDelete('comment', comment.commentId)
-                                    }
-                                    className="flex mx-1 text-[7px]"
-                                  >
-                                    &#10060;
-                                  </button>
                                 </div>
                               </div>
-                            </div>
-                          ))}
+                            ))}
                         {Authorization && (
                           <div className="flex">
                             <input
