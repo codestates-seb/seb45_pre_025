@@ -68,7 +68,7 @@ const HeaderOn = () => {
   const handleLogout = () => {
     // 로그아웃 처리: 토큰 삭제
     // localStorage에서 토큰 삭제
-    localStorage.removeItem('token');
+    localStorage.removeItem('accessToken');
 
     // Header 컴포넌트로 변경하는 로직
     // 여기에서는 기존의 HeaderOn 컴포넌트 대신 Header 컴포넌트를 렌더링하도록 설정합니다.

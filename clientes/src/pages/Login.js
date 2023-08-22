@@ -31,20 +31,18 @@ const Login = () => {
         },
       )
       .then((res) => {
-        console.log(res);
-        const authHeader = res.headers['Authorization'];
+        console.log('Response Object:', res); // 응답 객체 자체를 로그로 출력
+        console.log('Response Object:', res.data);
+        console.log('success!');
 
-        console.log('test authHeader', authHeader);
+        const accessToken = res.data.accessToken;
+        const refreshToken = res.data.refreshToken;
 
-        const jwt = authHeader ? authHeader.split(' ')[1] : null;
+        console.log('authorization test', accessToken);
+        console.log('refreshToken test', refreshToken);
 
-        console.log('token test', jwt);
-        console.log('authHeader test', authHeader);
-
-        localStorage.setItem('token', jwt);
-
-        console.log('token', jwt);
-        console.log('authHeader', authHeader);
+        localStorage.setItem('accessToken', accessToken);
+        localStorage.setItem('refreshToken', refreshToken);
 
         navigate('/');
       })

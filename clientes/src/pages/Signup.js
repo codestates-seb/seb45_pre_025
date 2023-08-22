@@ -45,19 +45,18 @@ const Signup = () => {
           password: password,
         },
       )
+
       .then((res) => {
         console.log('success!');
         console.log('User profile', res.data.userName);
-        console.log('User token', res.data.jwt);
-        console.log('jwt', jwt);
+        console.log('User profile', res.data.email);
 
-        const authHeader = res.headers.authorization;
-        const jwt = authHeader ? authHeader.split('')[1] : null;
+        const userName = res.data.userName;
 
-        localStorage.setItem('token', res.data.jwt);
-        localStorage.setItem('token', jwt);
+        localStorage.setItem('User profile', userName);
         navigate('/');
       })
+
       .catch((err) => {
         console.log('error', err.res);
       });
