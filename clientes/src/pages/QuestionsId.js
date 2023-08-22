@@ -11,17 +11,17 @@ const QuestionsId = () => {
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
   const questionId = searchParams.get('id');
-  //const [error, setError] = useState(null);
-  const [questionDetails, setQuestionDetails] = useState([]);
-  const [answersDetails, setAnswersDetails] = useState([]);
+  // const [error, setError] = useState(null);
+  const [questionDetails, setQuestionDetails] = useState(undefined);
+  const [answersDetails, setAnswersDetails] = useState(undefined);
   const [newAnswer, setNewAnswer] = useState('');
   const [newComment, setNewComment] = useState('');
-  const [commentsDetails, setCommentsDetails] = useState([]);
+  const [commentsDetails, setCommentsDetails] = useState(undefined);
   const navigate = useNavigate();
 
   const apiUrl =
     'http://ec2-52-79-212-94.ap-northeast-2.compute.amazonaws.com:8080';
-  const Authorization = localStorage.getItem('token');
+  const Authorization = localStorage.getItem('accessToken');
 
   // useEffect(() => {
   //   const fetchData = async () => {
@@ -102,8 +102,8 @@ const QuestionsId = () => {
 
   useEffect(() => {
     let question = undefined;
-    if (questionDetails.length > 0) {
-      const questionBody = `${questionDetails[0].bodyProblem}\n\n${questionDetails[0].bodyExpecting}`;
+    if (questionDetails) {
+      const questionBody = `${questionDetails.bodyProblem}\n\n${questionDetails.bodyExpecting}`;
       question = Editor.factory({
         el: document.querySelector('#question'),
         initialValue: questionBody,
@@ -122,6 +122,7 @@ const QuestionsId = () => {
       .get(`${apiUrl}/questions/${questionId}`)
       .then((response) => {
         setQuestionDetails(response.data);
+        console.log(response);
       })
       .catch((error) => {
         console.error('Error fetching question details:', error);
@@ -130,55 +131,85 @@ const QuestionsId = () => {
   }, []);
 
   useEffect(() => {
-    const fetchAnswersAndComments = async () => {
-      try {
-        // Fetch answers
-        const answersResponse = await axios.get(
-          `${apiUrl}/question/${questionId}/answers`,
-        );
-        const fetchedAnswers = answersResponse.data.map((answer) => {
-          // Extract user ID from email
+    axios
+      .get(`${apiUrl}/question/${questionId}/answers`)
+      .then((response) => {
+        const fetchedAnswers = response.data.map((answer) => {
           const userEmail = answer.userEmail;
           const userId = userEmail.split('@')[0];
-          return {
-            ...answer,
-            userId: userId, // Add the user ID to the answer object
-          };
-        });
-        // Fetch comments for each answer and accumulate them
-        const allComments = [];
-        for (const answer of fetchedAnswers) {
-          const commentsResponse = await axios.get(
-            `${apiUrl}/answers/${answer.answerId}/comments`,
-          );
-          const commentsForAnswer = commentsResponse.data.map((comment) => {
-            // Extract user ID from email
-            const userEmail = comment.userEmail;
-            const userId = userEmail.split('@')[0];
+
+          const comments = answer.comments.map((comment) => {
+            const commentUserEmail = comment.userEmail;
+            const commentUserId = commentUserEmail.split('@')[0];
             return {
               ...comment,
-              userId: userId, // Add the user ID to the comment object
+              userId: commentUserId,
             };
           });
-          allComments.push(...commentsForAnswer);
-        }
-        // Set answers and accumulated comments in state
+
+          return {
+            ...answer,
+            userId: userId,
+            comments: comments,
+          };
+        });
+
         setAnswersDetails(fetchedAnswers);
+        console.log('Fetched answers:', fetchedAnswers);
+
+        // setCommentsDetails(fetchedAnswers.comments);
+        // console.log('Fetched comments:', fetchedAnswers.comments);
+
+        const allComments = fetchedAnswers.flatMap((answer) => answer.comments);
+
         setCommentsDetails(allComments);
-      } catch (error) {
-        console.error('Error fetching answers and comments:', error);
-        //setError('An error occurred while fetching data.');
-      }
-    };
-    fetchAnswersAndComments();
-  }, [questionId, newAnswer]);
+        console.log('All comments:', allComments);
+      })
+      .catch((error) => {
+        console.error('Error fetching answers:', error);
+      });
+  }, []);
+
+  // useEffect(() => {
+  //   axios
+  //     .get(`${apiUrl}/question/${questionId}/answers`)
+  //     .then((response) => {
+  //       const fetchedAnswers = response.data.map((answer) => {
+  //         const userEmail = answer.userEmail;
+  //         const userId = userEmail.split('@')[0];
+
+  //         return {
+  //           ...answer,
+  //           userId: userId,
+  //         };
+  //       });
+  //       // const comments = response.data.comments.map((comment) => {
+  //       //   const userEmail = comment.userEmail;
+  //       //   const userId = userEmail.split('@')[0];
+  //       //   return {
+  //       //     ...comment,
+  //       //     userId: userId,
+  //       //   };
+  //       // });
+
+  //       const comments = response.data.comments;
+
+  //       setAnswersDetails(fetchedAnswers);
+  //       console.log('Fetched answers:', fetchedAnswers);
+  //       console.log('Fetched comments:', comments);
+  //       setCommentsDetails(comments);
+  //     })
+  //     .catch((error) => {
+  //       console.error('Error fetching answers:', error);
+  //     });
+  // }, []);
 
   const handleNewAnswerSubmit = () => {
     // Create a new answer
     const dataToSend = {
       content: newAnswer,
       headers: {
-        Authorization: `Bearer ${Authorization}`,
+        Authorization: Authorization,
       },
     };
 
@@ -196,7 +227,7 @@ const QuestionsId = () => {
   const handleDelete = (type, id) => {
     const config = {
       headers: {
-        Authorization: `Bearer ${Authorization}`,
+        Authorization: Authorization,
       },
     };
 
@@ -216,7 +247,7 @@ const QuestionsId = () => {
         console.log(`Successfully deleted ${type}:`, response);
         // Navigate to appropriate page
         if (type === 'question') {
-          navigate('/questions');
+          navigate('/home');
         } else {
           // Handle navigation for answers and comments as needed
         }
@@ -238,7 +269,7 @@ const QuestionsId = () => {
     axios
       .post(`${apiUrl}/answer/${answerId}/comment`, dataToSend, {
         headers: {
-          Authorization: `Bearer ${Authorization}`,
+          Authorization: Authorization,
         },
       })
       .then((response) => {
@@ -261,8 +292,10 @@ const QuestionsId = () => {
       <div className="flex flex-col justify-center pt-14 pl-6 mb-1.5 divide-y divide-slate-200 w-4/6 ">
         <div className="">
           <div className="flex justify-between">
-            {questionDetails[0] && (
-              <div className="mb-2 text-2xl">{questionDetails[0].title}</div>
+            {questionDetails && (
+              <div className="mb-2 text-2xl">
+                {questionDetails.title && questionDetails.title}
+              </div>
             )}
             <div className="text-white text-sm cursor-pointer">
               {/* 로그인 정보 받으면 수정/삭제 버튼 보이게 */}
@@ -284,25 +317,23 @@ const QuestionsId = () => {
               </Link>
             </div>
           </div>{' '}
-          {questionDetails[0] && (
+          {questionDetails && (
             <div className="flex mb-2">
               <div className="mr-4 text-xs font-light">
-                Asked{' '}
-                {formatDistanceToNow(new Date(questionDetails[0].createdAt))}{' '}
+                Asked {formatDistanceToNow(new Date(questionDetails.createdAt))}{' '}
                 ago
               </div>
               <div className="mr-4 text-xs font-light">
                 Modified{' '}
-                {formatDistanceToNow(new Date(questionDetails[0].modifiedAt))}{' '}
-                ago
+                {formatDistanceToNow(new Date(questionDetails.modifiedAt))} ago
               </div>
               <div className="text-xs font-light">
-                Viewed{` ${questionDetails[0].views}`}
+                Viewed{` ${questionDetails.views}`}
               </div>
             </div>
           )}
         </div>
-        {questionDetails[0] && (
+        {questionDetails && (
           <div className="flex justify-between ">
             <div className="w-3/4">
               <div className="flex grow py-4 min-h-[12%]">
@@ -336,7 +367,7 @@ const QuestionsId = () => {
                     <div
                       id="question"
                       className="mb-4 border rounded-md p-3 bg-white"
-                    >{`${questionDetails[0].bodyExpecting}\n\n${questionDetails[0].bodyProblem}`}</div>
+                    >{`${questionDetails.bodyExpecting}\n\n${questionDetails.bodyProblem}`}</div>
                   </div>
                   {/* <ul className="relative">
                   <li className="inline-block space-x-1 p-1.5 bg-[#E1ECF4] text-[#39739D] rounded-md text-xs">
@@ -348,14 +379,11 @@ const QuestionsId = () => {
                       <div className="text-[#6A737C]">
                         Asked{' '}
                         {format(
-                          new Date(questionDetails[0].createdAt),
+                          new Date(questionDetails.createdAt),
                           'MMM d, yyyy',
                         )}{' '}
                         at{' '}
-                        {format(
-                          new Date(questionDetails[0].createdAt),
-                          'HH:mm',
-                        )}
+                        {format(new Date(questionDetails.createdAt), 'HH:mm')}
                       </div>
                       <div className="flex pt-1">
                         <img
@@ -364,7 +392,7 @@ const QuestionsId = () => {
                           className="h-8 w-8"
                         />
                         <div className="text-[#0074CC] ml-2.5">
-                          {questionDetails[0].authorId}
+                          {questionDetails.authorId}
                         </div>
                       </div>
                     </div>
@@ -457,39 +485,43 @@ const QuestionsId = () => {
                             </div>
                           </div>
                         </div>
-                        {commentsDetails
-                          .filter(
-                            (comment) => comment.answerId === answer.answerId,
-                          )
-                          .map((comment) => (
-                            <div key={comment.commentId}>
-                              <div
-                                className="w-full border-t"
-                                key={comment.commentId}
-                              >
-                                <div className="flex py-[1.5%] mr-[.5%] ml-[6%] text-xs">
-                                  <span>{comment.content}&nbsp;</span>
-                                  <div className="mx-1 text-[#0074CC] text-xs">
-                                    -{comment.userId}&nbsp;
+                        {commentsDetails &&
+                          commentsDetails
+                            // .filter(
+                            //   (comment) => comment.answerId === answer.answerId,
+                            // )
+                            .map((comment) => (
+                              <div key={comment.commentId}>
+                                <div
+                                  className="w-full border-t"
+                                  //key={comment.commentId}
+                                >
+                                  <div className="flex py-[1.5%] mr-[.5%] ml-[6%] text-xs">
+                                    <span>{comment.content}&nbsp;</span>
+                                    <div className="mx-1 text-[#0074CC] text-xs">
+                                      -{comment.userId}&nbsp;
+                                    </div>
+                                    <div className="text-[#6A737C]">
+                                      {format(
+                                        new Date(comment.createdAt),
+                                        "'answered' MMM d, yyyy 'at' HH:mm",
+                                      )}
+                                    </div>
+                                    <button
+                                      onClick={() =>
+                                        handleDelete(
+                                          'comment',
+                                          comment.commentId,
+                                        )
+                                      }
+                                      className="flex mx-1 text-[7px]"
+                                    >
+                                      &#10060;
+                                    </button>
                                   </div>
-                                  <div className="text-[#6A737C]">
-                                    {format(
-                                      new Date(comment.createdAt),
-                                      "'answered' MMM d, yyyy 'at' HH:mm",
-                                    )}
-                                  </div>
-                                  <button
-                                    onClick={() =>
-                                      handleDelete('comment', comment.commentId)
-                                    }
-                                    className="flex mx-1 text-[7px]"
-                                  >
-                                    &#10060;
-                                  </button>
                                 </div>
                               </div>
-                            </div>
-                          ))}
+                            ))}
                         {Authorization && (
                           <div className="flex">
                             <input

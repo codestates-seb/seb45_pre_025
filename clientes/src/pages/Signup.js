@@ -40,25 +40,35 @@ const Signup = () => {
       .post(
         'http://ec2-52-79-212-94.ap-northeast-2.compute.amazonaws.com:8080/users/signup',
         {
-          username: userName,
+          userName: userName,
           email: email,
           password: password,
         },
       )
+
       .then((res) => {
+        console.log('Response Object:', res); // 응답 객체 자체를 로그로 출력
+        console.log('Response Object:', res.data);
+        console.log('Response Object:', res.data.data.userName);
+        console.log('Response Object:', res.data.data.email);
+        console.log('Response Object:', res.data.data.memberId);
+
         console.log('success!');
-        console.log('User profile', res.data.userName);
-        console.log('User token', res.data.jwt);
-        localStorage.setItem('token', res.data.jwt);
+
+        const userName = res.data.data.userName;
+
+        localStorage.setItem('userProfile', userName);
         navigate('/');
       })
+
       .catch((err) => {
         console.log('error', err.res);
       });
   };
 
   const handleGoogleSignupClick = () => {
-    const url = 'https://accounts.google.com/o/oauth2/v2/auth';
+    const url =
+      'http://ec2-52-79-212-94.ap-northeast-2.compute.amazonaws.com:8080/oauth2/authorization/google';
     const queryParams = new URLSearchParams({
       client_id:
         process.env

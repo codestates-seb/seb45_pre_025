@@ -1,6 +1,44 @@
 import SideCartegory from '../components/SideCartegory';
+import axios from 'axios';
 
 const Users = () => {
+  const userProfile = localStorage.getItem('userProfile');
+  const apiUrl =
+    'http://ec2-52-79-212-94.ap-northeast-2.compute.amazonaws.com:8080';
+  const Authorization = localStorage.getItem('accessToken');
+
+  const handleWithdrawal = () => {
+    const config = {
+      headers: {
+        Authorization: Authorization,
+      },
+    };
+    if (!userProfile || !Authorization) {
+      console.error('User profile or access token not found.');
+      return;
+    }
+
+    axios
+      .delete(`${apiUrl}/users`, config)
+      .then((res) => {
+        localStorage.setItem('accessToken', Authorization);
+
+        if (res.status === 200) {
+          console.log('User has been deleted.');
+          const accessToken = res.headers['authorization'];
+          const refreshToken = res.headers['refresh'];
+
+          localStorage.setItem('access_token', accessToken);
+          localStorage.setItem('refresh_token', refreshToken);
+        } else {
+          console.error('Failed to delete user.');
+        }
+      })
+      .catch((err) => {
+        console.err('Error while deleting user:', err);
+      });
+  };
+
   return (
     <main className="relative top-14  max-w-7xl w-full flex justify-between my-0 mx-auto">
       <SideCartegory />
@@ -13,7 +51,7 @@ const Users = () => {
                 <div className="w-32 h-32 rounded-md bg-yellow-300" />
                 <div className="flex flex-col justify-center ml-4">
                   {/* 회원 이름 */}
-                  <h1 className="text-4xl">User Name</h1>
+                  <h1 className="text-4xl">{userProfile}</h1>
 
                   {/* 회원 상세정보 */}
                   <div className="flex mt-2 text-sm">
@@ -78,7 +116,10 @@ const Users = () => {
                 </button>
 
                 {/* 회원탈퇴 */}
-                <button className="flex items-center fill-slate-600 text-slate-600 bg-white border border-slate-400 rounded-md px-2 py-1 text-sm ml-2">
+                <button
+                  className="flex items-center fill-slate-600 text-slate-600 bg-white border border-slate-400 rounded-md px-2 py-1 text-sm ml-2"
+                  onClick={handleWithdrawal}
+                >
                   <svg
                     aria-hidden="true"
                     className="native mln2 mr2 svg-icon iconLogoSEXxs"

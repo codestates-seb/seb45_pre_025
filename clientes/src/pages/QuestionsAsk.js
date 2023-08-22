@@ -18,7 +18,7 @@ const QuestionsAsk = () => {
   const questionId = searchParams.get('id');
   const baseURL =
     'http://ec2-52-79-212-94.ap-northeast-2.compute.amazonaws.com:8080';
-  const Authorization = localStorage.getItem('token');
+  const Authorization = localStorage.getItem('accessToken');
 
   let editor1 = undefined;
   let editor2 = undefined;
@@ -110,7 +110,7 @@ const QuestionsAsk = () => {
       axios
         .patch(`${baseURL}/questions/${questionId}`, dataToSend, {
           headers: {
-            Authorization: `Bearer ${Authorization}`,
+            Authorization: Authorization,
           },
         })
         .then((response) => {
@@ -132,7 +132,7 @@ const QuestionsAsk = () => {
       axios
         .post(`${baseURL}/questions`, dataToSend, {
           headers: {
-            Authorization: `Bearer ${Authorization}`,
+            Authorization: Authorization,
           },
         })
         .then((response) => {

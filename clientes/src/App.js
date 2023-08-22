@@ -11,6 +11,7 @@ import QuestionsAsk from './pages/QuestionsAsk';
 import QuestionsId from './pages/QuestionsId';
 import Home from './pages/Home';
 import Users from './pages/Users';
+// import { RequireToken } from "../Login/Auth";
 
 function App() {
   const location = useLocation();
@@ -26,7 +27,7 @@ function App() {
   const showFooter = () => showFooterPaths.includes(location.pathname);
 
   // 로그인 상태에 따라 Header 컴포넌트를 교체
-  const logIn = localStorage.getItem('token');
+  const logIn = localStorage.getItem('accessToken');
   const HeaderComponent = logIn ? HeaderOn : Header;
 
   return (
@@ -41,6 +42,14 @@ function App() {
         <Route path="/questions/view" element={<QuestionsId />}></Route>
         <Route path="/home" element={<Home />}></Route>
         <Route path="/users" element={<Users />}></Route>
+        {/* <Route
+          path="/users"
+          element={
+            <RequireToken>
+              <Users />
+            </RequireToken>
+          }
+        ></Route> */}
       </Routes>
       {showFooter() && <Footer />}
     </div>
