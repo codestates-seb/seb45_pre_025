@@ -1,20 +1,13 @@
 package com.codinghaezo.stackOverFlow.member;
 
-import com.codinghaezo.stackOverFlow.Utils.UriCreator;
-import com.codinghaezo.stackOverFlow.logIn.jwt.jwt.JwtAuthService;
-import com.codinghaezo.stackOverFlow.logIn.jwt.userDetails.CustomUserDetails;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import javax.validation.constraints.Min;
 import javax.validation.constraints.Positive;
-import java.net.URI;
 import java.util.List;
 
 @RestController
@@ -24,12 +17,10 @@ public class MemberController {
     private final MemberService memberService;
     private final MemberMapper mapper;
 
-    private final JwtAuthService jwtAuthService;
 
-    public MemberController(MemberService memberService, MemberMapper mapper, JwtAuthService jwtAuthService) {
+    public MemberController(MemberService memberService, MemberMapper mapper) {
         this.memberService = memberService;
         this.mapper = mapper;
-        this.jwtAuthService = jwtAuthService;
     }
 
 
@@ -40,7 +31,6 @@ public class MemberController {
         Member member = memberService.createMember(mapper.memberPostDtoToMember(memberPostDto));
         /*
         토큰 발행 메서드
-
          */
         return new ResponseEntity<>(
                 new MemberDto.SingleResponseDto<>(mapper.memberToMemberResponseDto(member)),

@@ -1,4 +1,4 @@
-package com.codinghaezo.stackOverFlow.logIn.oauth2_jwt.auth.handler;
+package com.codinghaezo.stackOverFlow.logIn.OAuth2.handler;
 
 import com.codinghaezo.stackOverFlow.logIn.jwt.jwt.JwtTokenizer;
 import com.codinghaezo.stackOverFlow.logIn.utils.CustomAuthorityUtils;
@@ -39,13 +39,17 @@ public class OAuth2MemberSuccessHandler extends SimpleUrlAuthenticationSuccessHa
         System.out.println("# Redirect to Frontend");
         var oAuth2User = (OAuth2User)authentication.getPrincipal();
         String email = String.valueOf(oAuth2User.getAttributes().get("email"));
+        String userName = String.valueOf(oAuth2User.getAttributes().get("name")); // Get nickname from OAuth2 user attributes
         List<String> authorities = authorityUtils.createRoles(email);
-        saveMember(email);
+        String profileImageUrl = (String) oAuth2User.getAttributes().get("picture");
+        saveMember(email, userName,profileImageUrl);
         redirect(request, response, email ,authorities);
     }
 
-    private void saveMember(String email) {
+    private void saveMember(String email, String userName, String profileImageUrl) {
         Member member = new Member(email);
+        member.setUserName(userName);
+        member.setProfileImageUrl(profileImageUrl);
         memberService.createMemberOAuth2(member);
     }
 
@@ -60,12 +64,12 @@ public class OAuth2MemberSuccessHandler extends SimpleUrlAuthenticationSuccessHa
         getRedirectStrategy().sendRedirect(request, response, uri);
     }
 
-    private String delegateAccessToken(String username, List<String> authorities) {
+    private String delegateAccessToken(String email, List<String> authorities) {
         Map<String, Object> claims = new HashMap<>();
-        claims.put("username", username);
+        claims.put("username", email);
         claims.put("roles", authorities);
 
-        String subject = username;
+        String subject = email;
         Date expiration = jwtTokenizer.getTokenExpiration(jwtTokenizer.getAccessTokenExpirationMinutes());
 
         String base64EncodedSecretKey = jwtTokenizer.encodeBase64SecretKey(jwtTokenizer.getSecretKey());
@@ -93,13 +97,11 @@ public class OAuth2MemberSuccessHandler extends SimpleUrlAuthenticationSuccessHa
         return UriComponentsBuilder
                 .newInstance()
                 .scheme("http")
-                .host("localhost")
-                .port(3000)
+                .host("pre-project-deploy.s3-website.ap-northeast-2.amazonaws.com")
+//                .port(3000)
                 .path("/")
                 .queryParams(queryParams)
                 .build()
                 .toUri();
     }
-
-
 }
