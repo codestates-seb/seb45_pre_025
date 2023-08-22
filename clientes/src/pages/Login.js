@@ -33,9 +33,16 @@ const Login = () => {
       .then((res) => {
         console.log('success!');
         console.log('User token', res.data.jwt);
+
+        const authHeader = res.headers.get('Authorization');
+        const jwt = authHeader ? authHeader.split('')[1] : null;
+
         localStorage.setItem('token', res.data.jwt);
+        localStorage.setItem('token', jwt);
+        console.log('token', jwt);
         navigate('/');
       })
+
       .catch((err) => {
         console.log('error', err.res);
       });
