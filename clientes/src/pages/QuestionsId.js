@@ -19,7 +19,6 @@ const QuestionsId = () => {
   const [commentsDetails, setCommentsDetails] = useState(undefined);
   const navigate = useNavigate();
 
-
   const apiUrl =
     'http://ec2-52-79-212-94.ap-northeast-2.compute.amazonaws.com:8080';
   const Authorization = localStorage.getItem('accessToken');
@@ -139,15 +138,32 @@ const QuestionsId = () => {
           const userEmail = answer.userEmail;
           const userId = userEmail.split('@')[0];
 
+          const comments = answer.comments.map((comment) => {
+            const commentUserEmail = comment.userEmail;
+            const commentUserId = commentUserEmail.split('@')[0];
+            return {
+              ...comment,
+              userId: commentUserId,
+            };
+          });
+
           return {
             ...answer,
             userId: userId,
+            comments: comments,
           };
         });
 
         setAnswersDetails(fetchedAnswers);
         console.log('Fetched answers:', fetchedAnswers);
-        setCommentsDetails(commentsDetails); //테스용
+
+        // setCommentsDetails(fetchedAnswers.comments);
+        // console.log('Fetched comments:', fetchedAnswers.comments);
+
+        const allComments = fetchedAnswers.flatMap((answer) => answer.comments);
+
+        setCommentsDetails(allComments);
+        console.log('All comments:', allComments);
       })
       .catch((error) => {
         console.error('Error fetching answers:', error);
@@ -155,173 +171,45 @@ const QuestionsId = () => {
   }, []);
 
   // useEffect(() => {
-  //   // Fetch answers for the question
   //   axios
   //     .get(`${apiUrl}/question/${questionId}/answers`)
   //     .then((response) => {
   //       const fetchedAnswers = response.data.map((answer) => {
   //         const userEmail = answer.userEmail;
   //         const userId = userEmail.split('@')[0];
+
   //         return {
   //           ...answer,
   //           userId: userId,
   //         };
   //       });
-  //       setAnswersDetails(fetchedAnswers);
+  //       // const comments = response.data.comments.map((comment) => {
+  //       //   const userEmail = comment.userEmail;
+  //       //   const userId = userEmail.split('@')[0];
+  //       //   return {
+  //       //     ...comment,
+  //       //     userId: userId,
+  //       //   };
+  //       // });
 
-  //       // Fetch comments for each answer
-  //       const fetchCommentsForAnswers = async () => {
-  //         const fetchedComments = [];
-
-  //         for (const answer of fetchedAnswers) {
-  //           try {
-  //             const commentsResponse = await axios.get(
-  //               `${apiUrl}/answers/${answer.answerId}/comments`,
-  //             );
-  //             const commentsForAnswer = commentsResponse.data.map((comment) => {
-  //               const userEmail = comment.userEmail;
-  //               const userId = userEmail.split('@')[0];
-  //               return {
-  //                 ...comment,
-  //                 userId: userId,
-  //               };
-  //             });
-
-  //             fetchedComments.push(...commentsForAnswer);
-  //             console.log('Comments for answer:', commentsForAnswer);
-
-  //             //console.log('Comments for answer:', fetchedComments);
-  //           } catch (error) {
-  //             console.error(
-  //               `Error fetching comments for answer ${answer.answerId}:`,
-  //               error,
-  //             );
-  //           }
-  //         }
-
-  //         setCommentsDetails(fetchedComments);
-  //       };
-
-  //       fetchCommentsForAnswers();
-  //     })
-  //     .catch((error) => {
-  //       console.error('Error fetching answers:', error);
-  //     });
-  // }, [questionId]);
-
-  // useEffect(() => {
-  //   axios
-  //     .get(`${apiUrl}/question/${questionId}/answers`)
-  //     .then((response) => {
-  //       const fetchedAnswers = response.data.map((answer) => {
-  //         const userEmail = answer.userEmail;
-  //         const userId = userEmail.split('@')[0];
-  //         return {
-  //           ...answer,
-  //           userId: userId,
-  //           comments: [], // Initialize an empty array to store comments for this answer
-  //         };
-  //       });
+  //       const comments = response.data.comments;
 
   //       setAnswersDetails(fetchedAnswers);
   //       console.log('Fetched answers:', fetchedAnswers);
-
-  //       // Fetch comments for each answer
-  //       fetchedAnswers.forEach((answer) => {
-  //         axios
-  //           .get(`${apiUrl}/answers/${answer.answerId}/comments`)
-  //           .then((response) => {
-  //             const commentsForAnswer = response.data.map((comment) => {
-  //               const userEmail = comment.userEmail;
-  //               const userId = userEmail.split('@')[0];
-  //               return {
-  //                 ...comment,
-  //                 userId: userId,
-  //               };
-  //             });
-
-  //             // Update the comments array for this answer in your state or data structure
-  //             const updatedAnswers = answersDetails.map((a) => {
-  //               if (a.answerId === answer.answerId) {
-  //                 return {
-  //                   ...a,
-  //                   comments: commentsForAnswer,
-  //                 };
-  //               }
-  //               return a;
-  //             });
-
-  //             setAnswersDetails(updatedAnswers);
-  //             console.log('Comments for answer:', commentsForAnswer);
-  //           })
-  //           .catch((error) => {
-  //             console.error('Error fetching comments:', error);
-  //           });
-  //       });
+  //       console.log('Fetched comments:', comments);
+  //       setCommentsDetails(comments);
   //     })
   //     .catch((error) => {
   //       console.error('Error fetching answers:', error);
   //     });
   // }, []);
 
-  // useEffect(() => {
-  //   const fetchAnswersAndComments = async () => {
-  //     try {
-  //       // Fetch answers
-  //       const answersResponse = await axios.get(
-  //         `${apiUrl}/question/${questionId}/answers`,
-  //       );
-  //       console.log('Answers response:', answersResponse.data);
-  //       console.log('Answers response:', answersResponse);
-  //       const fetchedAnswers = answersResponse.data.map((answer) => {
-  //         // Extract user ID from email
-  //         const userEmail = answer.userEmail;
-  //         const userId = userEmail.split('@')[0];
-  //         return {
-  //           ...answer,
-  //           userId: userId, // Add the user ID to the answer object
-  //         };
-  //       });
-  //       console.log('Fetched answers:', fetchedAnswers);
-  //       // Fetch comments for each answer and accumulate them
-  //       const allComments = [];
-  //       for (const answer of fetchedAnswers) {
-  //         const commentsResponse = await axios.get(
-  //           `${apiUrl}/answers/${answer.answerId}/comments`,
-  //         );
-  //         console.log('Comments response:', commentsResponse);
-  //         const commentsForAnswer = commentsResponse.data.map((comment) => {
-  //           // Extract user ID from email
-  //           const userEmail = comment.userEmail;
-  //           const userId = userEmail.split('@')[0];
-  //           return {
-  //             ...comment,
-  //             userId: userId, // Add the user ID to the comment object
-  //           };
-  //         });
-  //         console.log('Comments for answer:', commentsForAnswer);
-  //         allComments.push(...commentsForAnswer);
-  //       }
-  //       console.log('All comments:', allComments);
-  //       // Set answers and accumulated comments in state
-  //       setAnswersDetails(fetchedAnswers);
-  //       setCommentsDetails(allComments);
-  //       console.log(answersDetails);
-  //       console.log(commentsDetails);
-  //     } catch (error) {
-  //       console.error('Error fetching answers and comments:', error);
-  //       //setError('An error occurred while fetching data.');
-  //     }
-  //   };
-  //   fetchAnswersAndComments();
-  // }, [questionId, newAnswer]);
-
   const handleNewAnswerSubmit = () => {
     // Create a new answer
     const dataToSend = {
       content: newAnswer,
       headers: {
-        Authorization: `Bearer ${Authorization}`,
+        Authorization: Authorization,
       },
     };
 
@@ -339,7 +227,7 @@ const QuestionsId = () => {
   const handleDelete = (type, id) => {
     const config = {
       headers: {
-        Authorization: `Bearer ${Authorization}`,
+        Authorization: Authorization,
       },
     };
 
@@ -359,7 +247,7 @@ const QuestionsId = () => {
         console.log(`Successfully deleted ${type}:`, response);
         // Navigate to appropriate page
         if (type === 'question') {
-          navigate('/questions');
+          navigate('/home');
         } else {
           // Handle navigation for answers and comments as needed
         }
@@ -381,7 +269,7 @@ const QuestionsId = () => {
     axios
       .post(`${apiUrl}/answer/${answerId}/comment`, dataToSend, {
         headers: {
-          Authorization: `Bearer ${Authorization}`,
+          Authorization: Authorization,
         },
       })
       .then((response) => {
@@ -599,9 +487,9 @@ const QuestionsId = () => {
                         </div>
                         {commentsDetails &&
                           commentsDetails
-                            .filter(
-                              (comment) => comment.answerId === answer.answerId,
-                            )
+                            // .filter(
+                            //   (comment) => comment.answerId === answer.answerId,
+                            // )
                             .map((comment) => (
                               <div key={comment.commentId}>
                                 <div

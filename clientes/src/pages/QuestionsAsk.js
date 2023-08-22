@@ -110,7 +110,7 @@ const QuestionsAsk = () => {
       axios
         .patch(`${baseURL}/questions/${questionId}`, dataToSend, {
           headers: {
-            Authorization: `Bearer ${Authorization}`,
+            Authorization: Authorization,
           },
         })
         .then((response) => {
@@ -132,7 +132,7 @@ const QuestionsAsk = () => {
       axios
         .post(`${baseURL}/questions`, dataToSend, {
           headers: {
-            Authorization: `Bearer ${Authorization}`,
+            Authorization: Authorization,
           },
         })
         .then((response) => {
