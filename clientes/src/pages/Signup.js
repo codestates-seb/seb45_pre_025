@@ -67,7 +67,8 @@ const Signup = () => {
   };
 
   const handleGoogleSignupClick = () => {
-    const url = 'https://accounts.google.com/o/oauth2/v2/auth';
+    const url =
+      'http://ec2-52-79-212-94.ap-northeast-2.compute.amazonaws.com:8080/oauth2/authorization/google';
     const queryParams = new URLSearchParams({
       client_id:
         process.env
