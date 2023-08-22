@@ -5,6 +5,7 @@ import com.codinghaezo.stackOverFlow.exception.ExceptionCode;
 
 import com.codinghaezo.stackOverFlow.logIn.OAuth2.OAuthProvider;
 import com.codinghaezo.stackOverFlow.logIn.utils.CustomAuthorityUtils;
+import com.codinghaezo.stackOverFlow.logIn.utils.UserAuthService;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -13,6 +14,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.Optional;
 
@@ -22,12 +24,16 @@ public class MemberService {
     private final MemberRepository memberRepository;
     private final PasswordEncoder passwordEncoder;
     private final CustomAuthorityUtils authorityUtils;
+    private final UserAuthService userAuthService;
     @Lazy
-    public MemberService(MemberRepository memberRepository, PasswordEncoder passwordEncoder, CustomAuthorityUtils authorityUtils) {
+    public MemberService(MemberRepository memberRepository, PasswordEncoder passwordEncoder,
+                         CustomAuthorityUtils authorityUtils, UserAuthService userAuthService) {
         this.memberRepository = memberRepository;
         this.passwordEncoder = passwordEncoder;
         this.authorityUtils = authorityUtils;
+        this.userAuthService = userAuthService;
     }
+
 
     public Member createMember(Member member) {
 
@@ -61,33 +67,36 @@ public class MemberService {
         return savedMember;
     }
 
-    public Member updateMember(Member member)  {
-        Member findMember = findVerifiedMember(member.getMemberId());
+    public Member updateMember(Member member ,HttpServletRequest request)  {
+        Member findMember = findVerifiedMember(request);
 
         Optional.ofNullable(member.getPassword())
                 .ifPresent(password -> findMember.setPassword(password));
-
+        Optional.ofNullable(member.getUserName())
+                .ifPresent(userName -> findMember.setUserName(userName));
         return memberRepository.save(findMember);
     }
     @Transactional(readOnly = true)
-    public Member findMember(long memberId)  {
-        return findVerifiedMember(memberId);
+    public Member findMember(HttpServletRequest request)  {
+        return findVerifiedMember(request);
     }
+
+
     public Page<Member> findMembers(int page, int size) {
         return memberRepository.findAll(PageRequest.of(page, size,
                 Sort.by("memberId").descending()));
     }
 
-    public void deleteMember(long memberId)  {
-        Member findMember = findVerifiedMember(memberId);
+    public void deleteMember(HttpServletRequest request)  {
+        Member findMember = findVerifiedMember(request);
 
         memberRepository.delete(findMember);
     }
 
     @Transactional(readOnly = true)
-
-    public Member findVerifiedMember(long memberId) {
-        Optional<Member> optionalMember = memberRepository.findById(memberId);
+    public Member findVerifiedMember(HttpServletRequest request) {
+        String findEmail = userAuthService.getSignedInUserEmail(request);
+        Optional<Member> optionalMember = memberRepository.findByEmail(findEmail);
         return optionalMember.orElseThrow(() -> new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
 
     }

@@ -31,7 +31,7 @@
 //    private Long newMember(OAuthInfoResponse oAuthInfoResponse) {
 //        Member member = Member.builder()
 //                .email(oAuthInfoResponse.getEmail())
-//                .nickname(oAuthInfoResponse.getNickname())
+//                .userName(oAuthInfoResponse.getNickname())
 //                .oAuthProvider(oAuthInfoResponse.getOAuthProvider())
 //                .build();
 //

@@ -73,7 +73,6 @@ public class SecurityConfiguration {
                         .antMatchers(HttpMethod.PATCH, "/*/questions/**").hasRole("USER")
                         .antMatchers(HttpMethod.DELETE, "/*/questions/**").hasRole("USER")
                         .anyRequest().permitAll()
-
                 ).oauth2Login(oauth2 -> oauth2
                        .successHandler(new OAuth2MemberSuccessHandler(jwtTokenizer, authorityUtils, memberService)));
 

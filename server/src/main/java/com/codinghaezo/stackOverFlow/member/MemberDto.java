@@ -1,10 +1,7 @@
 package com.codinghaezo.stackOverFlow.member;
 
 import com.codinghaezo.stackOverFlow.answer.PageInfo;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.springframework.context.annotation.Primary;
 import org.springframework.data.domain.Page;
 
@@ -17,6 +14,7 @@ public class MemberDto {
     @Setter
     @NoArgsConstructor
     @AllArgsConstructor
+    @ToString
     public static class MemberPostDto{
         @NotBlank
         @Email
@@ -25,17 +23,16 @@ public class MemberDto {
         private String userName;
 
         private String password;
+
     }
     @Getter
     @AllArgsConstructor
     @NoArgsConstructor
     @Setter
     public static class MemberPatchDto{
-        private long memberId;
 
         private String userName;
         private String password;
-
     }
 
     @Getter
