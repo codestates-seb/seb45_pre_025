@@ -8,6 +8,7 @@ import com.codinghaezo.stackOverFlow.exception.ExceptionCode;
 import com.codinghaezo.stackOverFlow.logIn.utils.UserAuthService;
 import com.codinghaezo.stackOverFlow.member.Member;
 import com.codinghaezo.stackOverFlow.member.MemberRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
@@ -25,7 +26,7 @@ import javax.validation.constraints.Positive;
 import java.net.URI;
 import java.time.LocalDateTime;
 import java.util.List;
-
+@Slf4j
 @RestController
 @RequestMapping("/question")
 public class AnswerController {
@@ -59,16 +60,17 @@ public class AnswerController {
                                      @RequestBody AnswerDto.AnswerCreateDto answerDto,
                                                 HttpServletRequest request) {
        String userEmail = userAuthService.getSignedInUserEmail(request);
+       log.info(userEmail);
        Member member = memberRepository.findByEmail(userEmail).orElseThrow(() -> new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
-
+        log.info(member.getEmail());
        Question question = questionRepository.findById(questionId).orElseThrow(() -> new BusinessLogicException(ExceptionCode.QUESTION_NOT_FOUND));
-
+       log.info(question.getTitle());
        Answer newAnswer = new Answer();
        newAnswer.setContent(answerDto.getContent());
        newAnswer.setMember(member);
        newAnswer.setQuestion(question);
        newAnswer.setCreatedAt(LocalDateTime.now());
-
+        log.info(newAnswer.getContent());
        answerRepository.save(newAnswer);
 
        return ResponseEntity.ok("Answer successfully created.");

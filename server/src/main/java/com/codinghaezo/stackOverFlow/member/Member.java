@@ -53,6 +53,4 @@ public class Member extends Auditable {
     @OneToMany(mappedBy = "author", cascade = CascadeType.ALL)
     private List<Question> questions = new ArrayList<>();
 
-
-
 }

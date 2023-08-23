@@ -3,7 +3,6 @@ package com.codinghaezo.stackOverFlow.member;
 import com.codinghaezo.stackOverFlow.exception.BusinessLogicException;
 import com.codinghaezo.stackOverFlow.exception.ExceptionCode;
 
-
 import com.codinghaezo.stackOverFlow.logIn.utils.CustomAuthorityUtils;
 import com.codinghaezo.stackOverFlow.logIn.utils.UserAuthService;
 import org.springframework.context.annotation.Lazy;
@@ -15,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 import java.util.Optional;
 
