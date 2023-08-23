@@ -9,7 +9,6 @@ const QuestionsAsk = () => {
   const [editorContent1, setEditorContent1] = useState('');
   const [editorContent2, setEditorContent2] = useState('');
   const [title, setTitle] = useState('');
-  //const [displayedMergedContent, setDisplayedMergedContent] = useState(''); //테스트용
   const [selectedStep, setSelectedStep] = useState(1);
   const navigate = useNavigate();
 
@@ -74,7 +73,7 @@ const QuestionsAsk = () => {
     console.log(title);
     console.log(editorContent1);
     //window.location.reload();
-    navigate(`/questions`);
+    navigate(`/home`);
   };
 
   useEffect(() => {
@@ -96,10 +95,6 @@ const QuestionsAsk = () => {
   }, [questionId]);
 
   const handleSubmit = () => {
-    // const mergedContent = `${editorContent1}\n\n${editorContent2}`; //테스트
-    // setDisplayedMergedContent(mergedContent); //테스트
-    // console.log(mergedContent); //테스트
-
     if (questionId) {
       //Edit question (/ask?id={id})
       const dataToSend = {
@@ -136,8 +131,11 @@ const QuestionsAsk = () => {
           },
         })
         .then((response) => {
-          const newQuestionId = response.headers.location.split('=').pop();
-          navigate(`/questions/view?id=${newQuestionId}`);
+          const url = response.headers.location;
+          const newQuestionId = url.split('/')[2];
+          console.log(newQuestionId);
+          console.log(response.headers.location);
+          navigate(`questions/view?id=${newQuestionId}`);
         })
         .catch((error) => {
           // Handle error if needed
@@ -145,19 +143,6 @@ const QuestionsAsk = () => {
         });
     }
   };
-
-  // useEffect(() => {
-  //   const viewer = Editor.factory({
-  //     el: document.querySelector('#viewer'),
-  //     initialValue: displayedMergedContent,
-  //     height: 'auto',
-  //     viewer: true,
-  //   });
-
-  //   return () => {
-  //     viewer.destroy();
-  //   };
-  // }, [displayedMergedContent]); //테스트
 
   return (
     <div className="bg-[#F8F9F9]  min-h-screen min-w-full">
@@ -453,11 +438,6 @@ const QuestionsAsk = () => {
             >
               Discard draft
             </button>
-            {/* 테스트용 */}
-            {/* <div
-              id="viewer"
-              className="my-4 border rounded-md p-3 bg-white"
-            ></div> */}
           </div>
         </div>
       </div>
