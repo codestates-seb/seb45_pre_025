@@ -106,12 +106,6 @@ public class MemberService {
         if (member.isPresent())
             throw new BusinessLogicException(ExceptionCode.MEMBER_EXISTS);
     }
-    /*
-    정말 회원 맞나?
 
-    SecurityContextHolder.getContext().getAuthorization().getPrincipal()
-
-    return member 메일
-     */
 
 }
