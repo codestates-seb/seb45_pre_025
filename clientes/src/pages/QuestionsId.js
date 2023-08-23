@@ -23,21 +23,6 @@ const QuestionsId = () => {
     'http://ec2-52-79-212-94.ap-northeast-2.compute.amazonaws.com:8080';
   const Authorization = localStorage.getItem('accessToken');
 
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     try {
-  //       const response = await axios.get(`${apiUrl}/questions/auth/login`);
-  //       // Handle the successful response
-  //       console.log(response);
-  //     } catch (error) {
-  //       console.error('An error occurred:', error);
-  //       // Handle the error case (e.g., show a user-friendly message)
-  //     }
-  //   };
-
-  //   fetchData();
-  // }, []);
-
   // const questionDetails = [
   //   {
   //     id: 1,
@@ -157,9 +142,6 @@ const QuestionsId = () => {
         setAnswersDetails(fetchedAnswers);
         console.log('Fetched answers:', fetchedAnswers);
 
-        // setCommentsDetails(fetchedAnswers.comments);
-        // console.log('Fetched comments:', fetchedAnswers.comments);
-
         const allComments = fetchedAnswers.flatMap((answer) => answer.comments);
 
         setCommentsDetails(allComments);
@@ -170,58 +152,29 @@ const QuestionsId = () => {
       });
   }, []);
 
-  // useEffect(() => {
-  //   axios
-  //     .get(`${apiUrl}/question/${questionId}/answers`)
-  //     .then((response) => {
-  //       const fetchedAnswers = response.data.map((answer) => {
-  //         const userEmail = answer.userEmail;
-  //         const userId = userEmail.split('@')[0];
-
-  //         return {
-  //           ...answer,
-  //           userId: userId,
-  //         };
-  //       });
-  //       // const comments = response.data.comments.map((comment) => {
-  //       //   const userEmail = comment.userEmail;
-  //       //   const userId = userEmail.split('@')[0];
-  //       //   return {
-  //       //     ...comment,
-  //       //     userId: userId,
-  //       //   };
-  //       // });
-
-  //       const comments = response.data.comments;
-
-  //       setAnswersDetails(fetchedAnswers);
-  //       console.log('Fetched answers:', fetchedAnswers);
-  //       console.log('Fetched comments:', comments);
-  //       setCommentsDetails(comments);
-  //     })
-  //     .catch((error) => {
-  //       console.error('Error fetching answers:', error);
-  //     });
-  // }, []);
-
   const handleNewAnswerSubmit = () => {
+    if (newComment.trim() === '') {
+      return; // Don't add empty comments
+    }
+
     // Create a new answer
     const dataToSend = {
       content: newAnswer,
-      headers: {
-        Authorization: Authorization,
-      },
     };
 
     axios
-      .post(`${apiUrl}/question/${questionId}/answer`, dataToSend)
+      .post(`${apiUrl}/question/${questionId}/answer`, dataToSend, {
+        headers: {
+          Authorization: Authorization,
+        },
+      })
       .then((response) => {
         console.log('Successfully submitted answer:', response);
+        setNewAnswer('');
       })
       .catch((error) => {
         console.error('Error submitting answer:', error);
       });
-    setNewAnswer('');
   };
 
   const handleDelete = (type, id) => {
@@ -546,12 +499,10 @@ const QuestionsId = () => {
                   <div className="">
                     <h2 className="pt-5 mb-2 text-2xl">Your Answer</h2>
                     <textarea
-                      type="text"
-                      //id="editor"
                       className="pb-[30%] pt-[2%] px-[2%] w-full h-auto border rounded-md focus:outline-none focus:border-sky-50 focus:ring-4"
                       placeholder="Please be sure to answer the question. Provide details and share your research!"
-                      onChange={(event) => setNewAnswer(event.target.value)}
                       value={newAnswer}
+                      onChange={(e) => setNewAnswer(e.target.value)}
                     />
                     <button
                       onClick={handleNewAnswerSubmit}
