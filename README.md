@@ -4,7 +4,7 @@
 
 
 > 프로젝트 기간 : 08.04 ~ 08.23
->> - [Figma Link](https://www.figma.com/file/n40SeKU2OlbZN8wwQZ1Zv7/%5B%EC%BD%94%EB%94%A9%ED%95%B4%EC%A1%B0%5D-pre-project?type=design&node-id=0%3A1&mode=design&t=uq01cPwr96HDyFwP-1)
+
 >> - **[배포사이트](http://pre-project-deploy.s3-website.ap-northeast-2.amazonaws.com)**
 
 <br>
@@ -26,7 +26,7 @@
 
 ## Stack
 ### **Environment**
-<img src="https://img.shields.io/badge/visual studio code-007ACC?style=flat&logo=visualstudiocode&logoColor=white"/> <img src="https://img.shields.io/badge/discord-5865F2?style=flat&logo=discord&logoColor=white"/> <img src="https://img.shields.io/badge/git-F05032?style=flat&logo=git&logoColor=white"/> <img src="https://img.shields.io/badge/git hub-181717?style=flat&logo=github&logoColor=white"/>
+<img src="https://img.shields.io/badge/visual studio code-007ACC?style=flat&logo=visualstudiocode&logoColor=white"/> <img src="https://img.shields.io/badge/discord-5865F2?style=flat&logo=discord&logoColor=white"/> <img src="https://img.shields.io/badge/git-F05032?style=flat&logo=git&logoColor=white"/> <img src="https://img.shields.io/badge/git hub-181717?style=flat&logo=github&logoColor=white"/> <img src="https://img.shields.io/badge/notion-000000?style=flat&logo=notion&logoColor=white"/>
 
  
 ### **Front-End**
@@ -34,7 +34,9 @@
 <img src="https://img.shields.io/badge/npm-CB3837?style=flat&logo=npm&logoColor=white"/> <img src="https://img.shields.io/badge/prettier-F7B93E?style=flat&logo=prettier&logoColor=white"/> <img src="https://img.shields.io/badge/eslint-4B32C3?style=flat&logo=eslint&logoColor=white"/> <img src="https://img.shields.io/badge/JavaScript-F7DF1E?style=flat&logo=JavaScript&logoColor=white"/> <img src="https://img.shields.io/badge/React-61DAFB?style=flat&logo=React&logoColor=white"/> <img src="https://img.shields.io/badge/Tailwind CSS-06B6D4?style=flat&logo=Tailwind CSS&logoColor=white"/> <img src="https://img.shields.io/badge/react router-CA4245?style=flat&logo=reactrouter&logoColor=white"/> <img src="https://img.shields.io/badge/axios-5A29E4?style=flat&logo=axios&logoColor=white"/>
 
 ### **Back-End**
-<img src="https://img.shields.io/badge/Java-007396?style=flat&logo=Java&logoColor=white"/> <img src="https://img.shields.io/badge/mysql-4479A1?style=flat&logo=mysql&logoColor=white"/> <img src="https://img.shields.io/badge/spring-6DB33F?style=flat&logo=spring&logoColor=white"/> <img src="https://img.shields.io/badge/springboot-6DB33F?style=flat&logo=springboot&logoColor=white"/> <img src="https://img.shields.io/badge/springsecurity-6DB33F?style=flat&logo=springsecurity&logoColor=white"/> <img src="https://img.shields.io/badge/JWT-000000?style=flat&logo=jsonwebtokens&logoColor=white"/> <img src="https://img.shields.io/badge/AWS-232F3E?style=flat&logo=amazonaws&logoColor=white"/>
+<img src="https://img.shields.io/badge/Java-007396?style=flat&logo=Java&logoColor=white"/> <img src="https://img.shields.io/badge/mysql-4479A1?style=flat&logo=mysql&logoColor=white"/> <img src="https://img.shields.io/badge/Spring -6DB33F?style=flat&logo=spring&logoColor=white"/> <img src="https://img.shields.io/badge/Spring Boot-6DB33F?style=flat&logo=springboot&logoColor=white"/> <img src="https://img.shields.io/badge/Spring Security-6DB33F?style=flat&logo=springsecurity&logoColor=white"/>  <img src="https://img.shields.io/badge/Spring Data JPA-6DB33F?style=flat&logo=SpringDataJPA&logoColor=white"/> <img src="https://img.shields.io/badge/JWT-000000?style=flat&logo=jsonwebtokens&logoColor=white"/> <img src="https://img.shields.io/badge/AWS-232F3E?style=flat&logo=amazonaws&logoColor=white"/>
+
+
 
 
 <br>
@@ -108,3 +110,177 @@
 
 ## 디렉토리 구조
 
+```
+.
+│  .gitignore
+│  package-lock.json
+│  package.json
+│  README.md
+│  tailwind.config.js
+│
+│ 
+├─ clientes
+│  │  .eslintrc.json
+│  │  .gitignore
+│  │  .prettierrc.json
+│  │  package-lock.json
+│  │  package.json
+│  │  tailwind.config.js
+│  │
+│  ├─public
+│  │  │  index.html
+│  │  │
+│  │  └─images
+│  │
+│  └─src
+│      │  App.css
+│      │  App.js
+│      │  Auth.js
+│      │  index.css
+│      │  index.js
+│      │
+│      ├─components
+│      │      Category.js
+│      │      Footer.js
+│      │      Header.js
+│      │      HeaderOn.js
+│      │      Sidebar.js
+│      │      SideCartegory.js
+│      │
+│      └─pages
+│              Home.js
+│              Login.js
+│              Main.js
+│              Questions.js
+│              QuestionsAsk.js
+│              QuestionsId.js
+│              Signup.js
+│              Users.js
+│
+│
+│
+└─server
+    │
+    └─src
+        ├─main
+        │  │  main.iml
+        │  │
+        │  ├─java
+        │  │  └─com
+        │  │      └─codinghaezo
+        │  │          └─stackOverFlow
+        │  │              │  StackOverFlowApplication.java
+        │  │              │
+        │  │              ├─advice
+        │  │              │      GlobalExceptionAdvice.java
+        │  │              │
+        │  │              ├─answer
+        │  │              │  │  Answer.java
+        │  │              │  │  AnswerController.java
+        │  │              │  │  AnswerDto.java
+        │  │              │  │  AnswerMapper.java
+        │  │              │  │  AnswerRepository.java
+        │  │              │  │  AnswerService.java
+        │  │              │  │  PageInfo.java
+        │  │              │  │
+        │  │              │  └─comment
+        │  │              │          Comment.java
+        │  │              │          CommentController.java
+        │  │              │          CommentDto.java
+        │  │              │          CommentMapper.java
+        │  │              │          CommentRepository.java
+        │  │              │          CommentService.java
+        │  │              │
+        │  │              ├─audit
+        │  │              │      Auditable.java
+        │  │              │
+        │  │              ├─bookmark
+        │  │              │      Bookmark.java
+        │  │              │      BookmarkController.java
+        │  │              │      BookmarkDto.java
+        │  │              │      BookmarkMapper.java
+        │  │              │      BookmarkRepository.java
+        │  │              │      BookmarkService.java
+        │  │              │
+        │  │              ├─domain
+        │  │              │  └─question
+        │  │              │      ├─controller
+        │  │              │      │      QuestionController.java
+        │  │              │      │
+        │  │              │      ├─dto
+        │  │              │      │      PaginatedResponseDto.java
+        │  │              │      │      QuestionDto.java
+        │  │              │      │
+        │  │              │      ├─entity
+        │  │              │      │      Question.java
+        │  │              │      │
+        │  │              │      ├─repository
+        │  │              │      │      QuestionRepository.java
+        │  │              │      │
+        │  │              │      └─service
+        │  │              │              QuestionService.java
+        │  │              │
+        │  │              ├─exception
+        │  │              │      BusinessLogicException.java
+        │  │              │      ExceptionCode.java
+        │  │              │
+        │  │              ├─logIn
+        │  │              │  ├─controller
+        │  │              │  │      AuthController.java
+        │  │              │  │
+        │  │              │  ├─jwt
+        │  │              │  │  ├─config
+        │  │              │  │  │      SecurityConfiguration.java
+        │  │              │  │  │
+        │  │              │  │  ├─dto
+        │  │              │  │  │      LoginDto.java
+        │  │              │  │  │
+        │  │              │  │  ├─filter
+        │  │              │  │  │      JwtAuthenticationFilter.java
+        │  │              │  │  │      JwtVerificationFilter.java
+        │  │              │  │  │
+        │  │              │  │  ├─handler
+        │  │              │  │  │      MemberAccessDeniedHandler.java
+        │  │              │  │  │      MemberAuthenticationEntryPoint.java
+        │  │              │  │  │      MemberAuthenticationFailureHandler.java
+        │  │              │  │  │      MemberAuthenticationSuccessHandler.java
+        │  │              │  │  │
+        │  │              │  │  ├─jwt
+        │  │              │  │  │      JwtTokenizer.java
+        │  │              │  │  │
+        │  │              │  │  └─userDetails
+        │  │              │  │          CustomUserDetails.java
+        │  │              │  │          MemberDetailsService.java
+        │  │              │  │
+        │  │              │  ├─OAuth2
+        │  │              │  │  └─handler
+        │  │              │  │          OAuth2MemberSuccessHandler.java
+        │  │              │  │
+        │  │              │  └─utils
+        │  │              │          CustomAuthorityUtils.java
+        │  │              │          ErrorResponder.java
+        │  │              │          MyController.java
+        │  │              │          UserAuthService.java
+        │  │              │          UserController.java
+        │  │              │
+        │  │              ├─member
+        │  │              │      Member.java
+        │  │              │      MemberController.java
+        │  │              │      MemberDto.java
+        │  │              │      MemberMapper.java
+        │  │              │      MemberRepository.java
+        │  │              │      MemberService.java
+        │  │              │
+        │  │              ├─response
+        │  │              │      ErrorResponse.java
+        │  │              │
+        │  │              └─Utils
+        │  │                      UriCreator.java
+        │  │
+        │  └─resources
+        │          application.yml
+        │
+        └─test
+ 
+
+```
