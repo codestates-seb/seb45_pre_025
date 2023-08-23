@@ -16,6 +16,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -64,6 +65,14 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
         response.setHeader("Authorization", "Bearer " + accessToken);
         response.setHeader("Refresh", refreshToken);
+        Map<String, String> responseBody = new HashMap<>();
+        responseBody.put("accessToken", "Bearer " + accessToken);
+        responseBody.put("refreshToken", refreshToken);
+
+        response.setContentType("application/json");
+        PrintWriter writer = response.getWriter();
+        writer.write(new ObjectMapper().writeValueAsString(responseBody));
+        writer.flush();
 
         this.getSuccessHandler().onAuthenticationSuccess(request, response, authResult);  // (1) 추가
     }

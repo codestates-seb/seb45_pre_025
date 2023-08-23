@@ -7,6 +7,7 @@ import com.codinghaezo.stackOverFlow.logIn.jwt.handler.MemberAuthenticationSucce
 import com.codinghaezo.stackOverFlow.logIn.jwt.filter.JwtVerificationFilter;
 import com.codinghaezo.stackOverFlow.logIn.jwt.jwt.JwtTokenizer;
 import com.codinghaezo.stackOverFlow.logIn.utils.CustomAuthorityUtils;
+import com.codinghaezo.stackOverFlow.logIn.utils.UserAuthService;
 import com.codinghaezo.stackOverFlow.member.MemberService;
 
 import org.springframework.context.annotation.Bean;
@@ -43,10 +44,14 @@ public class SecurityConfiguration {
     private final CustomAuthorityUtils authorityUtils;
     private final MemberService memberService;
 
-    public SecurityConfiguration(JwtTokenizer jwtTokenizer, CustomAuthorityUtils authorityUtils, MemberService memberService) {
+    private final UserAuthService userAuthService;
+
+    public SecurityConfiguration(JwtTokenizer jwtTokenizer, CustomAuthorityUtils authorityUtils,
+                                 MemberService memberService, UserAuthService userAuthService) {
         this.jwtTokenizer = jwtTokenizer;
         this.authorityUtils = authorityUtils;
         this.memberService = memberService;
+        this.userAuthService = userAuthService;
     }
 
     @Bean
