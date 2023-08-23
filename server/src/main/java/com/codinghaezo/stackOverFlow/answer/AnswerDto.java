@@ -32,7 +32,7 @@ public class AnswerDto {
         private LocalDateTime createdAt;
         @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
         private LocalDateTime updatedAt;
-
+        private List<CommentResponseDTO> comments;
     }
 
     @Getter
@@ -76,5 +76,19 @@ public class AnswerDto {
             this.pageInfo = new PageInfo(page.getNumber() + 1,
                     page.getSize(), page.getTotalElements(), page.getTotalPages());
         }
+    }
+
+    @Getter
+    @Setter
+    public static class CommentResponseDTO {
+        private long commentId;
+        private String content;
+        private String userEmail;
+        @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+        private LocalDateTime createdAt;
+        @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+        private LocalDateTime updatedAt;
+
+
     }
 }
