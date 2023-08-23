@@ -2,7 +2,7 @@ package com.codinghaezo.stackOverFlow.member;
 
 import com.codinghaezo.stackOverFlow.audit.Auditable;
 import com.codinghaezo.stackOverFlow.domain.question.entity.Question;
-import com.codinghaezo.stackOverFlow.logIn.OAuth2.OAuthProvider;
+
 import lombok.*;
 
 import javax.persistence.*;
@@ -38,7 +38,6 @@ public class Member extends Auditable {
         this.email = email;
     }
 
-
     public Member(String userName, String email,
                   String password,
                   List<String> roles,
@@ -51,7 +50,7 @@ public class Member extends Auditable {
         this.profileImageUrl = profileImageUrl;
     }
 
-    @OneToMany(mappedBy = "author")
+    @OneToMany(mappedBy = "author", cascade = CascadeType.ALL)
     private List<Question> questions = new ArrayList<>();
 
 }

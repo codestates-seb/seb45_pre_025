@@ -6,6 +6,7 @@ import com.codinghaezo.stackOverFlow.logIn.jwt.jwt.JwtTokenizer;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.Map;
 
 @Service
@@ -26,7 +27,22 @@ public class UserAuthService {
 
         String base64EncodedSecretKey = jwtTokenizer.encodeBase64SecretKey(jwtTokenizer.getSecretKey());
         Map<String, Object> claims = jwtTokenizer.getClaims(jws, base64EncodedSecretKey).getBody();
-        String email = (String) claims.get("username");
+        String email = (String) claims.get("email");
+        if (email == null) {
+            throw new BusinessLogicException(ExceptionCode.MEMBER_NOT_SIGNED_IN);
+        }
+        return email;
+    }
+    public String getSignedInUserEmail(HttpServletResponse response) {
+
+        String jws = response.getHeader("Authorization");
+        if (jws.startsWith("Bearer ")) {
+            jws = jws.substring(7);
+        }
+
+        String base64EncodedSecretKey = jwtTokenizer.encodeBase64SecretKey(jwtTokenizer.getSecretKey());
+        Map<String, Object> claims = jwtTokenizer.getClaims(jws, base64EncodedSecretKey).getBody();
+        String email = (String) claims.get("email");
         if (email == null) {
             throw new BusinessLogicException(ExceptionCode.MEMBER_NOT_SIGNED_IN);
         }
